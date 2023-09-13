@@ -197,8 +197,8 @@ public class PlayerController : MonoBehaviour, IPlayerController
     #region Gravity
 
     [Header("GRAVITY")] [SerializeField] private float _fallClamp = -40f;
-    [SerializeField] private float _minFallAccel = 80f;
-    [SerializeField] private float _maxFallAccel = 120f;
+    [SerializeField, Tooltip("gravity while moving up")] private float _minFallAccel = 80f;
+    [SerializeField, Tooltip("gravity while falling")] private float _maxFallAccel = 120f;
     private float _fallAccel;
 
     private void CalculateGravity()
@@ -225,8 +225,8 @@ public class PlayerController : MonoBehaviour, IPlayerController
 
     #region Jump
 
-    [Header("JUMPING")] [SerializeField] private float _jumpHeight = 30;
-    [SerializeField, Tooltip("not 100% certain about behavior of this parameter")] private float _jumpApexThreshold = 10f;
+    [Header("JUMPING")] [SerializeField] private float _jumpVelocity = 30;
+    [SerializeField, Tooltip("lower value = smaller window of apex bonus control; also effects fall speeds somehow")] private float _jumpApexThreshold = 10f;
     [SerializeField] private float _coyoteTimeThreshold = 0.1f;
     [SerializeField] private float _jumpBuffer = 0.1f;
     [SerializeField] private float _jumpEndEarlyGravityModifier = 3;
@@ -256,7 +256,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
         // Jump if: grounded or within coyote threshold || sufficient jump buffer
         if (Input.JumpDown && CanUseCoyote || HasBufferedJump)
         {
-            _currentVerticalSpeed = _jumpHeight;
+            _currentVerticalSpeed = _jumpVelocity;
             _endedJumpEarly = false;
             _coyoteUsable = false;
             _timeLeftGrounded = float.MinValue; // smallest value so that time difference from current time is never small

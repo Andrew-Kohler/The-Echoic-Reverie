@@ -103,18 +103,18 @@ MonoBehaviour:
   _groundLayer:
     serializedVersion: 2
     m_Bits: 64
-  _detectorCount: 3
+  _detectorCount: 4
   _detectionRayLength: 0.1
   _rayBuffer: 0.1
-  _acceleration: 90
-  _moveClamp: 13
-  _deAcceleration: 60
+  _acceleration: 60
+  _moveClamp: 7
+  _deAcceleration: 35
   _apexBonus: 2
-  _fallClamp: -40
-  _minFallAccel: 80
-  _maxFallAccel: 120
-  _jumpHeight: 30
-  _jumpApexThreshold: 10
+  _fallClamp: -30
+  _minFallAccel: 40
+  _maxFallAccel: 60
+  _jumpVelocity: 15
+  _jumpApexThreshold: 15
   _coyoteTimeThreshold: 0.1
   _jumpBuffer: 0.1
   _jumpEndEarlyGravityModifier: 3
