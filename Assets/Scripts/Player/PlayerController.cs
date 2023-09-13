@@ -74,9 +74,9 @@ public class PlayerController : MonoBehaviour, IPlayerController
     [SerializeField] [Range(0.1f, 0.3f)] private float _rayBuffer = 0.1f; // Prevents side detectors hitting the ground
 
     private RayRange _raysUp, _raysRight, _raysDown, _raysLeft;
-    private bool _colUp, _colRight, _colDown, _colLeft;
+    private bool _colUp, _colRight, _colDown, _colLeft; // IMPORTANT (whether there are collisions on each side)
 
-    private float _timeLeftGrounded;
+    private float _timeLeftGrounded; // only used for coyote jump timing (i.e. time since fell off ground not time since jump)
 
     // We use these raycast checks for pre-collision information
     private void RunCollisionChecks()
@@ -130,11 +130,11 @@ public class PlayerController : MonoBehaviour, IPlayerController
 
     private void OnDrawGizmos()
     {
-        // Bounds
+        // Bounds - drawn in and out of play mode
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireCube(transform.position + _characterBounds.center, _characterBounds.size);
 
-        // Rays
+        // Rays - only drawn when not in play mode
         if (!Application.isPlaying)
         {
             CalculateRayRanged();
@@ -150,14 +150,13 @@ public class PlayerController : MonoBehaviour, IPlayerController
 
         if (!Application.isPlaying) return;
 
-        // Draw the future position. Handy for visualizing gravity
+        // Draw the future position. Handy for visualizing gravity - only drawn in play mode
         Gizmos.color = Color.red;
         var move = new Vector3(_currentHorizontalSpeed, _currentVerticalSpeed) * Time.deltaTime;
         Gizmos.DrawWireCube(transform.position + _characterBounds.center + move, _characterBounds.size);
     }
 
     #endregion
-
 
     #region Walk
 
@@ -198,9 +197,9 @@ public class PlayerController : MonoBehaviour, IPlayerController
     #region Gravity
 
     [Header("GRAVITY")] [SerializeField] private float _fallClamp = -40f;
-    [SerializeField] private float _minFallSpeed = 80f;
-    [SerializeField] private float _maxFallSpeed = 120f;
-    private float _fallSpeed;
+    [SerializeField] private float _minFallAccel = 80f;
+    [SerializeField] private float _maxFallAccel = 120f;
+    private float _fallAccel;
 
     private void CalculateGravity()
     {
@@ -212,10 +211,10 @@ public class PlayerController : MonoBehaviour, IPlayerController
         else
         {
             // Add downward force while ascending if we ended the jump early
-            var fallSpeed = _endedJumpEarly && _currentVerticalSpeed > 0 ? _fallSpeed * _jumpEndEarlyGravityModifier : _fallSpeed;
+            var fallAccel = _endedJumpEarly && _currentVerticalSpeed > 0 ? _fallAccel * _jumpEndEarlyGravityModifier : _fallAccel;
 
             // Fall
-            _currentVerticalSpeed -= fallSpeed * Time.deltaTime;
+            _currentVerticalSpeed -= fallAccel * Time.deltaTime;
 
             // Clamp
             if (_currentVerticalSpeed < _fallClamp) _currentVerticalSpeed = _fallClamp;
@@ -227,7 +226,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
     #region Jump
 
     [Header("JUMPING")] [SerializeField] private float _jumpHeight = 30;
-    [SerializeField] private float _jumpApexThreshold = 10f;
+    [SerializeField, Tooltip("not 100% certain about behavior of this parameter")] private float _jumpApexThreshold = 10f;
     [SerializeField] private float _coyoteTimeThreshold = 0.1f;
     [SerializeField] private float _jumpBuffer = 0.1f;
     [SerializeField] private float _jumpEndEarlyGravityModifier = 3;
@@ -244,7 +243,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
         {
             // Gets stronger the closer to the top of the jump
             _apexPoint = Mathf.InverseLerp(_jumpApexThreshold, 0, Mathf.Abs(Velocity.y));
-            _fallSpeed = Mathf.Lerp(_minFallSpeed, _maxFallSpeed, _apexPoint);
+            _fallAccel = Mathf.Lerp(_minFallAccel, _maxFallAccel, _apexPoint);
         }
         else
         {
@@ -260,7 +259,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
             _currentVerticalSpeed = _jumpHeight;
             _endedJumpEarly = false;
             _coyoteUsable = false;
-            _timeLeftGrounded = float.MinValue;
+            _timeLeftGrounded = float.MinValue; // smallest value so that time difference from current time is never small
             JumpingThisFrame = true;
         }
         else
@@ -277,7 +276,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
 
         if (_colUp)
         {
-            if (_currentVerticalSpeed > 0) _currentVerticalSpeed = 0;
+            if (_currentVerticalSpeed > 0) _currentVerticalSpeed = 0; // bonk
         }
     }
 
@@ -317,7 +316,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
             {
                 transform.position = positionToMoveTo;
 
-                // We've landed on a corner or hit our head on a ledge. Nudge the player gently
+                // We've landed on a corner or hit our head on a ledge. Nudge the player gently - *not entirely sure how this works
                 if (i == 1)
                 {
                     if (_currentVerticalSpeed < 0) _currentVerticalSpeed = 0;
