@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
     public bool LandingThisFrame { get; private set; }
     public Vector3 RawMovement { get; private set; }
     public bool Grounded => _colDown;
+    public bool ClingingThisFrame { get; private set; }
 
     private Vector3 _lastPosition;
     private float _currentHorizontalSpeed, _currentVerticalSpeed;
@@ -42,6 +43,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
         CalculateJumpApex(); // Affects fall speed, so calculate before gravity
         CalculateGravity(); // Vertical movement
         CalculateJump(); // Possibly overrides vertical
+        CalculateWallCling(); // Overrides horizontal and vertical if necessary
 
         MoveCharacter(); // Actually perform the axis movement
     }
@@ -77,6 +79,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
     private bool _colUp, _colRight, _colDown, _colLeft; // IMPORTANT (whether there are collisions on each side)
 
     private float _timeLeftGrounded; // only used for coyote jump timing (i.e. time since fell off ground not time since jump)
+    private float _timeClingStart = float.MinValue;
 
     // We use these raycast checks for pre-collision information
     private void RunCollisionChecks()
@@ -84,7 +87,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
         // Generate ray ranges. 
         CalculateRayRanged();
 
-        // Ground
+        // Ground - Grounded state
         LandingThisFrame = false;
         var groundedCheck = RunDetection(_raysDown);
         if (_colDown && !groundedCheck) _timeLeftGrounded = Time.time; // Only trigger when first leaving
@@ -96,10 +99,22 @@ public class PlayerController : MonoBehaviour, IPlayerController
 
         _colDown = groundedCheck;
 
-        // The rest
+        // Walls - Clinging state
+        ClingingThisFrame = false;
+        var clingingCheckLeft = RunDetection(_raysLeft);
+        var clingingCheckRight = RunDetection(_raysRight);
+        if((!_colLeft && clingingCheckLeft) || (!_colRight && clingingCheckRight)) // just started a cling
+        {
+            ClingingThisFrame = true;
+            _timeClingStart = Time.time;
+            _leftCling = clingingCheckLeft; // set direction to know which way to wall jump later
+        }
+
+        _colLeft = clingingCheckLeft;
+        _colRight = clingingCheckRight;
+
+        // Ceiling
         _colUp = RunDetection(_raysUp);
-        _colLeft = RunDetection(_raysLeft);
-        _colRight = RunDetection(_raysRight);
 
         bool RunDetection(RayRange range)
         {
@@ -172,9 +187,6 @@ public class PlayerController : MonoBehaviour, IPlayerController
             // Set horizontal move speed
             _currentHorizontalSpeed += Input.X * _acceleration * Time.deltaTime;
 
-            // clamped by max frame movement
-            _currentHorizontalSpeed = Mathf.Clamp(_currentHorizontalSpeed, -_moveClamp, _moveClamp);
-
             // Apply bonus at the apex of a jump
             var apexBonus = Mathf.Sign(Input.X) * _apexBonus * _apexPoint;
             _currentHorizontalSpeed += apexBonus * Time.deltaTime;
@@ -184,6 +196,9 @@ public class PlayerController : MonoBehaviour, IPlayerController
             // No input. Let's slow the character down
             _currentHorizontalSpeed = Mathf.MoveTowards(_currentHorizontalSpeed, 0, _deAcceleration * Time.deltaTime);
         }
+
+        // clamped by max frame movement
+        _currentHorizontalSpeed = Mathf.Clamp(_currentHorizontalSpeed, -_moveClamp, _moveClamp);
 
         if (_currentHorizontalSpeed > 0 && _colRight || _currentHorizontalSpeed < 0 && _colLeft)
         {
@@ -225,7 +240,9 @@ public class PlayerController : MonoBehaviour, IPlayerController
 
     #region Jump
 
-    [Header("JUMPING")] [SerializeField] private float _jumpVelocity = 30;
+    [Header("JUMPING")] 
+    [SerializeField] private float _jumpVelocity = 30;
+    [SerializeField] private Vector2 _wallJumpVelocity = new Vector2(5f, 10f);
     [SerializeField, Tooltip("lower value = smaller window of apex bonus control; also effects fall speeds somehow")] private float _jumpApexThreshold = 10f;
     [SerializeField] private float _coyoteTimeThreshold = 0.1f;
     [SerializeField] private float _jumpBuffer = 0.1f;
@@ -239,6 +256,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
 
     private void CalculateJumpApex()
     {
+        
         if (!_colDown)
         {
             // Gets stronger the closer to the top of the jump
@@ -253,13 +271,22 @@ public class PlayerController : MonoBehaviour, IPlayerController
 
     private void CalculateJump()
     {
-        // Jump if: grounded or within coyote threshold || sufficient jump buffer
-        if (Input.JumpDown && CanUseCoyote || HasBufferedJump)
+        // Jump if: grounded or within coyote threshold || sufficient jump buffer && not wall clinging
+        if ((Input.JumpDown && CanUseCoyote || HasBufferedJump) && _timeClingStart + _clingDuration <= Time.time)
         {
             _currentVerticalSpeed = _jumpVelocity;
             _endedJumpEarly = false;
             _coyoteUsable = false;
             _timeLeftGrounded = float.MinValue; // smallest value so that time difference from current time is never small
+            JumpingThisFrame = true;
+        }
+        else if(Input.JumpDown && _timeClingStart + _clingDuration > Time.time) // wall jump
+        {
+            _currentHorizontalSpeed = (_leftCling ? 1 : -1) * _wallJumpVelocity.x;
+            _currentVerticalSpeed = _wallJumpVelocity.y;
+            _timeClingStart = float.MinValue; // end cling state
+            _timeLeftGrounded = float.MinValue;
+            _endedJumpEarly = false;
             JumpingThisFrame = true;
         }
         else
@@ -268,7 +295,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
         }
 
         // End the jump early if button released
-        if (!_colDown && Input.JumpUp && !_endedJumpEarly && Velocity.y > 0)
+        if (!_colDown && Input.JumpUp && !_endedJumpEarly && Velocity.y > 0 && _timeClingStart + _clingDuration <= Time.time)
         {
             // _currentVerticalSpeed = 0;
             _endedJumpEarly = true;
@@ -277,6 +304,28 @@ public class PlayerController : MonoBehaviour, IPlayerController
         if (_colUp)
         {
             if (_currentVerticalSpeed > 0) _currentVerticalSpeed = 0; // bonk
+        }
+    }
+
+    #endregion
+
+    #region Wall Cling
+
+    [Header("WALL CLING")]
+    [SerializeField] private float _clingDuration = 1f;
+    private bool _leftCling;
+
+    private void CalculateWallCling()
+    {
+        if (_timeClingStart + _clingDuration > Time.time) // still clinging
+        {
+            // set speeds to 0 as you are clung to wall
+            _currentHorizontalSpeed = 0;
+            _currentVerticalSpeed = 0;
+        }
+        else
+        {
+            _timeClingStart = float.MinValue;
         }
     }
 

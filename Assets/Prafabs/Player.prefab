@@ -122,6 +122,8 @@ MonoBehaviour:
   _coyoteTimeThreshold: 0.1
   _jumpBuffer: 0.1
   _jumpEndEarlyGravityModifier: 3
+  _clingDuration: 0.15
+  _wallJumpVelocity: {x: 158.9, y: 10}
   _freeColliderIterations: 10
 --- !u!114 &2968947467466690203
 MonoBehaviour:
@@ -140,15 +142,8 @@ MonoBehaviour:
   _groundMask:
     serializedVersion: 2
     m_Bits: 64
-  _jumpParticles: {fileID: 0}
-  _launchParticles: {fileID: 0}
-  _moveParticles: {fileID: 0}
-  _landParticles: {fileID: 0}
-  _footsteps: []
   _maxTilt: 5
   _tiltSpeed: 50
-  _maxIdleSpeed: 2
-  _maxParticleFallSpeed: -40
 --- !u!95 &-5601829614600383496
 Animator:
   serializedVersion: 5

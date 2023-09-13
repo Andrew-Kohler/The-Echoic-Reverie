@@ -19,6 +19,7 @@ namespace TarodevController
         bool LandingThisFrame { get; }
         Vector3 RawMovement { get; }
         bool Grounded { get; }
+        bool ClingingThisFrame { get; }
     }
 
     public struct RayRange
