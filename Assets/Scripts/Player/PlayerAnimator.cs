@@ -38,7 +38,22 @@ public class PlayerAnimator : MonoBehaviour
         if (_player == null) return;
 
         // Flip the sprite
-        if (_player.Input.X != 0) transform.localScale = new Vector3(_player.Input.X > 0 ? _baseScale.x : -_baseScale.x, _baseScale.y, _baseScale.z);
+        if (_player.Input.X != 0)
+        {
+            transform.localScale = new Vector3(_player.Input.X > 0 ? _baseScale.x : -_baseScale.x, _baseScale.y, _baseScale.z);
+        }
+
+        // Set animation variables
+        if(_player.Velocity.x != 0) 
+        {
+            _anim.SetBool("isMoving", true);
+        }
+        else
+        {
+            _anim.SetBool("isMoving", false);
+        }
+        _anim.SetBool("isGrounded", _playerGrounded);
+        _anim.SetFloat("yVelocity", _player.Velocity.y);
 
         // Lean while running
         var targetRotVector = new Vector3(0, 0, Mathf.Lerp(-_maxTilt, _maxTilt, Mathf.InverseLerp(-1, 1, _player.Input.X)));
