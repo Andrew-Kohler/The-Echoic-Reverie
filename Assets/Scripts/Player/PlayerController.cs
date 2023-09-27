@@ -247,8 +247,14 @@ public class PlayerController : MonoBehaviour, IPlayerController
     {
         if (_colDown!=NO_COL)
         {
-            // Move out of the ground
-            if (_currentVerticalSpeed < 0) _currentVerticalSpeed = 0;
+            if (_currentVerticalSpeed < 0)
+            {
+                // Don't fall through floor (it is solid)
+                _currentVerticalSpeed = 0;
+
+                // snap to ground (consistent height/gap)
+                transform.position += new Vector3(0, _colGap - _colDown, 0);
+            }
         }
         else
         {
