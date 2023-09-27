@@ -108,8 +108,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   _detectorCount: 4
-  _detectionRayLength: 0.1
+  _detectionRayLength: 0.07
   _rayBuffer: 0.1
+  _colGap: 0.03
   _acceleration: 60
   _moveClamp: 7
   _deAcceleration: 35
@@ -118,12 +119,12 @@ MonoBehaviour:
   _minFallAccel: 40
   _maxFallAccel: 60
   _jumpVelocity: 15
+  _wallJumpVelocity: {x: 20, y: 13}
   _jumpApexThreshold: 15
   _coyoteTimeThreshold: 0.1
   _jumpBuffer: 0.1
   _jumpEndEarlyGravityModifier: 3
-  _clingDuration: 0.15
-  _wallJumpVelocity: {x: 158.9, y: 10}
+  _clingDuration: 0.2
   _freeColliderIterations: 10
 --- !u!114 &2968947467466690203
 MonoBehaviour:

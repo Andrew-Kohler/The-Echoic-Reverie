@@ -77,6 +77,8 @@ public class PlayerController : MonoBehaviour, IPlayerController
     [SerializeField] private int _detectorCount = 3;
     [SerializeField] private float _detectionRayLength = 0.1f;
     [SerializeField] [Range(0.1f, 0.3f)] private float _rayBuffer = 0.1f; // Prevents side detectors hitting the ground
+    [Tooltip("consistent spacing between player collider and colliders")]
+    [SerializeField] private float _colGap = 0.1f;
 
     private RayRange _raysUp, _raysRight, _raysDown, _raysLeft;
     private float _colUp, _colRight, _colDown, _colLeft; // IMPORTANT: collision distance ; -1 = no collision
@@ -214,12 +216,21 @@ public class PlayerController : MonoBehaviour, IPlayerController
         // clamped by max frame movement
         _currentHorizontalSpeed = Mathf.Clamp(_currentHorizontalSpeed, -_moveClamp, _moveClamp);
 
-        if (_currentHorizontalSpeed > 0 && _colRight!=NO_COL || _currentHorizontalSpeed < 0 && _colLeft!=NO_COL)
+        if (_currentHorizontalSpeed > 0 && _colRight!=NO_COL) 
         {
             // Don't walk through walls
             _currentHorizontalSpeed = 0;
 
-            // ADD CODE HERE TO SNAP TO LEFT/RIGHT WALL
+            // snap to right wall
+            transform.position += new Vector3(_colRight - _colGap, 0, 0);
+        }
+        if(_currentHorizontalSpeed < 0 && _colLeft != NO_COL)
+        {
+            // Don't walk through walls
+            _currentHorizontalSpeed = 0;
+
+            // snap to left wall
+            transform.position += new Vector3(_colGap -_colLeft, 0, 0);
         }
     }
 
