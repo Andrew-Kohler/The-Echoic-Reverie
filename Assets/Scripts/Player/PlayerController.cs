@@ -49,6 +49,8 @@ public class PlayerController : MonoBehaviour, IPlayerController
         CalculateWallCling(); // Overrides horizontal and vertical if necessary
 
         MoveCharacter(); // Actually perform the axis movement
+
+
     }
 
 
@@ -60,7 +62,10 @@ public class PlayerController : MonoBehaviour, IPlayerController
         {
             JumpDown = UnityEngine.Input.GetButtonDown("Jump"),
             JumpUp = UnityEngine.Input.GetButtonUp("Jump"),
-            X = UnityEngine.Input.GetAxisRaw("Horizontal")
+            X = UnityEngine.Input.GetAxisRaw("Horizontal"),
+            MouseDown = UnityEngine.Input.GetMouseButtonDown(0),
+            MouseX = UnityEngine.Input.mousePosition.x,
+            MouseY = UnityEngine.Input.mousePosition.y
         };
         if (Input.JumpDown)
         {
