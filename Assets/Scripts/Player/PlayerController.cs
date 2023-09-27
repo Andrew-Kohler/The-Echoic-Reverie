@@ -50,7 +50,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
 
         MoveCharacter(); // Actually perform the axis movement
 
-
+        ProjectileAbility(); // Handle projectile spawning and cooldowns
     }
 
 
@@ -64,8 +64,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
             JumpUp = UnityEngine.Input.GetButtonUp("Jump"),
             X = UnityEngine.Input.GetAxisRaw("Horizontal"),
             MouseDown = UnityEngine.Input.GetMouseButtonDown(0),
-            MouseX = UnityEngine.Input.mousePosition.x,
-            MouseY = UnityEngine.Input.mousePosition.y
+            MousePos = UnityEngine.Input.mousePosition
         };
         if (Input.JumpDown)
         {
@@ -418,5 +417,25 @@ public class PlayerController : MonoBehaviour, IPlayerController
         }
     }
 
+    #endregion
+
+    #region PROJECTILE
+    [Header("Projectile Ability")]
+    [SerializeField] private GameObject _projectilePrefab;
+    [SerializeField] private float _projectileSpeed;
+
+    public void ProjectileAbility()
+    {
+        // fire projectile
+        if (Input.MouseDown)
+        {
+            // calculate velocity
+            Vector2 playerPos = Camera.main.WorldToScreenPoint(transform.position);
+            Vector2 velocity = (Input.MousePos - playerPos).normalized * _projectileSpeed;
+
+            // create projectile with velocity
+            Instantiate(_projectilePrefab, transform.position, _projectilePrefab.transform.rotation).GetComponent<Rigidbody2D>().velocity = velocity;
+        }
+    }
     #endregion
 }
