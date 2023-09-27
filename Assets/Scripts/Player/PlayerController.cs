@@ -423,11 +423,14 @@ public class PlayerController : MonoBehaviour, IPlayerController
     [Header("Projectile Ability")]
     [SerializeField] private GameObject _projectilePrefab;
     [SerializeField] private float _projectileSpeed;
+    [SerializeField] private float _cooldown = 5f;
+
+    private float _cooldownTimer = 0f;
 
     public void ProjectileAbility()
     {
         // fire projectile
-        if (Input.MouseDown)
+        if (Input.MouseDown && _cooldownTimer <= 0)
         {
             // calculate velocity
             Vector2 playerPos = Camera.main.WorldToScreenPoint(transform.position);
@@ -435,6 +438,12 @@ public class PlayerController : MonoBehaviour, IPlayerController
 
             // create projectile with velocity
             Instantiate(_projectilePrefab, transform.position, _projectilePrefab.transform.rotation).GetComponent<Rigidbody2D>().velocity = velocity;
+
+            _cooldownTimer = _cooldown; // start cooldown
+        }
+        else if(_cooldownTimer > 0) // timer
+        {
+            _cooldownTimer -= Time.deltaTime;
         }
     }
     #endregion
