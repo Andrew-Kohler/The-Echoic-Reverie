@@ -20,13 +20,13 @@ public class PlayerAnimator : MonoBehaviour
     //[SerializeField, Range(1f, 3f)] private float _maxIdleSpeed = 2;
     //[SerializeField] private float _maxParticleFallSpeed = -40;
 
-    private IPlayerController _player;
+    private PlayerController _player;
     private bool _playerGrounded;
     private ParticleSystem.MinMaxGradient _currentGradient;
     private Vector2 _movement;
     private Vector3 _baseScale;
 
-    void Awake() => _player = GetComponentInParent<IPlayerController>();
+    void Awake() => _player = GetComponentInParent<PlayerController>();
 
     private void Start()
     {
@@ -54,6 +54,10 @@ public class PlayerAnimator : MonoBehaviour
         }
         _anim.SetBool("isGrounded", _playerGrounded);
         _anim.SetFloat("yVelocity", _player.Velocity.y);
+
+        _anim.SetBool("isClinging", _player.CurrentlyClinging);
+
+        
 
         // Lean while running
         var targetRotVector = new Vector3(0, 0, Mathf.Lerp(-_maxTilt, _maxTilt, Mathf.InverseLerp(-1, 1, _player.Input.X)));

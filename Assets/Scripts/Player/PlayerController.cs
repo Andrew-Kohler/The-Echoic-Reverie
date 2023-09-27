@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
     public Vector3 RawMovement { get; private set; }
     public bool Grounded => _colDown;
     public bool ClingingThisFrame { get; private set; }
+    public bool CurrentlyClinging { get; private set; }
 
     private Vector3 _lastPosition;
     private float _currentHorizontalSpeed, _currentVerticalSpeed;
@@ -320,11 +321,13 @@ public class PlayerController : MonoBehaviour, IPlayerController
         if (_timeClingStart + _clingDuration > Time.time) // still clinging
         {
             // set speeds to 0 as you are clung to wall
+            CurrentlyClinging = true;
             _currentHorizontalSpeed = 0;
             _currentVerticalSpeed = 0;
         }
         else
         {
+            CurrentlyClinging = false;
             _timeClingStart = float.MinValue;
         }
     }
