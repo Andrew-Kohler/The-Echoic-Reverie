@@ -5,12 +5,7 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class SoundwaveController : MonoBehaviour
 {
-    // Visual style
-    // Clean
-    // Messy
-    // STRANGE
     enum LaunchConfigs{Clean, Messy, Strange};
-    
 
     [Tooltip("Turns on live adjustments; to be used for testing new configs")]
     [SerializeField] private bool experimentationMode;
@@ -55,7 +50,7 @@ public class SoundwaveController : MonoBehaviour
         //TODO: Swapping between two constants and one constant is Not Working
         var shapeVariables = waveGenerator.shape;
         var mainVariables = waveGenerator.main;
-        var mainVariablesSize = mainVariables.startSize;
+        var mainVariablesSize = waveGenerator.main.startSize;
         var collisionVariables = waveGenerator.collision;
         var noiseVariables = waveGenerator.noise;
 
@@ -66,22 +61,29 @@ public class SoundwaveController : MonoBehaviour
 
         if (config == LaunchConfigs.Clean)
         {
-            mainVariablesSize.mode = ParticleSystemCurveMode.Constant;
-            mainVariables.startSize = .2f;
+            //mainVariablesSize.mode = ParticleSystemCurveMode.Constant;
+            mainVariablesSize.constantMin = .2f;
+            mainVariablesSize.constantMax = .2f;
+            mainVariables.startSize = new ParticleSystem.MinMaxCurve(0.2f, .2f);
             noiseVariables.enabled = false;
         }
         else if (config == LaunchConfigs.Messy)
         {
-            mainVariablesSize.mode = ParticleSystemCurveMode.TwoConstants;
+           // mainVariablesSize.mode = ParticleSystemCurveMode.TwoConstants;
             mainVariablesSize.constantMin = .06f;
             mainVariablesSize.constantMax = 1f;
+            mainVariables.startSize = new ParticleSystem.MinMaxCurve(0.06f, .75f);
             noiseVariables.enabled = false;
         }
         else if (config == LaunchConfigs.Strange)
         {
-            mainVariablesSize.mode = ParticleSystemCurveMode.TwoConstants;
+           // mainVariablesSize.mode = ParticleSystemCurveMode.TwoConstants;
             mainVariablesSize.constantMin = .06f;
             mainVariablesSize.constantMax = 1f;
+            mainVariables.startSize = new ParticleSystem.MinMaxCurve(0.06f, 1.0f);
+
+
+
             noiseVariables.enabled = true;
         }
     }
