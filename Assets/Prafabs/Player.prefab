@@ -126,6 +126,8 @@ MonoBehaviour:
   _jumpEndEarlyGravityModifier: 3
   _clingDuration: 0.2
   _freeColliderIterations: 10
+  _projectilePrefab: {fileID: 8819576824762881337, guid: aa86c304f37daa443a70c6cf96d63f20, type: 3}
+  _projectileSpeed: 5
 --- !u!114 &2968947467466690203
 MonoBehaviour:
   m_ObjectHideFlags: 0
