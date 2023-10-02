@@ -12,13 +12,16 @@ using TarodevController;
 /// </summary>
 public class PlayerController : MonoBehaviour, IPlayerController
 {
+    // constants - for readability
+    private const float NO_COL = -1;
+
     // Public for external hooks
     public Vector3 Velocity { get; private set; }
     public FrameInput Input { get; private set; }
     public bool JumpingThisFrame { get; private set; }
     public bool LandingThisFrame { get; private set; }
     public Vector3 RawMovement { get; private set; }
-    public bool Grounded => _colDown;
+    public bool Grounded => _colDown != NO_COL;
     public bool ClingingThisFrame { get; private set; }
     public bool CurrentlyClinging { get; private set; }
 
@@ -47,6 +50,8 @@ public class PlayerController : MonoBehaviour, IPlayerController
         CalculateWallCling(); // Overrides horizontal and vertical if necessary
 
         MoveCharacter(); // Actually perform the axis movement
+
+        ProjectileAbility(); // Handle projectile spawning and cooldowns
     }
 
 
@@ -58,7 +63,9 @@ public class PlayerController : MonoBehaviour, IPlayerController
         {
             JumpDown = UnityEngine.Input.GetButtonDown("Jump"),
             JumpUp = UnityEngine.Input.GetButtonUp("Jump"),
-            X = UnityEngine.Input.GetAxisRaw("Horizontal")
+            X = UnityEngine.Input.GetAxisRaw("Horizontal"),
+            MouseDown = UnityEngine.Input.GetMouseButtonDown(0),
+            MousePos = UnityEngine.Input.mousePosition
         };
         if (Input.JumpDown)
         {
@@ -75,9 +82,11 @@ public class PlayerController : MonoBehaviour, IPlayerController
     [SerializeField] private int _detectorCount = 3;
     [SerializeField] private float _detectionRayLength = 0.1f;
     [SerializeField] [Range(0.1f, 0.3f)] private float _rayBuffer = 0.1f; // Prevents side detectors hitting the ground
+    [Tooltip("consistent spacing between player collider and colliders")]
+    [SerializeField] private float _colGap = 0.1f;
 
     private RayRange _raysUp, _raysRight, _raysDown, _raysLeft;
-    private bool _colUp, _colRight, _colDown, _colLeft; // IMPORTANT (whether there are collisions on each side)
+    private float _colUp, _colRight, _colDown, _colLeft; // IMPORTANT: collision distance ; -1 = no collision
 
     private float _timeLeftGrounded; // only used for coyote jump timing (i.e. time since fell off ground not time since jump)
     private float _timeClingStart = float.MinValue;
@@ -90,9 +99,9 @@ public class PlayerController : MonoBehaviour, IPlayerController
 
         // Ground - Grounded state
         LandingThisFrame = false;
-        var groundedCheck = RunDetection(_raysDown);
-        if (_colDown && !groundedCheck) _timeLeftGrounded = Time.time; // Only trigger when first leaving
-        else if (!_colDown && groundedCheck)
+        float groundedCheck = RunDetection(_raysDown);
+        if (_colDown!=NO_COL && groundedCheck==NO_COL) _timeLeftGrounded = Time.time; // Only trigger when first leaving
+        else if (_colDown==NO_COL && groundedCheck!=NO_COL)
         {
             _coyoteUsable = true; // Only trigger when first touching
             LandingThisFrame = true;
@@ -102,13 +111,13 @@ public class PlayerController : MonoBehaviour, IPlayerController
 
         // Walls - Clinging state
         ClingingThisFrame = false;
-        var clingingCheckLeft = RunDetection(_raysLeft);
-        var clingingCheckRight = RunDetection(_raysRight);
-        if((!_colLeft && clingingCheckLeft) || (!_colRight && clingingCheckRight)) // just started a cling
+        float clingingCheckLeft = RunDetection(_raysLeft);
+        float clingingCheckRight = RunDetection(_raysRight);
+        if((_colLeft==NO_COL && clingingCheckLeft!=NO_COL) || (_colRight==NO_COL && clingingCheckRight!=NO_COL)) // just started a cling
         {
             ClingingThisFrame = true;
             _timeClingStart = Time.time;
-            _leftCling = clingingCheckLeft; // set direction to know which way to wall jump later
+            _leftCling = clingingCheckLeft!=NO_COL; // set direction to know which way to wall jump later
         }
 
         _colLeft = clingingCheckLeft;
@@ -117,9 +126,20 @@ public class PlayerController : MonoBehaviour, IPlayerController
         // Ceiling
         _colUp = RunDetection(_raysUp);
 
-        bool RunDetection(RayRange range)
+        float RunDetection(RayRange range)
         {
-            return EvaluateRayPositions(range).Any(point => Physics2D.Raycast(point, range.Dir, _detectionRayLength, _groundLayer));
+            IEnumerable<Vector2> vectors = EvaluateRayPositions(range);
+            float colDist = -1; // default -1 indicates no collision
+
+            // check for nearest collision distance
+            foreach(Vector2 vector in vectors)
+            {
+                RaycastHit2D raycast = Physics2D.Raycast(vector, range.Dir, _detectionRayLength, _groundLayer);
+                if (raycast && (raycast.distance < colDist || colDist == -1))
+                    colDist = raycast.distance;
+            }
+
+            return colDist;
         }
     }
 
@@ -201,10 +221,21 @@ public class PlayerController : MonoBehaviour, IPlayerController
         // clamped by max frame movement
         _currentHorizontalSpeed = Mathf.Clamp(_currentHorizontalSpeed, -_moveClamp, _moveClamp);
 
-        if (_currentHorizontalSpeed > 0 && _colRight || _currentHorizontalSpeed < 0 && _colLeft)
+        if (_currentHorizontalSpeed > 0 && _colRight!=NO_COL) 
         {
             // Don't walk through walls
             _currentHorizontalSpeed = 0;
+
+            // snap to right wall
+            transform.position += new Vector3(_colRight - _colGap, 0, 0);
+        }
+        if(_currentHorizontalSpeed < 0 && _colLeft != NO_COL)
+        {
+            // Don't walk through walls
+            _currentHorizontalSpeed = 0;
+
+            // snap to left wall
+            transform.position += new Vector3(_colGap -_colLeft, 0, 0);
         }
     }
 
@@ -219,10 +250,16 @@ public class PlayerController : MonoBehaviour, IPlayerController
 
     private void CalculateGravity()
     {
-        if (_colDown)
+        if (_colDown!=NO_COL)
         {
-            // Move out of the ground
-            if (_currentVerticalSpeed < 0) _currentVerticalSpeed = 0;
+            if (_currentVerticalSpeed < 0)
+            {
+                // Don't fall through floor (it is solid)
+                _currentVerticalSpeed = 0;
+
+                // snap to ground (consistent height/gap)
+                transform.position += new Vector3(0, _colGap - _colDown, 0);
+            }
         }
         else
         {
@@ -252,13 +289,13 @@ public class PlayerController : MonoBehaviour, IPlayerController
     private bool _endedJumpEarly = true;
     private float _apexPoint; // Becomes 1 at the apex of a jump
     private float _lastJumpPressed;
-    private bool CanUseCoyote => _coyoteUsable && !_colDown && _timeLeftGrounded + _coyoteTimeThreshold > Time.time;
-    private bool HasBufferedJump => _colDown && _lastJumpPressed + _jumpBuffer > Time.time;
+    private bool CanUseCoyote => _coyoteUsable && _colDown==NO_COL && _timeLeftGrounded + _coyoteTimeThreshold > Time.time;
+    private bool HasBufferedJump => _colDown!=NO_COL && _lastJumpPressed + _jumpBuffer > Time.time;
 
     private void CalculateJumpApex()
     {
         
-        if (!_colDown)
+        if (_colDown==NO_COL)
         {
             // Gets stronger the closer to the top of the jump
             _apexPoint = Mathf.InverseLerp(_jumpApexThreshold, 0, Mathf.Abs(Velocity.y));
@@ -296,13 +333,13 @@ public class PlayerController : MonoBehaviour, IPlayerController
         }
 
         // End the jump early if button released
-        if (!_colDown && Input.JumpUp && !_endedJumpEarly && Velocity.y > 0 && _timeClingStart + _clingDuration <= Time.time)
+        if (_colDown==NO_COL && Input.JumpUp && !_endedJumpEarly && Velocity.y > 0 && _timeClingStart + _clingDuration <= Time.time)
         {
             // _currentVerticalSpeed = 0;
             _endedJumpEarly = true;
         }
 
-        if (_colUp)
+        if (_colUp!=NO_COL)
         {
             if (_currentVerticalSpeed > 0) _currentVerticalSpeed = 0; // bonk
         }
@@ -383,5 +420,34 @@ public class PlayerController : MonoBehaviour, IPlayerController
         }
     }
 
+    #endregion
+
+    #region PROJECTILE
+    [Header("Projectile Ability")]
+    [SerializeField] private GameObject _projectilePrefab;
+    [SerializeField] private float _projectileSpeed;
+    [SerializeField] private float _cooldown = 5f;
+
+    private float _cooldownTimer = 0f;
+
+    public void ProjectileAbility()
+    {
+        // fire projectile
+        if (Input.MouseDown && _cooldownTimer <= 0)
+        {
+            // calculate velocity
+            Vector2 playerPos = Camera.main.WorldToScreenPoint(transform.position);
+            Vector2 velocity = (Input.MousePos - playerPos).normalized * _projectileSpeed;
+
+            // create projectile with velocity
+            Instantiate(_projectilePrefab, transform.position, _projectilePrefab.transform.rotation).GetComponent<Rigidbody2D>().velocity = velocity;
+
+            _cooldownTimer = _cooldown; // start cooldown
+        }
+        else if(_cooldownTimer > 0) // timer
+        {
+            _cooldownTimer -= Time.deltaTime;
+        }
+    }
     #endregion
 }
