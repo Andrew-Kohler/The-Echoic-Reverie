@@ -58,6 +58,7 @@ public class SoundwaveController : MonoBehaviour
         mainVariables.startSpeed = this.initialSpeed;
         collisionVariables.dampen = this.dampenRate;
         mainVariables.startColor = this.color;
+        mainVariables.startLifetime = this.lifetime;
 
         if (config == LaunchConfigs.Clean)
         {

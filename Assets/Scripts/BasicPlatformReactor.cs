@@ -19,15 +19,40 @@ public class BasicPlatformReactor : MonoBehaviour
         
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Debug.Log("UWU");
+        if (collision.gameObject.CompareTag("Player")) // !activeCoroutine && 
+        {
+            //StartCoroutine(DoParticleEffect());
+            platformRim.color = Color.white;
+            platformRim.color = new Color(platformRim.color.r, platformRim.color.g, platformRim.color.b, .5f);
+            if (!activeCoroutine)
+            {
+                StartCoroutine(DoFadeEffect());
+            }
+
+
+        }
+    }
+
     private void OnParticleCollision(GameObject other)
     {
 
-        if (!activeCoroutine && other.CompareTag("External Particles"))
+        if (other.CompareTag("External Particles")) // !activeCoroutine && 
         {
-            StartCoroutine(DoParticleEffect());
-            StartCoroutine(DoFadeEffect());
+            //StartCoroutine(DoParticleEffect());
+            platformRim.color = Color.white;
+            platformRim.color = new Color(platformRim.color.r, platformRim.color.g, platformRim.color.b, .5f);
+            if (!activeCoroutine)
+            {
+                StartCoroutine(DoFadeEffect());
+            }
+            
         }
     }
+
+    
 
     IEnumerator DoParticleEffect()
     {
@@ -46,6 +71,7 @@ public class BasicPlatformReactor : MonoBehaviour
 
     IEnumerator DoFadeEffect()
     {
+        activeCoroutine = true;
         platformRim.color = Color.white;
         platformRim.color = new Color(platformRim.color.r, platformRim.color.g, platformRim.color.b, .5f);
         while (platformRim.color.a > 0)
@@ -54,5 +80,6 @@ public class BasicPlatformReactor : MonoBehaviour
             platformRim.color = new Color(platformRim.color.r, platformRim.color.g, platformRim.color.b, alpha);
             yield return null;
         }
+        activeCoroutine = false;
     }
 }
