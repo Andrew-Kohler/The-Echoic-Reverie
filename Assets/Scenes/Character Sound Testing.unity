@@ -16088,6 +16088,7 @@ MonoBehaviour:
   m_from: {x: 0, y: 0, z: 10}
   m_to: {x: 0, y: 0, z: -10}
   m_frequency: 4
+  rateOfFade: 0.7
 --- !u!61 &1039789878
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -26333,6 +26334,7 @@ MonoBehaviour:
   m_from: {x: 0, y: 0, z: 7}
   m_to: {x: 0, y: 0, z: -7}
   m_frequency: 4
+  rateOfFade: 0.7
 --- !u!61 &1462778515
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -26724,6 +26726,7 @@ MonoBehaviour:
   m_from: {x: 0, y: 0, z: 3}
   m_to: {x: 0, y: 0, z: -3}
   m_frequency: 4
+  rateOfFade: 0.2
 --- !u!212 &1724046637
 SpriteRenderer:
   m_ObjectHideFlags: 0

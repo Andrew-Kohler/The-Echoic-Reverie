@@ -13,6 +13,8 @@ public class DecorativeElement : MonoBehaviour
     [SerializeField] protected Vector3 m_to = new Vector3(0.0F, 0.0F, -10.0F);
     [SerializeField] protected float m_frequency = 4F;
 
+    [SerializeField] protected float rateOfFade = .7f;
+
     void Start()
     {
         sr = GetComponent<SpriteRenderer>();
@@ -42,9 +44,10 @@ public class DecorativeElement : MonoBehaviour
     {
         sr.color = regularColor;
         sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, 1f);
+
         while (sr.color.a > 0)
         {
-            float alpha = sr.color.a - .7f * Time.deltaTime;
+            float alpha = sr.color.a - rateOfFade * Time.deltaTime;
             sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, alpha);
             yield return null;
         }
