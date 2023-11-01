@@ -40,6 +40,21 @@ public class DecorativeElement : MonoBehaviour
         StartCoroutine(DoShakeEffect());
     }
 
+    private void OnParticleCollision(GameObject other)
+    {
+
+        if (other.CompareTag("External Particles")) // !activeCoroutine && 
+        {
+/*            if (!activeCoroutine)
+            {*/
+                StopAllCoroutines();
+                audioSource.Play();
+                StartCoroutine(DoFadeEffect());
+                //StartCoroutine(DoShakeEffect());
+            //}
+        }
+    }
+
     IEnumerator DoFadeEffect()
     {
         sr.color = regularColor;
