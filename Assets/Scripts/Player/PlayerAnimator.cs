@@ -12,25 +12,27 @@ public class PlayerAnimator : MonoBehaviour
     [SerializeField] private Animator _anim;
     [SerializeField] private AudioSource _source;
     [SerializeField] private LayerMask _groundMask;
+    SpriteRenderer sr;
     //[SerializeField] private ParticleSystem _jumpParticles, _launchParticles;
-    //[SerializeField] private ParticleSystem _moveParticles, _landParticles;
+    
     //[SerializeField] private AudioClip[] _footsteps;
     [SerializeField] private float _maxTilt = .1f;
     [SerializeField] private float _tiltSpeed = 1;
     //[SerializeField, Range(1f, 3f)] private float _maxIdleSpeed = 2;
     //[SerializeField] private float _maxParticleFallSpeed = -40;
 
-    private IPlayerController _player;
+    private PlayerController _player;
     private bool _playerGrounded;
     private ParticleSystem.MinMaxGradient _currentGradient;
     private Vector2 _movement;
     private Vector3 _baseScale;
 
-    void Awake() => _player = GetComponentInParent<IPlayerController>();
+    void Awake() => _player = GetComponentInParent<PlayerController>();
 
     private void Start()
     {
         _baseScale = transform.localScale;
+        sr = GetComponent<SpriteRenderer>();
     }
 
     void Update()
@@ -38,7 +40,34 @@ public class PlayerAnimator : MonoBehaviour
         if (_player == null) return;
 
         // Flip the sprite
-        if (_player.Input.X != 0) transform.localScale = new Vector3(_player.Input.X > 0 ? _baseScale.x : -_baseScale.x, _baseScale.y, _baseScale.z);
+        if (_player.Input.X != 0)
+        {
+            //transform.localScale = new Vector3(_player.Input.X > 0 ? _baseScale.x : -_baseScale.x, _baseScale.y, _baseScale.z);
+            if(_player.Input.X < 0)
+            {
+                sr.flipX = true;
+            }
+            else if(_player.Input.X > 0)
+            {
+                sr.flipX = false;
+            }
+        }
+
+        // Set animation variables
+        if(_player.Velocity.x != 0) 
+        {
+            _anim.SetBool("isMoving", true);
+        }
+        else
+        {
+            _anim.SetBool("isMoving", false);
+        }
+        _anim.SetBool("isGrounded", _playerGrounded);
+        _anim.SetFloat("yVelocity", _player.Velocity.y);
+
+        _anim.SetBool("isClinging", _player.CurrentlyClinging);
+
+        
 
         // Lean while running
         var targetRotVector = new Vector3(0, 0, Mathf.Lerp(-_maxTilt, _maxTilt, Mathf.InverseLerp(-1, 1, _player.Input.X)));
@@ -73,7 +102,17 @@ public class PlayerAnimator : MonoBehaviour
         if (!_playerGrounded && _player.Grounded)
         {
             _playerGrounded = true;
-            //_moveParticles.Play();
+            /*if(_player.Velocity.x != 0)
+            {
+                _moveParticles1.Play();
+                _moveParticles2.Play();
+            }
+            else
+            {
+                _moveParticles1.Stop();
+                _moveParticles2.Stop();
+            }*/
+            
             //_landParticles.transform.localScale = Vector3.one * Mathf.InverseLerp(0, _maxParticleFallSpeed, _movement.y);
             //SetColor(_landParticles);
             //_landParticles.Play();
@@ -81,7 +120,8 @@ public class PlayerAnimator : MonoBehaviour
         else if (_playerGrounded && !_player.Grounded) // leaving ground
         {
             _playerGrounded = false;
-            //_moveParticles.Stop();
+            /*_moveParticles1.Stop();
+            _moveParticles2.Stop();*/
         }
 
         // Detect ground color - particles are color of ground?

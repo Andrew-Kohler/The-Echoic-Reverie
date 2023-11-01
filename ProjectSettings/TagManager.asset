@@ -3,7 +3,9 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - External Particles
+  - Internal Particles
   layers:
   - Default
   - TransparentFX
@@ -38,6 +40,18 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: BG
+    uniqueID: 1219968581
+    locked: 0
+  - name: Midground
+    uniqueID: 3763276071
+    locked: 0
+  - name: Player Midground
+    uniqueID: 2199792097
+    locked: 0
+  - name: Foreground
+    uniqueID: 4233221387
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
