@@ -6,6 +6,7 @@ TagManager:
   tags:
   - External Particles
   - Internal Particles
+  - Stomp Box
   layers:
   - Default
   - TransparentFX

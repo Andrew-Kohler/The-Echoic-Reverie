@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StepperMover : MonoBehaviour
+public class StepMover : MonoBehaviour
 {
     [Header("End Points")]
     [SerializeField] private float _startX, _endX;

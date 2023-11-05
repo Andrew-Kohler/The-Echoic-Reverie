@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
     public bool Grounded => _colDown > 0;
     public bool ClingingThisFrame { get; private set; }
     public bool CurrentlyClinging { get; private set; }
+    public bool IsStomped { get; set; }
 
     private Vector3 _lastPosition;
     private float _currentHorizontalSpeed, _currentVerticalSpeed;
@@ -43,17 +44,20 @@ public class PlayerController : MonoBehaviour, IPlayerController
 
         GatherInput();
         RunCollisionChecks();
-
+        
         CalculateWalk(); // Horizontal movement
         CalculateJumpApex(); // Affects fall speed, so calculate before gravity
         CalculateGravity(); // Vertical movement
         CalculateJump(); // Possibly overrides vertical
         CalculateWallCling(); // Overrides horizontal and vertical if necessary
         CalculateEnemyKnockback(); // Overrides all velocities if necessary to apply enemy knockback
+        
+        if(!IsStomped) // only actually move character if stomped
+        {
+            MoveCharacter(); // Actually perform the axis movement
 
-        MoveCharacter(); // Actually perform the axis movement
-
-        ProjectileAbility(); // Handle projectile spawning and cooldowns
+            ProjectileAbility(); // Handle projectile spawning and cooldowns
+        }
     }
 
 
