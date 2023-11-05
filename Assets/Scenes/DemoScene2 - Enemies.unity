@@ -32489,11 +32489,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2908451548585528407, guid: 344468afdb9cf5f4ea9d4a44c1e81e86, type: 3}
       propertyPath: _endX
-      value: 0.2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2908451548585528407, guid: 344468afdb9cf5f4ea9d4a44c1e81e86, type: 3}
       propertyPath: _startX
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2908451548585528407, guid: 344468afdb9cf5f4ea9d4a44c1e81e86, type: 3}
+      propertyPath: _jumpSpeed
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2908451548585528407, guid: 344468afdb9cf5f4ea9d4a44c1e81e86, type: 3}
+      propertyPath: _pauseInterval
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2908451548585528410, guid: 344468afdb9cf5f4ea9d4a44c1e81e86, type: 3}
       propertyPath: m_RootOrder

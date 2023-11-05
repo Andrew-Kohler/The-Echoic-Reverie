@@ -10,22 +10,19 @@ public class StepperMover : MonoBehaviour
     [Header("Movement Parameters")]
     [SerializeField, Tooltip("rate at which it achieves goal speed from current")] private float _speedSharpness = 1f;
     [SerializeField] private float _steppingInterval = 0.5f, _steppingSpeed = 5f;
-    [SerializeField, Min(0)] private float _jumpHeight = 1f;
+    [SerializeField, Min(0)] private float _jumpSpeed = 1f, _fallSpeed = 4f;
     [SerializeField] private float _pauseInterval = 3f;
 
     private bool _isForwardDirection = true; // forward = from start to end
     private bool _isMoving = false; // start in stopped cycle
     private float _durationTimer = -1; // initialized in first update frame
-    private float _currSpeed = 0;
+    private Vector2 _currSpeed = Vector2.zero;
     private float _initHeight, _maxHeight;
-    private float _goalHeight;
 
     // Start is called before the first frame update
     void Start() 
     {
         _initHeight = transform.position.y;
-        _maxHeight = _initHeight + _jumpHeight;
-        _goalHeight = _initHeight;
 
         transform.position = new Vector3(_startX, transform.position.y, transform.position.z);
 
@@ -59,27 +56,28 @@ public class StepperMover : MonoBehaviour
 
         if (_isMoving) // is movin along
         {
-            // lerp to goal speed
-            _currSpeed = Mathf.Lerp(_currSpeed, _steppingSpeed, 1 - Mathf.Exp(-_speedSharpness * Time.deltaTime));
+            // lerp to goal move speed
+            _currSpeed.x = Mathf.Lerp(_currSpeed.x, _steppingSpeed, 1 - Mathf.Exp(-_speedSharpness * Time.deltaTime));
 
-            // calculate goal height
-            _goalHeight = HelperFunctions.Remap(_durationTimer > _steppingInterval/2f ? _steppingInterval - _durationTimer : _durationTimer, 
-                0, _steppingInterval / 2f, _initHeight, _maxHeight);
+            // lerp to goal jump speed
+            _currSpeed.y = Mathf.Lerp(_currSpeed.y, _durationTimer > _steppingInterval / 2f ? _jumpSpeed : -_fallSpeed,
+                1 - Mathf.Exp(-_speedSharpness * Time.deltaTime));
+            
         }
         else // is not movin along 
         {
             // lerp to stopped speed - prevents instantaneous stopping
-            _currSpeed = Mathf.Lerp(_currSpeed, 0, 1 - Mathf.Exp(-_speedSharpness * Time.deltaTime));
+            _currSpeed.x = Mathf.Lerp(_currSpeed.x, 0, 1 - Mathf.Exp(-_speedSharpness * Time.deltaTime));
 
-            // goal height is the ground - not moving
-            _goalHeight = _initHeight;
+            // continue falling
+            _currSpeed.y = Mathf.Lerp(_currSpeed.y, -_fallSpeed, 1 - Mathf.Exp(-_speedSharpness * Time.deltaTime));
         }
 
         // UPDATE HORIZONTAL POSITION
         // non-normalized travel direction
         float travelDir = _isForwardDirection ? _endX - transform.position.x : _startX - transform.position.x;
         // check for snapping to end
-        if (Mathf.Abs(travelDir) < _currSpeed * Time.deltaTime)
+        if (Mathf.Abs(travelDir) < _currSpeed.x * Time.deltaTime)
         {
             // snap to end
             transform.position = new Vector3(_isForwardDirection ? _endX : _startX, transform.position.y, transform.position.z);
@@ -89,18 +87,24 @@ public class StepperMover : MonoBehaviour
             _isMoving = false;
             _durationTimer = _pauseInterval;
             // snap currspeed to 0 to prevent instant velocity swap and teleport effect
-            _currSpeed = 0;
+            _currSpeed.x = 0;
         }
         else // standard movement
         {
-            transform.position += new Vector3((travelDir < 0 ? -1 : 1) * _currSpeed * Time.deltaTime, 0, 0);
+            transform.position += new Vector3((travelDir < 0 ? -1 : 1) * _currSpeed.x * Time.deltaTime, 0, 0);
         }
 
         // UPDATE VERTICAL POSITION
-        // lerp to goal height from current
-        float currHeight = Mathf.Lerp(transform.position.y, _goalHeight, 1 - Mathf.Exp(-_speedSharpness * Time.deltaTime));
-        // update transform
-        transform.position = new Vector3(transform.position.x, currHeight, transform.position.y);
+        if(_currSpeed.y < 0 && Mathf.Abs(_currSpeed.y * Time.deltaTime) > transform.position.y - _initHeight) // if going to pass the ground this frame
+        {
+            // snap to ground
+            transform.position = new Vector3(transform.position.x, _initHeight, transform.position.z);
+            _currSpeed.y = 0;
+        }
+        else // standard movement
+        {
+            transform.position += new Vector3(0, _currSpeed.y * Time.deltaTime, 0);
+        }
 
         // update timer
         _durationTimer -= Time.deltaTime;
