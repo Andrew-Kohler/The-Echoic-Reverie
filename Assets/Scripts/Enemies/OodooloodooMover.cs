@@ -15,7 +15,7 @@ public class OodooloodooMover : MonoBehaviour
     private bool _isForwardDirection = true; // forward = from start to end
     private bool _isMoving = true; // start in move cycle
     private float _durationTimer = -1; // initialized in first update frame
-    private float currSpeed = 0;
+    private float _currSpeed = 0;
 
     // Start is called before the first frame update
     void Start() 
@@ -26,6 +26,7 @@ public class OodooloodooMover : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // cycles between states
         if(_durationTimer < 0)
         {
             _durationTimer = Random.Range(_minDuration, _maxDuration);
@@ -44,25 +45,34 @@ public class OodooloodooMover : MonoBehaviour
 
         if(_isMoving) // is movin along
         {
-            currSpeed = Mathf.Lerp(currSpeed, _goalSpeed, 1 - Mathf.Exp(-_speedSharpness * Time.deltaTime));
+            // lerp to goal speed
+            _currSpeed = Mathf.Lerp(_currSpeed, _goalSpeed, 1 - Mathf.Exp(-_speedSharpness * Time.deltaTime)); 
+        }
+        else // is not movin along 
+        {
+            // lerp to stopped speed
+            _currSpeed = Mathf.Lerp(_currSpeed, 0, 1 - Mathf.Exp(-_speedSharpness * Time.deltaTime));
+        }
 
-            // non-normalized
-            Vector3 travelDir = _isForwardDirection ? _endPos - transform.position : _startPos - transform.position;
-            
-            // check for snapping to end
-            if (travelDir.magnitude < currSpeed * Time.deltaTime) // THIS IS THE ISSUE PROBABLY - DEBUG HERE
-            {
-                // snap to end
-                transform.position = _isForwardDirection ? _endPos : _startPos;
-                // flip direction
-                _isForwardDirection = !_isForwardDirection;
-                // stop moving
-                _isMoving = !_isMoving;
-            }
-            else // standard movement
-            {
-                transform.position += travelDir.normalized * Time.deltaTime;
-            }
+        // UPDATE POSITION
+        // non-normalized travel direction
+        Vector3 travelDir = _isForwardDirection ? _endPos - transform.position : _startPos - transform.position;
+        // check for snapping to end
+        if (travelDir.magnitude < _currSpeed * Time.deltaTime)
+        {
+            // snap to end
+            transform.position = _isForwardDirection ? _endPos : _startPos;
+            // flip direction
+            _isForwardDirection = !_isForwardDirection;
+            // stop moving
+            _isMoving = false;
+            _durationTimer = Random.Range(_minDuration, _maxDuration);
+            // snap currspeed to 0 to prevent bounce back effect when slowing down
+            _currSpeed = 0;
+        }
+        else // standard movement
+        {
+            transform.position += travelDir.normalized * _currSpeed * Time.deltaTime;
         }
 
         // update timer
