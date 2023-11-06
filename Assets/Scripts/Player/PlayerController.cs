@@ -44,20 +44,27 @@ public class PlayerController : MonoBehaviour, IPlayerController
 
         GatherInput();
         RunCollisionChecks();
-        
-        CalculateWalk(); // Horizontal movement
-        CalculateJumpApex(); // Affects fall speed, so calculate before gravity
-        CalculateGravity(); // Vertical movement
-        CalculateJump(); // Possibly overrides vertical
-        CalculateWallCling(); // Overrides horizontal and vertical if necessary
-        CalculateEnemyKnockback(); // Overrides all velocities if necessary to apply enemy knockback
-        
-        if(!IsStomped) // only actually move character if stomped
+
+        if (IsStomped) // when stomped, only calculate gravity
         {
-            MoveCharacter(); // Actually perform the axis movement
+            _currentVerticalSpeed = _fallClamp; // set fall speed to max
+            _currentHorizontalSpeed = 0; // don't slide, go straight down
+
+            CalculateGravity(); // Ensure no clipping through ground
+        }
+        else // standard behavior
+        {
+            CalculateWalk(); // Horizontal movement
+            CalculateJumpApex(); // Affects fall speed, so calculate before gravity
+            CalculateGravity(); // Vertical movement
+            CalculateJump(); // Possibly overrides vertical
+            CalculateWallCling(); // Overrides horizontal and vertical if necessary
+            CalculateEnemyKnockback(); // Overrides all velocities if necessary to apply enemy knockback
 
             ProjectileAbility(); // Handle projectile spawning and cooldowns
         }
+
+        MoveCharacter(); // Actually perform the axis movement
     }
 
 
