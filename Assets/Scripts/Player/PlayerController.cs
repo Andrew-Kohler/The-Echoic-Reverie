@@ -44,20 +44,27 @@ public class PlayerController : MonoBehaviour, IPlayerController
 
         GatherInput();
         RunCollisionChecks();
-        
-        CalculateWalk(); // Horizontal movement
-        CalculateJumpApex(); // Affects fall speed, so calculate before gravity
-        CalculateGravity(); // Vertical movement
-        CalculateJump(); // Possibly overrides vertical
-        CalculateWallCling(); // Overrides horizontal and vertical if necessary
-        CalculateEnemyKnockback(); // Overrides all velocities if necessary to apply enemy knockback
-        
-        if(!IsStomped) // only actually move character if stomped
+
+        if (IsStomped) // when stomped, only calculate gravity
         {
-            MoveCharacter(); // Actually perform the axis movement
+            _currentVerticalSpeed = _fallClamp; // set fall speed to max
+            _currentHorizontalSpeed = 0; // don't slide, go straight down
+
+            CalculateGravity(); // Ensure no clipping through ground
+        }
+        else // standard behavior
+        {
+            CalculateWalk(); // Horizontal movement
+            CalculateJumpApex(); // Affects fall speed, so calculate before gravity
+            CalculateGravity(); // Vertical movement
+            CalculateJump(); // Possibly overrides vertical
+            CalculateWallCling(); // Overrides horizontal and vertical if necessary
+            CalculateEnemyKnockback(); // Overrides all velocities if necessary to apply enemy knockback
 
             ProjectileAbility(); // Handle projectile spawning and cooldowns
         }
+
+        MoveCharacter(); // Actually perform the axis movement
     }
 
 
@@ -88,7 +95,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
     [SerializeField] private LayerMask _groundLayer, _enemyLayer;
     [SerializeField] private int _detectorCount = 3;
     [SerializeField] private float _detectionRayLength = 0.1f;
-    [SerializeField] [Range(0.1f, 0.3f)] private float _rayBuffer = 0.1f; // Prevents side detectors hitting the ground
+    [SerializeField] [Range(0.0f, 0.3f)] private float _rayBuffer = 0.1f; // Prevents side detectors hitting the ground
     [Tooltip("consistent spacing between player collider and colliders")]
     [SerializeField] private float _colGap = 0.1f;
 
@@ -120,11 +127,19 @@ public class PlayerController : MonoBehaviour, IPlayerController
         ClingingThisFrame = false;
         float clingingCheckLeft = RunDetection(_raysLeft);
         float clingingCheckRight = RunDetection(_raysRight);
-        if(_isInControl && ((_colLeft==NO_COL && clingingCheckLeft>0) || (_colRight==NO_COL && clingingCheckRight>0))) // just started a cling
+        if(_isInControl && clingingCheckLeft>0 && Input.X < 0)
         {
+            // refresh cling duration if holding
             ClingingThisFrame = true;
             _timeClingStart = Time.time;
-            _leftCling = clingingCheckLeft>0; // set direction to know which way to wall jump later
+            _leftCling = true; // set direction to know which way to wall jump later
+        }
+        else if(_isInControl && clingingCheckRight>0 && Input.X > 0)
+        {
+            // refresh cling duration if holding
+            ClingingThisFrame = true;
+            _timeClingStart = Time.time;
+            _leftCling = false;
         }
 
         _colLeft = clingingCheckLeft;
@@ -235,23 +250,6 @@ public class PlayerController : MonoBehaviour, IPlayerController
             // clamped by max frame movement
             _currentHorizontalSpeed = Mathf.Clamp(_currentHorizontalSpeed, -_moveClamp, _moveClamp);
         }
-
-        if (_currentHorizontalSpeed > 0 && _colRight>0) 
-        {
-            // Don't walk through walls
-            _currentHorizontalSpeed = 0;
-
-            // snap to right wall
-            transform.position += new Vector3(_colRight - _colGap, 0, 0);
-        }
-        if(_currentHorizontalSpeed < 0 && _colLeft>0)
-        {
-            // Don't walk through walls
-            _currentHorizontalSpeed = 0;
-
-            // snap to left wall
-            transform.position += new Vector3(_colGap -_colLeft, 0, 0);
-        }
     }
 
     #endregion
@@ -265,18 +263,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
 
     private void CalculateGravity()
     {
-        if (_colDown>0)
-        {
-            if (_currentVerticalSpeed < 0)
-            {
-                // Don't fall through floor (it is solid)
-                _currentVerticalSpeed = 0;
-
-                // snap to ground (consistent height/gap)
-                transform.position += new Vector3(0, _colGap - _colDown, 0);
-            }
-        }
-        else
+        if(_colDown < 0) // not already on ground
         {
             // Add downward force while ascending if we ended the jump early
             var fallAccel = _endedJumpEarly && _currentVerticalSpeed > 0 && _isInControl ? _fallAccel * _jumpEndEarlyGravityModifier : _fallAccel;
@@ -355,11 +342,6 @@ public class PlayerController : MonoBehaviour, IPlayerController
         {
             // _currentVerticalSpeed = 0;
             _endedJumpEarly = true;
-        }
-
-        if (_colUp>0)
-        {
-            if (_currentVerticalSpeed > 0) _currentVerticalSpeed = 0; // bonk
         }
     }
 
@@ -442,55 +424,54 @@ public class PlayerController : MonoBehaviour, IPlayerController
     #region Move
 
     [Header("MOVE")]
-    [SerializeField, Tooltip("Raising this value increases collision accuracy at the cost of performance.")]
-    private int _freeColliderIterations = 10;
+    [SerializeField, Tooltip("Set distance from colliders after collision")] private float _snapDistance = 0.01f;
 
     // We cast our bounds before moving to avoid future collisions
     private void MoveCharacter()
     {
-        var pos = transform.position + _characterBounds.center;
+
+        // top collision
+        if(_colUp >= 0 && _currentVerticalSpeed > 0)
+        {
+            // stop
+            _currentVerticalSpeed = 0;
+            // snap
+            transform.position += new Vector3(0, _colUp - _snapDistance, 0);
+        }
+        // bottom collision
+        if(_colDown >= 0 && _currentVerticalSpeed < 0)
+        {
+            // stop
+            _currentVerticalSpeed = 0;
+            // snap
+            transform.position -= new Vector3(0, _colDown - _snapDistance, 0);
+        }
+        // right collision
+        if(_colRight >= 0 && _currentHorizontalSpeed > 0)
+        {
+            // stop
+            _currentHorizontalSpeed = 0;
+            // snap
+            transform.position += new Vector3(_colRight - _snapDistance, 0, 0);
+        }
+        // left collision
+        if(_colLeft >= 0 && _currentHorizontalSpeed < 0)
+        {
+            // stop
+            _currentHorizontalSpeed = 0;
+            // snap
+            transform.position -= new Vector3(_colLeft - _snapDistance, 0, 0);
+        }
+
+        // movement
         RawMovement = new Vector3(_currentHorizontalSpeed, _currentVerticalSpeed); // Used externally
-        var move = RawMovement * Time.deltaTime;
-        var furthestPoint = pos + move;
-
-        // check furthest movement. If nothing hit, move and don't do extra checks
-        var hit = Physics2D.OverlapBox(furthestPoint, _characterBounds.size, 0, _groundLayer);
-        if (!hit)
-        {
-            transform.position += move;
-            return;
-        }
-
-        // otherwise increment away from current pos; see what closest position we can move to
-        var positionToMoveTo = transform.position;
-        for (int i = 1; i < _freeColliderIterations; i++)
-        {
-            // increment to check all but furthestPoint - we did that already
-            var t = (float)i / _freeColliderIterations;
-            var posToTry = Vector2.Lerp(pos, furthestPoint, t);
-
-            if (Physics2D.OverlapBox(posToTry, _characterBounds.size, 0, _groundLayer))
-            {
-                transform.position = positionToMoveTo;
-
-                // We've landed on a corner or hit our head on a ledge. Nudge the player gently - *not entirely sure how this works
-                if (i == 1)
-                {
-                    if (_currentVerticalSpeed < 0) _currentVerticalSpeed = 0;
-                    var dir = transform.position - hit.transform.position;
-                    transform.position += dir.normalized * move.magnitude;
-                }
-
-                return;
-            }
-
-            positionToMoveTo = posToTry;
-        }
+        transform.position += RawMovement * Time.deltaTime;
     }
 
     #endregion
 
     #region PROJECTILE
+
     [Header("Projectile Ability")]
     [SerializeField] private GameObject _projectilePrefab;
     [SerializeField] private float _projectileSpeed;
@@ -517,5 +498,6 @@ public class PlayerController : MonoBehaviour, IPlayerController
             _cooldownTimer -= Time.deltaTime;
         }
     }
+
     #endregion
 }
