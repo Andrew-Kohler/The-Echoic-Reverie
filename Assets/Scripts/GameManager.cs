@@ -8,6 +8,9 @@ using UnityEngine.SceneManagement;
 /// </summary>
 public class GameManager : MonoBehaviour
 {
+    private const float INIT_SPAWNPOINT_X = 0;
+    private const float INIT_SPAWNPOINT_Y = 0;
+
     // instance - SINGLETON
     private static GameManager _instance;
     public static GameManager Instance
@@ -30,7 +33,7 @@ public class GameManager : MonoBehaviour
     private class Data
     {
         public bool[] levers = new bool[4];
-        public int sceneFrom; // 0 = start; 1, 2, 3 correspond with levers
+        public Vector2 spawnpoint;
     }
     private Data _data;
 
@@ -48,11 +51,17 @@ public class GameManager : MonoBehaviour
 
             // initialize default data
             _data = new Data();
-
             for(int i = 0; i < _data.levers.Length; i++)
                 _data.levers[i] = false;
-            _data.sceneFrom = 0;
-           
+#if UNITY_EDITOR
+            if (FindAnyObjectByType<SetSpawn>())
+                _data.spawnpoint = new Vector2(FindAnyObjectByType<SetSpawn>().spawn.x, FindAnyObjectByType<SetSpawn>().spawn.y);
+            else
+                _data.spawnpoint = new Vector2(INIT_SPAWNPOINT_X, INIT_SPAWNPOINT_Y);
+#else
+            _data.spawnpoint = new Vector2(INIT_SPAWNPOINT_X, INIT_SPAWNPOINT_Y);
+#endif
+
 
             // components
             _audioSource = GetComponent<AudioSource>();
@@ -62,9 +71,9 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    #endregion
+#endregion
 
-    #region DATA MODIFIERS
+#region DATA MODIFIERS
 
     /// <summary>
     /// true = lever flipped; false = lever not flipped
@@ -90,39 +99,38 @@ public class GameManager : MonoBehaviour
         _data.levers[index] = true;
     }
 
-    /// <summary>
-    /// 0 = start; 1, 2, 3 correspond with levers
-    /// </summary>
-    public int GetSceneFrom()
+    public Vector2 GetSpawnpoint()
     {
-        return _data.sceneFrom;
+        return _data.spawnpoint;
     }
     
     /// <summary>
-    /// should be called whenever a new side room is entered so the appropriate player spawn location in the hub is selected upon returning
+    /// should be called whenever a new side room is entered so the appropriate player spawn location in next scene is set
     /// </summary>
-    public void SetSceneFrom(int newSceneFrom)
+    public void SetSpawnpoint(Vector2 newSpawnpoint)
     {
-        // error checking for invalid input
-        if (newSceneFrom <= 0 || newSceneFrom >= _data.levers.Length)
-            Debug.LogError("SetSceneFrom(newSceneFrom): Invalid new sceneFrom input"); // can only set to 1, 2, or 3
-
-        _data.sceneFrom = newSceneFrom;
+        _data.spawnpoint = newSpawnpoint;
     }
-    #endregion
+#endregion
 
-    #region SCENE MANAGEMENT
+#region SCENE MANAGEMENT
     public void TransitionScene(string sceneName)
     {
         // load new scene
         SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
     }
-    #endregion
 
-    #region AUDIO
+    public void TransitionScene(int sceneIndex)
+    {
+        // load new scene
+        SceneManager.LoadScene(sceneIndex, LoadSceneMode.Single);
+    }
+#endregion
+
+#region AUDIO
     public void PlaySound(AudioClip clip, int volume)
     {
         _audioSource.PlayOneShot(clip, volume);
     }
-    #endregion
+#endregion
 }

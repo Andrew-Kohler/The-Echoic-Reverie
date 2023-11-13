@@ -32,12 +32,20 @@ public class PlayerController : MonoBehaviour, IPlayerController
 
     // This is horrible, but for some reason colliders are not fully established when update starts...
     private bool _active;
-    void Awake() => Invoke(nameof(Activate), 0.5f);
+    private void Awake()
+    {
+        Invoke(nameof(Activate), 0.5f);
+
+        // set player to proper spawnpoint
+        transform.position = GameManager.Instance.GetSpawnpoint();
+    }
     void Activate() => _active = true;
 
     private void Update()
     {
+        // prevents clipping in first 0.5 seconds
         if (!_active) return;
+
         // Calculate velocity
         Velocity = (transform.position - _lastPosition) / Time.deltaTime;
         _lastPosition = transform.position;
