@@ -202,7 +202,7 @@ MonoBehaviour:
   _moveClamp: 4
   _deAcceleration: 20
   _apexBonus: 2
-  _fallClamp: -30
+  _fallClamp: -10
   _minFallAccel: 20
   _maxFallAccel: 40
   _jumpVelocity: 11
@@ -402,7 +402,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f74072cfdd3b6c341af98826c4b63126, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _stompedDuration: 4
+  _stompedDuration: 0.5
 --- !u!50 &-5627729178657602567
 Rigidbody2D:
   serializedVersion: 4
