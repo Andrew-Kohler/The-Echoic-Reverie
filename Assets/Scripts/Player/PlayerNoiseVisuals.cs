@@ -13,7 +13,7 @@ public class PlayerNoiseVisuals : MonoBehaviour
     //[SerializeField, Range(1f, 3f)] private float _maxIdleSpeed = 2;
     //[SerializeField] private float _maxParticleFallSpeed = -40;
 
-    [SerializeField] private ParticleSystem _moveParticles1, _moveParticles2, _moveParticles3;
+    [SerializeField] private ParticleSystem _moveParticles1, _moveParticles2, _moveParticles3, _clingParticles1, _clingParticles2;
 
     private PlayerController _player;
     private bool _playerGrounded;
@@ -51,5 +51,12 @@ public class PlayerNoiseVisuals : MonoBehaviour
         {
             _playerGrounded = false;
         }
+
+        if (_player.ClingingThisFrame)
+        {
+
+        }
+
+
     }
 }

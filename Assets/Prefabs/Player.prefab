@@ -198,7 +198,6 @@ MonoBehaviour:
   _detectorCount: 5
   _detectionRayLength: 0.07
   _rayBuffer: 0
-  _colGap: 0.03
   _acceleration: 30
   _moveClamp: 4
   _deAcceleration: 20
@@ -218,7 +217,7 @@ MonoBehaviour:
   _minBounceSpeed: 10
   _maxBounceSpeed: 15
   _outOfControlDuration: 0.3
-  _snapDistance: 0.01
+  _snapDistance: 0.03
   _projectilePrefab: {fileID: 8819576824762881337, guid: aa86c304f37daa443a70c6cf96d63f20, type: 3}
   _projectileSpeed: 3
   _cooldown: 5
@@ -373,6 +372,8 @@ MonoBehaviour:
   _moveParticles1: {fileID: 5713164246404085892}
   _moveParticles2: {fileID: 5713164246727386094}
   _moveParticles3: {fileID: 5713164246469526047}
+  _clingParticles1: {fileID: 0}
+  _clingParticles2: {fileID: 0}
 --- !u!70 &-6845085311166774180
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
