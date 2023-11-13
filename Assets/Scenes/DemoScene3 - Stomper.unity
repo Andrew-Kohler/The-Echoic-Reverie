@@ -15160,7 +15160,7 @@ GameObject:
   - component: {fileID: 1003860786}
   - component: {fileID: 1003860785}
   m_Layer: 6
-  m_Name: Interior
+  m_Name: Interior - Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25760,6 +25760,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 9135707449525015684, guid: 79e1b549a5b53d84f81285bef4359058, type: 3}
+      propertyPath: _snapDistance
+      value: 0.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 9135707449525015684, guid: 79e1b549a5b53d84f81285bef4359058, type: 3}
+      propertyPath: _detectionRayLength
+      value: 0.07
+      objectReference: {fileID: 0}
     - target: {fileID: 9135707449525015687, guid: 79e1b549a5b53d84f81285bef4359058, type: 3}
       propertyPath: m_Name
       value: Player
@@ -31271,7 +31279,7 @@ GameObject:
   - component: {fileID: 1824098788}
   - component: {fileID: 1824098787}
   m_Layer: 6
-  m_Name: Interior
+  m_Name: Interior - Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
