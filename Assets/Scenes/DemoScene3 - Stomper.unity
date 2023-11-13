@@ -25761,6 +25761,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9135707449525015684, guid: 79e1b549a5b53d84f81285bef4359058, type: 3}
+      propertyPath: _fallClamp
+      value: -10
+      objectReference: {fileID: 0}
+    - target: {fileID: 9135707449525015684, guid: 79e1b549a5b53d84f81285bef4359058, type: 3}
       propertyPath: _snapDistance
       value: 0.03
       objectReference: {fileID: 0}
