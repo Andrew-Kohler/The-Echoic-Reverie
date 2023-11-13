@@ -6,8 +6,8 @@ public class DecorativeElement : MonoBehaviour
 {
     SpriteRenderer sr;
     BoxCollider2D trigger;
-    AudioSource audioSource;
-    [SerializeField] Color regularColor;
+    SoundScaler soundScaler;
+    //[SerializeField] Color regularColor;
 
     [SerializeField] protected Vector3 m_from = new Vector3(0.0F, 0.0F, 10.0F);
     [SerializeField] protected Vector3 m_to = new Vector3(0.0F, 0.0F, -10.0F);
@@ -19,7 +19,7 @@ public class DecorativeElement : MonoBehaviour
     {
         sr = GetComponent<SpriteRenderer>();
         trigger = GetComponent<BoxCollider2D>();
-        audioSource = GetComponent<AudioSource>();
+        soundScaler = GetComponent<SoundScaler>();
         sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, 0f);
     }
 
@@ -35,7 +35,7 @@ public class DecorativeElement : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         StopAllCoroutines();
-        audioSource.Play();
+        soundScaler.PlaySound();
         StartCoroutine(DoFadeEffect());
         StartCoroutine(DoShakeEffect());
     }
@@ -48,16 +48,17 @@ public class DecorativeElement : MonoBehaviour
 /*            if (!activeCoroutine)
             {*/
                 StopAllCoroutines();
-                audioSource.Play();
+                soundScaler.PlaySound();
+        
                 StartCoroutine(DoFadeEffect());
-                //StartCoroutine(DoShakeEffect());
+                StartCoroutine(DoShakeEffect());
             //}
         }
     }
 
     IEnumerator DoFadeEffect()
     {
-        sr.color = regularColor;
+        //sr.color = regularColor;
         sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, 1f);
 
         while (sr.color.a > 0)

@@ -21,7 +21,6 @@ public class BasicPlatformReactor : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("UWU");
         if (collision.gameObject.CompareTag("Player")) // !activeCoroutine && 
         {
             //StartCoroutine(DoParticleEffect());
@@ -30,8 +29,8 @@ public class BasicPlatformReactor : MonoBehaviour
             if (!activeCoroutine)
             {
                 StartCoroutine(DoFadeEffect());
+                StartCoroutine(DoParticleEffect());
             }
-
 
         }
     }

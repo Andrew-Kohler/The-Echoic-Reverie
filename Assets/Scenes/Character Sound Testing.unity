@@ -156,7 +156,7 @@ Transform:
   - {fileID: 232049641}
   - {fileID: 821535701}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &117684627
 GameObject:
@@ -15689,6 +15689,7 @@ GameObject:
   - component: {fileID: 1039789877}
   - component: {fileID: 1039789878}
   - component: {fileID: 1039789879}
+  - component: {fileID: 1039789880}
   m_Layer: 0
   m_Name: Bush
   m_TagString: Untagged
@@ -15761,7 +15762,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1039789877
 MonoBehaviour:
@@ -15775,7 +15776,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e583d0c8dc0f3d14aba0c6d5b4f3fec9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  regularColor: {r: 0, g: 0.7830189, b: 0.05540232, a: 1}
   m_from: {x: 0, y: 0, z: 10}
   m_to: {x: 0, y: 0, z: -10}
   m_frequency: 4
@@ -15902,6 +15902,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1039789880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1039789874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5246299ced873b3429dc6a092185c342, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxDistance: 12
 --- !u!1 &1095175554
 GameObject:
   m_ObjectHideFlags: 0
@@ -25935,8 +25948,9 @@ GameObject:
   - component: {fileID: 1462778514}
   - component: {fileID: 1462778515}
   - component: {fileID: 1462778516}
+  - component: {fileID: 1462778517}
   m_Layer: 0
-  m_Name: StopSign
+  m_Name: Stop Sign
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26007,7 +26021,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1462778514
 MonoBehaviour:
@@ -26021,7 +26035,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e583d0c8dc0f3d14aba0c6d5b4f3fec9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  regularColor: {r: 1, g: 0, b: 0, a: 1}
   m_from: {x: 0, y: 0, z: 7}
   m_to: {x: 0, y: 0, z: -7}
   m_frequency: 4
@@ -26148,6 +26161,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1462778517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1462778511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5246299ced873b3429dc6a092185c342, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxDistance: 12
 --- !u!1001 &1594915259
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26329,8 +26355,9 @@ GameObject:
   - component: {fileID: 1724046636}
   - component: {fileID: 1724046635}
   - component: {fileID: 1724046634}
+  - component: {fileID: 1724046639}
   m_Layer: 0
-  m_Name: HotDogCart
+  m_Name: Hot Dog Cart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26470,7 +26497,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e583d0c8dc0f3d14aba0c6d5b4f3fec9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  regularColor: {r: 1, g: 0.3882353, b: 0, a: 1}
   m_from: {x: 0, y: 0, z: 3}
   m_to: {x: 0, y: 0, z: -3}
   m_frequency: 4
@@ -26542,6 +26568,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1724046639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1724046633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5246299ced873b3429dc6a092185c342, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxDistance: 12
 --- !u!1 &1737147391
 GameObject:
   m_ObjectHideFlags: 0
@@ -26634,7 +26673,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1760245887
 GameObject:
@@ -26669,7 +26708,7 @@ Transform:
   - {fileID: 117684628}
   - {fileID: 1358893528}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1761979896
 GameObject:
@@ -31812,7 +31851,7 @@ Transform:
   - {fileID: 1095175555}
   - {fileID: 1761979897}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2047086195
 GameObject:
