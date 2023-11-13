@@ -53,7 +53,15 @@ public class GameManager : MonoBehaviour
             _data = new Data();
             for(int i = 0; i < _data.levers.Length; i++)
                 _data.levers[i] = false;
+#if UNITY_EDITOR
+            if (FindAnyObjectByType<SetSpawn>())
+                _data.spawnpoint = new Vector2(FindAnyObjectByType<SetSpawn>().spawn.x, FindAnyObjectByType<SetSpawn>().spawn.y);
+            else
+                _data.spawnpoint = new Vector2(INIT_SPAWNPOINT_X, INIT_SPAWNPOINT_Y);
+#else
             _data.spawnpoint = new Vector2(INIT_SPAWNPOINT_X, INIT_SPAWNPOINT_Y);
+#endif
+
 
             // components
             _audioSource = GetComponent<AudioSource>();
@@ -63,9 +71,9 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    #endregion
+#endregion
 
-    #region DATA MODIFIERS
+#region DATA MODIFIERS
 
     /// <summary>
     /// true = lever flipped; false = lever not flipped
@@ -103,9 +111,9 @@ public class GameManager : MonoBehaviour
     {
         _data.spawnpoint = newSpawnpoint;
     }
-    #endregion
+#endregion
 
-    #region SCENE MANAGEMENT
+#region SCENE MANAGEMENT
     public void TransitionScene(string sceneName)
     {
         // load new scene
@@ -117,12 +125,12 @@ public class GameManager : MonoBehaviour
         // load new scene
         SceneManager.LoadScene(sceneIndex, LoadSceneMode.Single);
     }
-    #endregion
+#endregion
 
-    #region AUDIO
+#region AUDIO
     public void PlaySound(AudioClip clip, int volume)
     {
         _audioSource.PlayOneShot(clip, volume);
     }
-    #endregion
+#endregion
 }
