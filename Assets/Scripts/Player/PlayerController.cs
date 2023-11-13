@@ -475,7 +475,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
             // move by length of collider only to check for snapping next frame
             int horSign = _currentHorizontalSpeed < 0 ? -1 : (_currentHorizontalSpeed > 0 ? 1 : 0);
             int verSign = _currentVerticalSpeed < 0 ? -1 : (_currentVerticalSpeed > 0 ? 1 : 0);
-            transform.position += new Vector3(horSign * _detectionRayLength, verSign * _detectionRayLength, 0);
+            transform.position += new Vector3(horSign * _detectionRayLength/2.0f, verSign * _detectionRayLength/2.0f, 0);
         }
     }
 
