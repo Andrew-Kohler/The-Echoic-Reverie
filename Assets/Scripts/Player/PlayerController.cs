@@ -45,12 +45,10 @@ public class PlayerController : MonoBehaviour, IPlayerController
         GatherInput();
         RunCollisionChecks();
 
-        if (IsStomped) // when stomped, only calculate gravity
+        if (IsStomped) // when stomped, set speeds
         {
             _currentVerticalSpeed = _fallClamp; // set fall speed to max
             _currentHorizontalSpeed = 0; // don't slide, go straight down
-
-            CalculateGravity(); // Ensure no clipping through ground
         }
         else // standard behavior
         {
@@ -96,8 +94,6 @@ public class PlayerController : MonoBehaviour, IPlayerController
     [SerializeField] private int _detectorCount = 3;
     [SerializeField] private float _detectionRayLength = 0.1f;
     [SerializeField] [Range(0.0f, 0.3f)] private float _rayBuffer = 0.1f; // Prevents side detectors hitting the ground
-    [Tooltip("consistent spacing between player collider and colliders")]
-    [SerializeField] private float _colGap = 0.1f;
 
     private RayRange _raysUp, _raysRight, _raysDown, _raysLeft;
     private float _colUp, _colRight, _colDown, _colLeft; // IMPORTANT: collision distance ; -1 = no collision
@@ -424,7 +420,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
     #region Move
 
     [Header("MOVE")]
-    [SerializeField, Tooltip("Set distance from colliders after collision")] private float _snapDistance = 0.01f;
+    [SerializeField, Tooltip("consistent spacing between player collider and colliders")] private float _snapDistance = 0.01f;
 
     // We cast our bounds before moving to avoid future collisions
     private void MoveCharacter()
@@ -463,9 +459,24 @@ public class PlayerController : MonoBehaviour, IPlayerController
             transform.position -= new Vector3(_colLeft - _snapDistance, 0, 0);
         }
 
-        // movement
+        // movement math
+        var centerPos = transform.position + _characterBounds.center;
         RawMovement = new Vector3(_currentHorizontalSpeed, _currentVerticalSpeed); // Used externally
-        transform.position += RawMovement * Time.deltaTime;
+        var move = RawMovement * Time.deltaTime;
+        var furthestPoint = centerPos + move;
+
+        var hit = Physics2D.OverlapBox(furthestPoint, _characterBounds.size, 0, _groundLayer);
+        if(!hit)
+        {
+            transform.position += move;
+        }
+        else
+        {
+            // move by length of collider only to check for snapping next frame
+            int horSign = _currentHorizontalSpeed < 0 ? -1 : (_currentHorizontalSpeed > 0 ? 1 : 0);
+            int verSign = _currentVerticalSpeed < 0 ? -1 : (_currentVerticalSpeed > 0 ? 1 : 0);
+            transform.position += new Vector3(horSign * _detectionRayLength, verSign * _detectionRayLength, 0);
+        }
     }
 
     #endregion
