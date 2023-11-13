@@ -99,7 +99,7 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// should be called whenever a new side room is entered so the appropriate player spawn location in next scene is set
     /// </summary>
-    public void SetSceneFrom(Vector2 newSpawnpoint)
+    public void SetSpawnpoint(Vector2 newSpawnpoint)
     {
         _data.spawnpoint = newSpawnpoint;
     }
@@ -110,6 +110,12 @@ public class GameManager : MonoBehaviour
     {
         // load new scene
         SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
+    }
+
+    public void TransitionScene(int sceneIndex)
+    {
+        // load new scene
+        SceneManager.LoadScene(sceneIndex, LoadSceneMode.Single);
     }
     #endregion
 
