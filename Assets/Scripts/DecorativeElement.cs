@@ -15,12 +15,15 @@ public class DecorativeElement : MonoBehaviour
 
     [SerializeField] protected float rateOfFade = .7f;
 
+    bool activeCoroutine;
+
     void Start()
     {
         sr = GetComponent<SpriteRenderer>();
         trigger = GetComponent<BoxCollider2D>();
         soundScaler = GetComponent<SoundScaler>();
         sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, 0f);
+        activeCoroutine = false;
     }
 
     private void Update()
@@ -32,19 +35,26 @@ public class DecorativeElement : MonoBehaviour
         this.transform.localRotation = Quaternion.Lerp(from, to, lerp);*/
     }
 
+    private void OnParticleTrigger()
+    {
+        Debug.Log("hi");
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         StopAllCoroutines();
         soundScaler.PlaySound();
         StartCoroutine(DoFadeEffect());
         StartCoroutine(DoShakeEffect());
+        Debug.Log("??");
     }
 
     private void OnParticleCollision(GameObject other)
     {
 
-        if (other.CompareTag("External Particles")) // !activeCoroutine && 
+        if (other.CompareTag("External Particles") && !activeCoroutine) // !activeCoroutine && 
         {
+            Debug.Log("??");
 /*            if (!activeCoroutine)
             {*/
                 StopAllCoroutines();
@@ -56,9 +66,12 @@ public class DecorativeElement : MonoBehaviour
         }
     }
 
+    
+
     IEnumerator DoFadeEffect()
     {
         //sr.color = regularColor;
+        activeCoroutine = true;
         sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, 1f);
 
         while (sr.color.a > 0)
@@ -67,6 +80,7 @@ public class DecorativeElement : MonoBehaviour
             sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, alpha);
             yield return null;
         }
+        activeCoroutine = false;
     }
 
     IEnumerator DoShakeEffect()
