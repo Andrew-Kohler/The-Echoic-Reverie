@@ -235,11 +235,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _anim: {fileID: 4256617571100155328}
   _source: {fileID: 8487187785912645961}
-  _groundMask:
-    serializedVersion: 2
-    m_Bits: 64
-  _maxTilt: 0
-  _tiltSpeed: 50
+  _footstepClips:
+  - {fileID: 8300000, guid: 7a7297ad42c97de488d89fac6be82c72, type: 3}
+  - {fileID: 8300000, guid: 5c5acdf8bb027f846b8a46e4923a5501, type: 3}
+  - {fileID: 8300000, guid: 78fe320e592d5874cbb3575b28902f57, type: 3}
+  - {fileID: 8300000, guid: a66fcb29631bff54dbd71a6629a55d15, type: 3}
+  - {fileID: 8300000, guid: eb043ea8523632343b8814e6d584d399, type: 3}
+  - {fileID: 8300000, guid: ada33c1b6092b8d42a615e0a4838c9d9, type: 3}
+  _stepVolume: 1
+  _jumpClip: {fileID: 8300000, guid: a024f3cc406c91546815c7f88917cd58, type: 3}
+  _jumpVolume: 0.5
+  _clingClip: {fileID: 8300000, guid: d50d032843ede974fb99ed711a5215eb, type: 3}
+  _clingVolume: 1
+  _walkEffectFrequency: 0.2
 --- !u!95 &4256617571100155328
 Animator:
   serializedVersion: 5

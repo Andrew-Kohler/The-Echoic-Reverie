@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
     public FrameInput Input { get; private set; }
     public bool JumpingThisFrame { get; private set; }
     public bool LandingThisFrame { get; private set; }
+    public bool BonkingThisFrame { get; private set; }
     public Vector3 RawMovement { get; private set; }
     public bool Grounded => _colDown > 0;
     public bool ClingingThisFrame { get; private set; }
@@ -134,23 +135,28 @@ public class PlayerController : MonoBehaviour, IPlayerController
         if(_isInControl && clingingCheckLeft>0 && Input.X < 0)
         {
             // refresh cling duration if holding
-            ClingingThisFrame = true;
             _timeClingStart = Time.time;
             _leftCling = true; // set direction to know which way to wall jump later
+            ClingingThisFrame = _colLeft == NO_COL;
         }
         else if(_isInControl && clingingCheckRight>0 && Input.X > 0)
         {
             // refresh cling duration if holding
-            ClingingThisFrame = true;
             _timeClingStart = Time.time;
             _leftCling = false;
+            ClingingThisFrame = _colRight == NO_COL;
         }
 
         _colLeft = clingingCheckLeft;
         _colRight = clingingCheckRight;
 
         // Ceiling
-        _colUp = RunDetection(_raysUp);
+        BonkingThisFrame = false;
+        float bonkingCheck = RunDetection(_raysUp);
+        if (_colUp == NO_COL && bonkingCheck > 0)
+            BonkingThisFrame = true;
+        _colUp = bonkingCheck;
+
 
         float RunDetection(RayRange range)
         {
@@ -317,7 +323,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
     private void CalculateJump()
     {
         // Jump if: grounded or within coyote threshold || sufficient jump buffer && not wall clinging
-        if ((Input.JumpDown && CanUseCoyote || HasBufferedJump) && _timeClingStart + _clingDuration <= Time.time)
+        if (!JumpingThisFrame && (Input.JumpDown && CanUseCoyote || HasBufferedJump) && !CurrentlyClinging)
         {
             _currentVerticalSpeed = _jumpVelocity;
             _endedJumpEarly = false;
@@ -326,7 +332,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
             JumpingThisFrame = true;
             _allowEndJumpEarly = true;
         }
-        else if(Input.JumpDown && _timeClingStart + _clingDuration > Time.time) // wall jump
+        else if(Input.JumpDown && CurrentlyClinging) // wall jump
         {
             _currentHorizontalSpeed = (_leftCling ? 1 : -1) * _wallJumpVelocity.x;
             _currentVerticalSpeed = _wallJumpVelocity.y;
