@@ -8,8 +8,8 @@ using UnityEngine.SceneManagement;
 /// </summary>
 public class GameManager : MonoBehaviour
 {
-    private const float INIT_SPAWNPOINT_X = 0;
-    private const float INIT_SPAWNPOINT_Y = 0;
+    private const float INIT_SPAWNPOINT_X = -17.16f;
+    private const float INIT_SPAWNPOINT_Y = 1.93f;
 
     // instance - SINGLETON
     private static GameManager _instance;
