@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8819576824762881336}
   - component: {fileID: 8819576824762881318}
   - component: {fileID: 8819576824762881317}
-  - component: {fileID: -6207844723788298212}
+  - component: {fileID: 3237961068888033965}
   - component: {fileID: 7528829060615734508}
   - component: {fileID: -8772690656126565786}
   m_Layer: 0
@@ -126,7 +126,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &-6207844723788298212
+--- !u!114 &3237961068888033965
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -138,7 +138,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eab68c5c87d59c746ac2aa48aa879eea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _timeToExpire: 5
+  _timeToStop: 5
 --- !u!198 &7528829060615734508
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -275,7 +275,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 5
+      scalar: 3
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -392,7 +392,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 3
       scalar: 0.05
-      minScalar: 0.7
+      minScalar: 0.4
       maxCurve:
         serializedVersion: 2
         m_Curve:

@@ -816,6 +816,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 9135707449525015684, guid: 79e1b549a5b53d84f81285bef4359058, type: 3}
+      propertyPath: _cooldown
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 9135707449525015684, guid: 79e1b549a5b53d84f81285bef4359058, type: 3}
       propertyPath: _projectileSpeed
       value: 6
       objectReference: {fileID: 0}
