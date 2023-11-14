@@ -567,6 +567,14 @@ PrefabInstance:
       value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 2333734837082554531, guid: 79e1b549a5b53d84f81285bef4359058, type: 3}
+      propertyPath: _knockbackClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 7e1ab0564a159f74db39a65912b2bb0f, type: 3}
+    - target: {fileID: 2333734837082554531, guid: 79e1b549a5b53d84f81285bef4359058, type: 3}
+      propertyPath: _knockbackVolume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2333734837082554531, guid: 79e1b549a5b53d84f81285bef4359058, type: 3}
       propertyPath: _footsteps.Array.size
       value: 6
       objectReference: {fileID: 0}

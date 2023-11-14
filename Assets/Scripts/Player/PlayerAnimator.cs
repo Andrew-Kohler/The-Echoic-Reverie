@@ -20,6 +20,8 @@ public class PlayerAnimator : MonoBehaviour
     [SerializeField] private float _stepVolume;
     [SerializeField] private AudioClip[] _jumpClips;
     [SerializeField] private float _jumpVolume;
+    [SerializeField] private AudioClip _knockbackClip;
+    [SerializeField] private float _knockbackVolume;
 
     [Header("Particles")]
     //[SerializeField] private ParticleSystem _jumpParticles, _launchParticles;
@@ -27,6 +29,9 @@ public class PlayerAnimator : MonoBehaviour
     [Header("Walk Effects")]
     [SerializeField, Tooltip("frequency of walk effects while walking")] private float _walkEffectFrequency = 1f;
     private float _walkEffectTimer = 0f;
+
+    private bool _prevIsInControl = true;
+
     private Vector2 _movement; // not currently used (could be helpful?)
 
     void Awake() => _player = GetComponentInParent<PlayerController>();
@@ -124,6 +129,14 @@ public class PlayerAnimator : MonoBehaviour
             // TODO: particle effect (at side)
         }
 
+        if(!_player.IsInControl && _prevIsInControl) // knocked by enemy this frame
+        {
+            // knockback sound
+            _source.PlayOneShot(_knockbackClip, _knockbackVolume);
+        }
+
         _movement = _player.RawMovement; // Previous frame movement is more valuable
+
+        _prevIsInControl = _player.IsInControl;
     }
 }
