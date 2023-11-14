@@ -9,29 +9,36 @@ using TarodevController;
 /// </summary>
 public class PlayerAnimator : MonoBehaviour
 {
+    [Header("Components")]
     [SerializeField] private Animator _anim;
     [SerializeField] private AudioSource _source;
-    [SerializeField] private LayerMask _groundMask;
-    SpriteRenderer sr;
-    //[SerializeField] private ParticleSystem _jumpParticles, _launchParticles;
-    
-    //[SerializeField] private AudioClip[] _footsteps;
-    [SerializeField] private float _maxTilt = .1f;
-    [SerializeField] private float _tiltSpeed = 1;
-    //[SerializeField, Range(1f, 3f)] private float _maxIdleSpeed = 2;
-    //[SerializeField] private float _maxParticleFallSpeed = -40;
-
     private PlayerController _player;
-    private bool _playerGrounded;
-    private ParticleSystem.MinMaxGradient _currentGradient;
-    private Vector2 _movement;
-    private Vector3 _baseScale;
+    SpriteRenderer sr;
+
+    [Header("Audio")]
+    [SerializeField] private AudioClip[] _footstepClips;
+    [SerializeField] private float _stepVolume;
+    [SerializeField] private AudioClip[] _jumpClips;
+    [SerializeField] private float _jumpVolume;
+    [SerializeField] private AudioClip _knockbackClip;
+    [SerializeField] private float _knockbackVolume;
+
+    [Header("Particles")]
+    //[SerializeField] private ParticleSystem _jumpParticles, _launchParticles;
+
+    [Header("Walk Effects")]
+    [SerializeField, Tooltip("frequency of walk effects while walking")] private float _walkEffectFrequency = 1f;
+    private float _walkEffectTimer = 0f;
+
+    private bool _prevIsInControl = true;
+    private bool _prevIsBouncing = false;
+
+    private Vector2 _movement; // not currently used (could be helpful?)
 
     void Awake() => _player = GetComponentInParent<PlayerController>();
 
     private void Start()
     {
-        _baseScale = transform.localScale;
         sr = GetComponent<SpriteRenderer>();
     }
 
@@ -40,9 +47,8 @@ public class PlayerAnimator : MonoBehaviour
         if (_player == null) return;
 
         // Flip the sprite
-        if (_player.Input.X != 0)
+        if (_player.Input.X != 0 && !_player.IsStomped)
         {
-            //transform.localScale = new Vector3(_player.Input.X > 0 ? _baseScale.x : -_baseScale.x, _baseScale.y, _baseScale.z);
             if(_player.Input.X < 0)
             {
                 sr.flipX = true;
@@ -62,100 +68,69 @@ public class PlayerAnimator : MonoBehaviour
         {
             _anim.SetBool("isMoving", false);
         }
-        _anim.SetBool("isGrounded", _playerGrounded);
+        _anim.SetBool("isGrounded", _player.Grounded);
         _anim.SetFloat("yVelocity", _player.Velocity.y);
 
         _anim.SetBool("isClinging", _player.CurrentlyClinging);
 
-        
 
-        // Lean while running
-        var targetRotVector = new Vector3(0, 0, Mathf.Lerp(-_maxTilt, _maxTilt, Mathf.InverseLerp(-1, 1, _player.Input.X)));
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(targetRotVector), _tiltSpeed * Time.deltaTime);
-
-        // Speed up idle while running
-        // _anim.SetFloat(IdleSpeedKey, Mathf.Lerp(1, _maxIdleSpeed, Mathf.Abs(_player.Input.X)));
-
-        // Splat
+        // Landing
         if (_player.LandingThisFrame)
         {
-            //_anim.SetTrigger(GroundedKey);
-            //_source.PlayOneShot(_footsteps[Random.Range(0, _footsteps.Length)]);
+            // landing step sound
+            _source.PlayOneShot(_footstepClips[Random.Range(0, _footstepClips.Length)], _stepVolume);
+
+            // TODO: particle effect (at feet)
         }
 
-        // Jump effects
-        if (_player.JumpingThisFrame)
+        // movement effects
+        if (_player.Grounded && _player.Velocity.x != 0 && _player.Velocity.y == 0)
         {
-            //_anim.SetTrigger(JumpKey);
-            //_anim.ResetTrigger(GroundedKey);
-
-            // Only play particles when grounded (avoid coyote)
-            if (_player.Grounded)
+            // do walk effects on timer delay
+            if(_walkEffectTimer < 0)
             {
-                //SetColor(_jumpParticles);
-                //SetColor(_launchParticles);
-                //_jumpParticles.Play();
-            }
-        }
+                // walking sound
+                _source.PlayOneShot(_footstepClips[Random.Range(0, _footstepClips.Length)], _stepVolume);
 
-        // Play landing effects and begin ground movement effects
-        if (!_playerGrounded && _player.Grounded)
-        {
-            _playerGrounded = true;
-            /*if(_player.Velocity.x != 0)
-            {
-                _moveParticles1.Play();
-                _moveParticles2.Play();
+                // TODO: walking particles (at feet)
+
+                // restart timer
+                _walkEffectTimer = _walkEffectFrequency;
             }
             else
             {
-                _moveParticles1.Stop();
-                _moveParticles2.Stop();
-            }*/
-            
-            //_landParticles.transform.localScale = Vector3.one * Mathf.InverseLerp(0, _maxParticleFallSpeed, _movement.y);
-            //SetColor(_landParticles);
-            //_landParticles.Play();
+                _walkEffectTimer -= Time.deltaTime;
+            }
         }
-        else if (_playerGrounded && !_player.Grounded) // leaving ground
+        else
+            _walkEffectTimer = _walkEffectFrequency; // restart timer if not grounded and walking dd- prevent double audio
+
+        // Bonking (head hits ceiling)
+        if (_player.BonkingThisFrame)
         {
-            _playerGrounded = false;
-            /*_moveParticles1.Stop();
-            _moveParticles2.Stop();*/
+            // no audio needed - sounds worse with it
+
+            // TODO: particle effects (at head)
         }
 
-        // Detect ground color - particles are color of ground?
-        /*var groundHit = Physics2D.Raycast(transform.position, Vector3.down, 2, _groundMask);
-        if (groundHit && groundHit.transform.TryGetComponent(out SpriteRenderer r))
+        // Jump effects (ground jump, wall jump, or enemy bounce)
+        if (_player.JumpingThisFrame || (_player.IsBouncing && !_prevIsBouncing))
         {
-            _currentGradient = new ParticleSystem.MinMaxGradient(r.color * 0.9f, r.color * 1.2f);
-            SetColor(_moveParticles);
-        }*/
+            // jumping sound
+            _source.PlayOneShot(_jumpClips[Random.Range(0, _jumpClips.Length)], _jumpVolume);
+
+            // TODO: particle effect (at feet or wall if wall jumping)
+        }
+
+        if(!_player.IsInControl && _prevIsInControl) // knocked by enemy this frame
+        {
+            // knockback sound
+            _source.PlayOneShot(_knockbackClip, _knockbackVolume);
+        }
 
         _movement = _player.RawMovement; // Previous frame movement is more valuable
+
+        _prevIsInControl = _player.IsInControl;
+        _prevIsBouncing = _player.IsBouncing;
     }
-
-    private void OnDisable()
-    {
-        //_moveParticles.Stop();
-    }
-
-    private void OnEnable()
-    {
-        //_moveParticles.Play();
-    }
-
-    void SetColor(ParticleSystem ps)
-    {
-        var main = ps.main;
-        main.startColor = _currentGradient;
-    }
-
-    #region Animation Keys
-
-    private static readonly int GroundedKey = Animator.StringToHash("Grounded");
-    private static readonly int IdleSpeedKey = Animator.StringToHash("IdleSpeed");
-    private static readonly int JumpKey = Animator.StringToHash("Jump");
-
-    #endregion
 }
