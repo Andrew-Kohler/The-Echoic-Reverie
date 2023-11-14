@@ -219,7 +219,7 @@ MonoBehaviour:
   _outOfControlDuration: 0.3
   _snapDistance: 0.03
   _projectilePrefab: {fileID: 8819576824762881337, guid: aa86c304f37daa443a70c6cf96d63f20, type: 3}
-  _projectileSpeed: 3
+  _projectileSpeed: 10
   _cooldown: 5
 --- !u!114 &2333734837082554531
 MonoBehaviour:
@@ -235,11 +235,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _anim: {fileID: 4256617571100155328}
   _source: {fileID: 8487187785912645961}
-  _groundMask:
-    serializedVersion: 2
-    m_Bits: 64
-  _maxTilt: 0
-  _tiltSpeed: 50
+  _footstepClips:
+  - {fileID: 8300000, guid: 392af000963414a48a40aa6ae27e406c, type: 3}
+  - {fileID: 8300000, guid: 19d275d83bc04574cbf45b56a0f5db56, type: 3}
+  - {fileID: 8300000, guid: 758c4856a2572a74ca9695636de53cf6, type: 3}
+  - {fileID: 8300000, guid: 50537253dec68e64ebdf7ec18ec6bd18, type: 3}
+  - {fileID: 8300000, guid: 180a4532f9e53ac499e828c551c98a72, type: 3}
+  - {fileID: 8300000, guid: a033b4a630b43ae438b0584cf16e39ab, type: 3}
+  _stepVolume: 0.25
+  _jumpClips:
+  - {fileID: 8300000, guid: 9fce7af007b401242833b6a2145f8e9d, type: 3}
+  - {fileID: 8300000, guid: 4a09c74e2aebb9046a0d4af238f7ada9, type: 3}
+  - {fileID: 8300000, guid: 8bed77a344581fa4391a7f12683be31f, type: 3}
+  _jumpVolume: 0.6
+  _knockbackClip: {fileID: 8300000, guid: 7e1ab0564a159f74db39a65912b2bb0f, type: 3}
+  _knockbackVolume: 1
+  _walkEffectFrequency: 0.3
 --- !u!95 &4256617571100155328
 Animator:
   serializedVersion: 5

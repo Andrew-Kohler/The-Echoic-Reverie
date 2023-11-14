@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
     public FrameInput Input { get; private set; }
     public bool JumpingThisFrame { get; private set; }
     public bool LandingThisFrame { get; private set; }
+    public bool BonkingThisFrame { get; private set; }
     public Vector3 RawMovement { get; private set; }
     public bool Grounded => _colDown > 0;
     public bool ClingingThisFrame { get; private set; }
@@ -118,8 +119,8 @@ public class PlayerController : MonoBehaviour, IPlayerController
         // Ground - Grounded state
         LandingThisFrame = false;
         float groundedCheck = RunDetection(_raysDown);
-        if (_colDown>0 && groundedCheck==NO_COL) _timeLeftGrounded = Time.time; // Only trigger when first leaving
-        else if (_colDown==NO_COL && groundedCheck>0)
+        if (_colDown > 0 && groundedCheck == NO_COL) _timeLeftGrounded = Time.time; // Only trigger when first leaving
+        else if (_colDown == NO_COL && groundedCheck > 0)
         {
             _coyoteUsable = true; // Only trigger when first touching
             LandingThisFrame = true;
@@ -131,26 +132,31 @@ public class PlayerController : MonoBehaviour, IPlayerController
         ClingingThisFrame = false;
         float clingingCheckLeft = RunDetection(_raysLeft);
         float clingingCheckRight = RunDetection(_raysRight);
-        if(_isInControl && clingingCheckLeft>0 && Input.X < 0)
+        if (IsInControl && clingingCheckLeft > 0 && Input.X < 0)
         {
             // refresh cling duration if holding
-            ClingingThisFrame = true;
             _timeClingStart = Time.time;
             _leftCling = true; // set direction to know which way to wall jump later
+            ClingingThisFrame = _colLeft == NO_COL;
         }
-        else if(_isInControl && clingingCheckRight>0 && Input.X > 0)
+        else if (IsInControl && clingingCheckRight > 0 && Input.X > 0)
         {
             // refresh cling duration if holding
-            ClingingThisFrame = true;
             _timeClingStart = Time.time;
             _leftCling = false;
+            ClingingThisFrame = _colRight == NO_COL;
         }
 
         _colLeft = clingingCheckLeft;
         _colRight = clingingCheckRight;
 
         // Ceiling
-        _colUp = RunDetection(_raysUp);
+        BonkingThisFrame = false;
+        float bonkingCheck = RunDetection(_raysUp);
+        if (_colUp == NO_COL && bonkingCheck > 0)
+            BonkingThisFrame = true;
+        _colUp = bonkingCheck;
+
 
         float RunDetection(RayRange range)
         {
@@ -158,7 +164,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
             float colDist = -1; // default -1 indicates no collision
 
             // check for nearest collision distance
-            foreach(Vector2 vector in vectors)
+            foreach (Vector2 vector in vectors)
             {
                 RaycastHit2D raycast = Physics2D.Raycast(vector, range.Dir, _detectionRayLength, _groundLayer);
                 if (raycast && (raycast.distance < colDist || colDist == -1))
@@ -234,7 +240,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
 
     private void CalculateWalk()
     {
-        if(_isInControl) // player walk control
+        if (IsInControl) // player walk control
         {
             if (Input.X != 0)
             {
@@ -267,10 +273,10 @@ public class PlayerController : MonoBehaviour, IPlayerController
 
     private void CalculateGravity()
     {
-        if(_colDown < 0) // not already on ground
+        if (_colDown < 0) // not already on ground
         {
             // Add downward force while ascending if we ended the jump early
-            var fallAccel = _endedJumpEarly && _currentVerticalSpeed > 0 && _isInControl ? _fallAccel * _jumpEndEarlyGravityModifier : _fallAccel;
+            var fallAccel = _endedJumpEarly && _currentVerticalSpeed > 0 && IsInControl ? _fallAccel * _jumpEndEarlyGravityModifier : _fallAccel;
 
             // Fall
             _currentVerticalSpeed -= fallAccel * Time.deltaTime;
@@ -284,7 +290,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
 
     #region Jump
 
-    [Header("JUMPING")] 
+    [Header("JUMPING")]
     [SerializeField] private float _jumpVelocity = 30;
     [SerializeField] private Vector2 _wallJumpVelocity = new Vector2(5f, 10f);
     [SerializeField, Tooltip("lower value = smaller window of apex bonus control; also effects fall speeds somehow")] private float _jumpApexThreshold = 10f;
@@ -296,13 +302,13 @@ public class PlayerController : MonoBehaviour, IPlayerController
     private bool _allowEndJumpEarly = true; // prevents ending jump early if false
     private float _apexPoint; // Becomes 1 at the apex of a jump
     private float _lastJumpPressed;
-    private bool CanUseCoyote => _coyoteUsable && _colDown==NO_COL && _timeLeftGrounded + _coyoteTimeThreshold > Time.time;
-    private bool HasBufferedJump => _colDown>0 && _lastJumpPressed + _jumpBuffer > Time.time;
+    private bool CanUseCoyote => _coyoteUsable && _colDown == NO_COL && _timeLeftGrounded + _coyoteTimeThreshold > Time.time;
+    private bool HasBufferedJump => _colDown > 0 && _lastJumpPressed + _jumpBuffer > Time.time;
 
     private void CalculateJumpApex()
     {
-        
-        if (_colDown==NO_COL)
+
+        if (_colDown == NO_COL)
         {
             // Gets stronger the closer to the top of the jump
             _apexPoint = Mathf.InverseLerp(_jumpApexThreshold, 0, Mathf.Abs(Velocity.y));
@@ -317,7 +323,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
     private void CalculateJump()
     {
         // Jump if: grounded or within coyote threshold || sufficient jump buffer && not wall clinging
-        if ((Input.JumpDown && CanUseCoyote || HasBufferedJump) && _timeClingStart + _clingDuration <= Time.time)
+        if (!JumpingThisFrame && (Input.JumpDown && CanUseCoyote || HasBufferedJump) && !CurrentlyClinging)
         {
             _currentVerticalSpeed = _jumpVelocity;
             _endedJumpEarly = false;
@@ -326,7 +332,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
             JumpingThisFrame = true;
             _allowEndJumpEarly = true;
         }
-        else if(Input.JumpDown && _timeClingStart + _clingDuration > Time.time) // wall jump
+        else if (Input.JumpDown && CurrentlyClinging) // wall jump
         {
             _currentHorizontalSpeed = (_leftCling ? 1 : -1) * _wallJumpVelocity.x;
             _currentVerticalSpeed = _wallJumpVelocity.y;
@@ -342,7 +348,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
         }
 
         // End the jump early if button released
-        if (_allowEndJumpEarly && _colDown==NO_COL && Input.JumpUp && !_endedJumpEarly && Velocity.y > 0 && _timeClingStart + _clingDuration <= Time.time)
+        if (_allowEndJumpEarly && _colDown == NO_COL && Input.JumpUp && !_endedJumpEarly && Velocity.y > 0 && _timeClingStart + _clingDuration <= Time.time)
         {
             // _currentVerticalSpeed = 0;
             _endedJumpEarly = true;
@@ -383,27 +389,13 @@ public class PlayerController : MonoBehaviour, IPlayerController
     [Tooltip("Duration of no player movement control after side knock")]
     [SerializeField] private float _outOfControlDuration = 1f;
 
-    private bool _isInControl = true;
+    public bool IsInControl { get; private set; } = true;
+    public bool IsBouncing { get; private set; } = false; // true during each frame of collision with top of enemy
     private float _controlTimer = 0;
 
     private void CalculateEnemyKnockback()
     {
-        if (_colLeft == ENEMY_COL)
-        {
-            _currentHorizontalSpeed = _sideKnockSpeed;
-            _currentVerticalSpeed = _sideVerticalKnockSpeed;
-            // start out of control timer
-            _isInControl = false;
-            _controlTimer = _outOfControlDuration;
-        }
-        if (_colRight == ENEMY_COL)
-        {
-            _currentHorizontalSpeed = -_sideKnockSpeed;
-            _currentVerticalSpeed = _sideVerticalKnockSpeed;
-            // start out of control timer
-            _isInControl = false;
-            _controlTimer = _outOfControlDuration;
-        }
+        IsBouncing = false;
         if (_colDown == ENEMY_COL)
         {
             // short and tall jump based on whether space bar held on bounce
@@ -412,12 +404,31 @@ public class PlayerController : MonoBehaviour, IPlayerController
 
             _endedJumpEarly = false; // prevent quick fall after if previously quick falling
             _allowEndJumpEarly = false; // prevents quick fall after big bounce
+
+            IsBouncing = true;
         }
+        else if (_colLeft == ENEMY_COL)
+        {
+            _currentHorizontalSpeed = _sideKnockSpeed;
+            _currentVerticalSpeed = _sideVerticalKnockSpeed;
+            // start out of control timer
+            IsInControl = false;
+            _controlTimer = _outOfControlDuration;
+        }
+        else if (_colRight == ENEMY_COL)
+        {
+            _currentHorizontalSpeed = -_sideKnockSpeed;
+            _currentVerticalSpeed = _sideVerticalKnockSpeed;
+            // start out of control timer
+            IsInControl = false;
+            _controlTimer = _outOfControlDuration;
+        }
+        
 
         // update out of control state
-        if(!_isInControl)
+        if(!IsInControl)
         {
-            if (_controlTimer < 0) _isInControl = true;
+            if (_controlTimer < 0) IsInControl = true;
 
             _controlTimer -= Time.deltaTime;
         }
@@ -504,11 +515,11 @@ public class PlayerController : MonoBehaviour, IPlayerController
         if (Input.MouseDown && _cooldownTimer <= 0)
         {
             // calculate velocity
-            Vector2 playerPos = Camera.main.WorldToScreenPoint(transform.position);
+            Vector2 playerPos = Camera.main.WorldToScreenPoint(transform.position + _characterBounds.center);
             Vector2 velocity = (Input.MousePos - playerPos).normalized * _projectileSpeed;
 
             // create projectile with velocity
-            Instantiate(_projectilePrefab, transform.position, _projectilePrefab.transform.rotation).GetComponent<Rigidbody2D>().velocity = velocity;
+            Instantiate(_projectilePrefab, transform.position + _characterBounds.center, _projectilePrefab.transform.rotation).GetComponent<Rigidbody2D>().velocity = velocity;
 
             _cooldownTimer = _cooldown; // start cooldown
         }
