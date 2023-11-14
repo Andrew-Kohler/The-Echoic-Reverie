@@ -515,11 +515,11 @@ public class PlayerController : MonoBehaviour, IPlayerController
         if (Input.MouseDown && _cooldownTimer <= 0)
         {
             // calculate velocity
-            Vector2 playerPos = Camera.main.WorldToScreenPoint(transform.position);
+            Vector2 playerPos = Camera.main.WorldToScreenPoint(transform.position + _characterBounds.center);
             Vector2 velocity = (Input.MousePos - playerPos).normalized * _projectileSpeed;
 
             // create projectile with velocity
-            Instantiate(_projectilePrefab, transform.position, _projectilePrefab.transform.rotation).GetComponent<Rigidbody2D>().velocity = velocity;
+            Instantiate(_projectilePrefab, transform.position + _characterBounds.center, _projectilePrefab.transform.rotation).GetComponent<Rigidbody2D>().velocity = velocity;
 
             _cooldownTimer = _cooldown; // start cooldown
         }
