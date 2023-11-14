@@ -390,10 +390,12 @@ public class PlayerController : MonoBehaviour, IPlayerController
     [SerializeField] private float _outOfControlDuration = 1f;
 
     public bool IsInControl { get; private set; } = true;
+    public bool IsBouncing { get; private set; } = false; // true during each frame of collision with top of enemy
     private float _controlTimer = 0;
 
     private void CalculateEnemyKnockback()
     {
+        IsBouncing = false;
         if (_colDown == ENEMY_COL)
         {
             // short and tall jump based on whether space bar held on bounce
@@ -402,6 +404,8 @@ public class PlayerController : MonoBehaviour, IPlayerController
 
             _endedJumpEarly = false; // prevent quick fall after if previously quick falling
             _allowEndJumpEarly = false; // prevents quick fall after big bounce
+
+            IsBouncing = true;
         }
         else if (_colLeft == ENEMY_COL)
         {

@@ -31,6 +31,7 @@ public class PlayerAnimator : MonoBehaviour
     private float _walkEffectTimer = 0f;
 
     private bool _prevIsInControl = true;
+    private bool _prevIsBouncing = false;
 
     private Vector2 _movement; // not currently used (could be helpful?)
 
@@ -113,20 +114,13 @@ public class PlayerAnimator : MonoBehaviour
             // TODO: particle effects (at head)
         }
 
-        // Jump effects
-        if (_player.JumpingThisFrame)
+        // Jump effects (ground jump, wall jump, or enemy bounce)
+        if (_player.JumpingThisFrame || (_player.IsBouncing && !_prevIsBouncing))
         {
             // jumping sound
             _source.PlayOneShot(_jumpClips[Random.Range(0, _jumpClips.Length)], _jumpVolume);
 
-            // TODO: particle effect (at feet)
-        }
-
-        if (_player.ClingingThisFrame)
-        {
-            // no audio needed - sounds worse with it
-
-            // TODO: particle effect (at side)
+            // TODO: particle effect (at feet or wall if wall jumping)
         }
 
         if(!_player.IsInControl && _prevIsInControl) // knocked by enemy this frame
@@ -138,5 +132,6 @@ public class PlayerAnimator : MonoBehaviour
         _movement = _player.RawMovement; // Previous frame movement is more valuable
 
         _prevIsInControl = _player.IsInControl;
+        _prevIsBouncing = _player.IsBouncing;
     }
 }

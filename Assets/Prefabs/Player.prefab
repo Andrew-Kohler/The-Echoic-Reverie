@@ -247,9 +247,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 9fce7af007b401242833b6a2145f8e9d, type: 3}
   - {fileID: 8300000, guid: 4a09c74e2aebb9046a0d4af238f7ada9, type: 3}
   - {fileID: 8300000, guid: 8bed77a344581fa4391a7f12683be31f, type: 3}
-  _jumpVolume: 0.8
-  _clingClip: {fileID: 8300000, guid: 7e1ab0564a159f74db39a65912b2bb0f, type: 3}
-  _clingVolume: 0.8
+  _jumpVolume: 0.6
+  _knockbackClip: {fileID: 8300000, guid: 7e1ab0564a159f74db39a65912b2bb0f, type: 3}
+  _knockbackVolume: 1
   _walkEffectFrequency: 0.3
 --- !u!95 &4256617571100155328
 Animator:
