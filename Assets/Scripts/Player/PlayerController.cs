@@ -394,22 +394,6 @@ public class PlayerController : MonoBehaviour, IPlayerController
 
     private void CalculateEnemyKnockback()
     {
-        if (_colLeft == ENEMY_COL)
-        {
-            _currentHorizontalSpeed = _sideKnockSpeed;
-            _currentVerticalSpeed = _sideVerticalKnockSpeed;
-            // start out of control timer
-            _isInControl = false;
-            _controlTimer = _outOfControlDuration;
-        }
-        if (_colRight == ENEMY_COL)
-        {
-            _currentHorizontalSpeed = -_sideKnockSpeed;
-            _currentVerticalSpeed = _sideVerticalKnockSpeed;
-            // start out of control timer
-            _isInControl = false;
-            _controlTimer = _outOfControlDuration;
-        }
         if (_colDown == ENEMY_COL)
         {
             // short and tall jump based on whether space bar held on bounce
@@ -419,6 +403,23 @@ public class PlayerController : MonoBehaviour, IPlayerController
             _endedJumpEarly = false; // prevent quick fall after if previously quick falling
             _allowEndJumpEarly = false; // prevents quick fall after big bounce
         }
+        else if (_colLeft == ENEMY_COL)
+        {
+            _currentHorizontalSpeed = _sideKnockSpeed;
+            _currentVerticalSpeed = _sideVerticalKnockSpeed;
+            // start out of control timer
+            _isInControl = false;
+            _controlTimer = _outOfControlDuration;
+        }
+        else if (_colRight == ENEMY_COL)
+        {
+            _currentHorizontalSpeed = -_sideKnockSpeed;
+            _currentVerticalSpeed = _sideVerticalKnockSpeed;
+            // start out of control timer
+            _isInControl = false;
+            _controlTimer = _outOfControlDuration;
+        }
+        
 
         // update out of control state
         if(!_isInControl)

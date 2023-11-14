@@ -18,10 +18,8 @@ public class PlayerAnimator : MonoBehaviour
     [Header("Audio")]
     [SerializeField] private AudioClip[] _footstepClips;
     [SerializeField] private float _stepVolume;
-    [SerializeField] private AudioClip _jumpClip;
+    [SerializeField] private AudioClip[] _jumpClips;
     [SerializeField] private float _jumpVolume;
-    [SerializeField] private AudioClip _clingClip;
-    [SerializeField] private float _clingVolume;
 
     [Header("Particles")]
     //[SerializeField] private ParticleSystem _jumpParticles, _launchParticles;
@@ -76,13 +74,12 @@ public class PlayerAnimator : MonoBehaviour
         {
             // landing step sound
             _source.PlayOneShot(_footstepClips[Random.Range(0, _footstepClips.Length)], _stepVolume);
-            _walkEffectTimer = _walkEffectFrequency; // restart timer - prevent double audio
 
-            // particle effect (at feet)
+            // TODO: particle effect (at feet)
         }
 
         // movement effects
-        if (_player.Grounded && _player.Velocity.x != 0)
+        if (_player.Grounded && _player.Velocity.x != 0 && _player.Velocity.y == 0)
         {
             // do walk effects on timer delay
             if(_walkEffectTimer < 0)
@@ -90,7 +87,7 @@ public class PlayerAnimator : MonoBehaviour
                 // walking sound
                 _source.PlayOneShot(_footstepClips[Random.Range(0, _footstepClips.Length)], _stepVolume);
 
-                // walking particles (at feet)
+                // TODO: walking particles (at feet)
 
                 // restart timer
                 _walkEffectTimer = _walkEffectFrequency;
@@ -100,31 +97,31 @@ public class PlayerAnimator : MonoBehaviour
                 _walkEffectTimer -= Time.deltaTime;
             }
         }
+        else
+            _walkEffectTimer = _walkEffectFrequency; // restart timer if not grounded and walking dd- prevent double audio
 
         // Bonking (head hits ceiling)
         if (_player.BonkingThisFrame)
         {
-            // bonking audio (same as steps)
-            _source.PlayOneShot(_footstepClips[Random.Range(0, _footstepClips.Length)], _stepVolume); // might remove and just do timer in grounded
+            // no audio needed - sounds worse with it
 
-            // particle effects (at head)
+            // TODO: particle effects (at head)
         }
 
         // Jump effects
         if (_player.JumpingThisFrame)
         {
             // jumping sound
-            _source.PlayOneShot(_jumpClip, _jumpVolume);
+            _source.PlayOneShot(_jumpClips[Random.Range(0, _jumpClips.Length)], _jumpVolume);
 
-            // particle effect (at feet)
+            // TODO: particle effect (at feet)
         }
 
-        if(_player.ClingingThisFrame)
+        if (_player.ClingingThisFrame)
         {
-            // cling audio
-            _source.PlayOneShot(_clingClip, _clingVolume);
+            // no audio needed - sounds worse with it
 
-            // particle effect (at side)
+            // TODO: particle effect (at side)
         }
 
         _movement = _player.RawMovement; // Previous frame movement is more valuable

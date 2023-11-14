@@ -555,8 +555,16 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2333734837082554531, guid: 79e1b549a5b53d84f81285bef4359058, type: 3}
-      propertyPath: _walkEffectFrequency
-      value: 0.4
+      propertyPath: _jumpClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 089f1d45137981b4aa1473ee308293d9, type: 3}
+    - target: {fileID: 2333734837082554531, guid: 79e1b549a5b53d84f81285bef4359058, type: 3}
+      propertyPath: _jumpVolume
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2333734837082554531, guid: 79e1b549a5b53d84f81285bef4359058, type: 3}
+      propertyPath: _clingVolume
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 2333734837082554531, guid: 79e1b549a5b53d84f81285bef4359058, type: 3}
       propertyPath: _footsteps.Array.size

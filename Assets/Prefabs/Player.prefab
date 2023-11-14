@@ -236,18 +236,21 @@ MonoBehaviour:
   _anim: {fileID: 4256617571100155328}
   _source: {fileID: 8487187785912645961}
   _footstepClips:
-  - {fileID: 8300000, guid: 7a7297ad42c97de488d89fac6be82c72, type: 3}
-  - {fileID: 8300000, guid: 5c5acdf8bb027f846b8a46e4923a5501, type: 3}
-  - {fileID: 8300000, guid: 78fe320e592d5874cbb3575b28902f57, type: 3}
-  - {fileID: 8300000, guid: a66fcb29631bff54dbd71a6629a55d15, type: 3}
-  - {fileID: 8300000, guid: eb043ea8523632343b8814e6d584d399, type: 3}
-  - {fileID: 8300000, guid: ada33c1b6092b8d42a615e0a4838c9d9, type: 3}
-  _stepVolume: 1
-  _jumpClip: {fileID: 8300000, guid: a024f3cc406c91546815c7f88917cd58, type: 3}
-  _jumpVolume: 0.5
-  _clingClip: {fileID: 8300000, guid: d50d032843ede974fb99ed711a5215eb, type: 3}
-  _clingVolume: 1
-  _walkEffectFrequency: 0.2
+  - {fileID: 8300000, guid: 392af000963414a48a40aa6ae27e406c, type: 3}
+  - {fileID: 8300000, guid: 19d275d83bc04574cbf45b56a0f5db56, type: 3}
+  - {fileID: 8300000, guid: 758c4856a2572a74ca9695636de53cf6, type: 3}
+  - {fileID: 8300000, guid: 50537253dec68e64ebdf7ec18ec6bd18, type: 3}
+  - {fileID: 8300000, guid: 180a4532f9e53ac499e828c551c98a72, type: 3}
+  - {fileID: 8300000, guid: a033b4a630b43ae438b0584cf16e39ab, type: 3}
+  _stepVolume: 0.25
+  _jumpClips:
+  - {fileID: 8300000, guid: 9fce7af007b401242833b6a2145f8e9d, type: 3}
+  - {fileID: 8300000, guid: 4a09c74e2aebb9046a0d4af238f7ada9, type: 3}
+  - {fileID: 8300000, guid: 8bed77a344581fa4391a7f12683be31f, type: 3}
+  _jumpVolume: 0.8
+  _clingClip: {fileID: 8300000, guid: 7e1ab0564a159f74db39a65912b2bb0f, type: 3}
+  _clingVolume: 0.8
+  _walkEffectFrequency: 0.3
 --- !u!95 &4256617571100155328
 Animator:
   serializedVersion: 5
