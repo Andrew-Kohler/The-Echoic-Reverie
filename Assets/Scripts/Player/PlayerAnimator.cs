@@ -49,7 +49,6 @@ public class PlayerAnimator : MonoBehaviour
         // Flip the sprite
         if (_player.Input.X != 0 && !_player.IsStomped)
         {
-            //transform.localScale = new Vector3(_player.Input.X > 0 ? _baseScale.x : -_baseScale.x, _baseScale.y, _baseScale.z);
             if(_player.Input.X < 0)
             {
                 sr.flipX = true;
