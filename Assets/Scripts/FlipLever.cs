@@ -32,6 +32,8 @@ public class FlipLever : MonoBehaviour
             GameManager.Instance.FlipLever(_leverIndex); // set data to flipped
 
             // TODO: play flip sound and activate big particle effect!! - only activates once on first flip
+
+            // TODO: set off bells if in 0_MainGrounds (delay to ensure it does not conflict with shock wave effect
         }
     }
 }
