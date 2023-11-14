@@ -15,6 +15,7 @@ public class StepMover : MonoBehaviour
 
     [Header("Particle Parameters")]
     [SerializeField] ParticleSystem _particleSystem;
+    [SerializeField] GameObject _projectilePrefab;
 
     private SpriteRenderer sr;
     private Animator anim;
@@ -141,14 +142,28 @@ public class StepMover : MonoBehaviour
         yield return new WaitForSeconds(.1f);
         if (!sr.flipX)
         {
-            tempSys = Instantiate(_particleSystem, new Vector3(this.transform.position.x - 1f, this.transform.position.y - .75f, 0f), new Quaternion(0, 0, 0, 0));
+            tempSys = Instantiate(_particleSystem, new Vector3(this.transform.position.x - 1.5f, this.transform.position.y - .75f, 0f), new Quaternion(0, 0, 0, 0));
             //tempSys.gameObject.transform.Rotate(new Vector3(0, 0, 90));
             tempSys.gameObject.transform.Rotate(new Vector3(0, 0, 90));
+
+            // calculate velocity
+            Vector2 stepperPos = new Vector2(this.transform.position.x - 1.5f, this.transform.position.y - .75f);
+            Vector2 velocity = new Vector2(3,3);
+
+            // create projectile with velocity
+            Instantiate(_projectilePrefab, stepperPos, _projectilePrefab.transform.rotation).GetComponent<Rigidbody2D>().velocity = velocity;
         }
         else
         {
             tempSys = Instantiate(_particleSystem, new Vector3(this.transform.position.x + 1f, this.transform.position.y - .75f, 0f), new Quaternion(0, 0, 0, 0));
-            
+
+            // calculate velocity
+            Vector2 stepperPos = new Vector2(this.transform.position.x + 1.5f, this.transform.position.y - .75f);
+            Vector2 velocity = new Vector2(-3, 3);
+
+            // create projectile with velocity
+            Instantiate(_projectilePrefab, stepperPos, _projectilePrefab.transform.rotation).GetComponent<Rigidbody2D>().velocity = velocity;
+
         }
         //ParticleSystem tempSys = Instantiate(_particleSystem, new Vector3(this.transform.position.x + .5f, this.transform.position.y - .8f, 0f), new Quaternion(0, 0, 0, 0));
         //tempSys.gameObject.transform.Rotate(new Vector3(0,0,90));

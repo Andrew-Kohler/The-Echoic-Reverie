@@ -42,11 +42,15 @@ public class DecorativeElement : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        StopAllCoroutines();
-        soundScaler.PlaySound();
-        StartCoroutine(DoFadeEffect());
-        StartCoroutine(DoShakeEffect());
-        Debug.Log("??");
+        if (!activeCoroutine)
+        {
+            StopAllCoroutines();
+            soundScaler.PlaySound();
+            StartCoroutine(DoFadeEffect());
+            StartCoroutine(DoShakeEffect());
+            Debug.Log("??");
+        }
+        
     }
 
     private void OnParticleCollision(GameObject other)
