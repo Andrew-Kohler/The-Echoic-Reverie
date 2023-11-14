@@ -219,7 +219,7 @@ MonoBehaviour:
   _outOfControlDuration: 0.3
   _snapDistance: 0.03
   _projectilePrefab: {fileID: 8819576824762881337, guid: aa86c304f37daa443a70c6cf96d63f20, type: 3}
-  _projectileSpeed: 3
+  _projectileSpeed: 10
   _cooldown: 5
 --- !u!114 &2333734837082554531
 MonoBehaviour:

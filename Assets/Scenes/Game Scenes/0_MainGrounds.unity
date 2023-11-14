@@ -554,54 +554,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2333734837082554531, guid: 79e1b549a5b53d84f81285bef4359058, type: 3}
-      propertyPath: _jumpClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 089f1d45137981b4aa1473ee308293d9, type: 3}
-    - target: {fileID: 2333734837082554531, guid: 79e1b549a5b53d84f81285bef4359058, type: 3}
-      propertyPath: _jumpVolume
-      value: 0.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 2333734837082554531, guid: 79e1b549a5b53d84f81285bef4359058, type: 3}
-      propertyPath: _clingVolume
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2333734837082554531, guid: 79e1b549a5b53d84f81285bef4359058, type: 3}
-      propertyPath: _knockbackClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 7e1ab0564a159f74db39a65912b2bb0f, type: 3}
-    - target: {fileID: 2333734837082554531, guid: 79e1b549a5b53d84f81285bef4359058, type: 3}
-      propertyPath: _knockbackVolume
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2333734837082554531, guid: 79e1b549a5b53d84f81285bef4359058, type: 3}
-      propertyPath: _footsteps.Array.size
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 2333734837082554531, guid: 79e1b549a5b53d84f81285bef4359058, type: 3}
-      propertyPath: _footsteps.Array.data[0]
-      value: 
-      objectReference: {fileID: 8300000, guid: 7a7297ad42c97de488d89fac6be82c72, type: 3}
-    - target: {fileID: 2333734837082554531, guid: 79e1b549a5b53d84f81285bef4359058, type: 3}
-      propertyPath: _footsteps.Array.data[1]
-      value: 
-      objectReference: {fileID: 8300000, guid: 5c5acdf8bb027f846b8a46e4923a5501, type: 3}
-    - target: {fileID: 2333734837082554531, guid: 79e1b549a5b53d84f81285bef4359058, type: 3}
-      propertyPath: _footsteps.Array.data[2]
-      value: 
-      objectReference: {fileID: 8300000, guid: 78fe320e592d5874cbb3575b28902f57, type: 3}
-    - target: {fileID: 2333734837082554531, guid: 79e1b549a5b53d84f81285bef4359058, type: 3}
-      propertyPath: _footsteps.Array.data[3]
-      value: 
-      objectReference: {fileID: 8300000, guid: a66fcb29631bff54dbd71a6629a55d15, type: 3}
-    - target: {fileID: 2333734837082554531, guid: 79e1b549a5b53d84f81285bef4359058, type: 3}
-      propertyPath: _footsteps.Array.data[4]
-      value: 
-      objectReference: {fileID: 8300000, guid: eb043ea8523632343b8814e6d584d399, type: 3}
-    - target: {fileID: 2333734837082554531, guid: 79e1b549a5b53d84f81285bef4359058, type: 3}
-      propertyPath: _footsteps.Array.data[5]
-      value: 
-      objectReference: {fileID: 8300000, guid: ada33c1b6092b8d42a615e0a4838c9d9, type: 3}
     - target: {fileID: 9135707449525015687, guid: 79e1b549a5b53d84f81285bef4359058, type: 3}
       propertyPath: m_Name
       value: Player
