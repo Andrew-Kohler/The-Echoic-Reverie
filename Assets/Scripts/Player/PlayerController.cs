@@ -467,7 +467,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
             transform.position -= new Vector3(0, _colDown - _snapDistance, 0);
         }
         // right collision
-        if(_colRight >= 0 && _currentHorizontalSpeed > 0)
+        if(_colRight >= 0 && (_currentHorizontalSpeed > 0 || ClingingThisFrame))
         {
             // stop
             _currentHorizontalSpeed = 0;
@@ -475,7 +475,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
             transform.position += new Vector3(_colRight - _snapDistance, 0, 0);
         }
         // left collision
-        if(_colLeft >= 0 && _currentHorizontalSpeed < 0)
+        if(_colLeft >= 0 && (_currentHorizontalSpeed < 0 || ClingingThisFrame))
         {
             // stop
             _currentHorizontalSpeed = 0;
