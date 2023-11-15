@@ -134,14 +134,14 @@ public class PlayerController : MonoBehaviour, IPlayerController
         ClingingThisFrame = false;
         float clingingCheckLeft = RunDetection(_raysLeft);
         float clingingCheckRight = RunDetection(_raysRight);
-        if (IsInControl && clingingCheckLeft > 0 && Input.X < 0)
+        if (IsInControl && clingingCheckLeft > 0 && Input.X < 0 && _currentHorizontalSpeed <= 0)
         {
             // refresh cling duration if holding
             _timeClingStart = Time.time;
             _leftCling = true; // set direction to know which way to wall jump later
             ClingingThisFrame = _colLeft == NO_COL;
         }
-        else if (IsInControl && clingingCheckRight > 0 && Input.X > 0)
+        else if (IsInControl && clingingCheckRight > 0 && Input.X > 0 && _currentHorizontalSpeed >= 0)
         {
             // refresh cling duration if holding
             _timeClingStart = Time.time;
