@@ -21,7 +21,7 @@ public class BasicPlatformReactor : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player")) // !activeCoroutine && 
+        if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("LeverBall")) // !activeCoroutine && 
         {
             //StartCoroutine(DoParticleEffect());
             platformRim.color = Color.white;

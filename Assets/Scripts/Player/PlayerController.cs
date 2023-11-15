@@ -20,6 +20,8 @@ public class PlayerController : MonoBehaviour, IPlayerController
     public Vector3 Velocity { get; private set; }
     public FrameInput Input { get; private set; }
     public bool JumpingThisFrame { get; private set; }
+    public bool LeftWallJumpingThisFrame { get; private set; }
+    public bool RightWallJumpingThisFrame { get; private set; }
     public bool LandingThisFrame { get; private set; }
     public bool BonkingThisFrame { get; private set; }
     public Vector3 RawMovement { get; private set; }
@@ -132,14 +134,14 @@ public class PlayerController : MonoBehaviour, IPlayerController
         ClingingThisFrame = false;
         float clingingCheckLeft = RunDetection(_raysLeft);
         float clingingCheckRight = RunDetection(_raysRight);
-        if (IsInControl && clingingCheckLeft > 0 && Input.X < 0)
+        if (IsInControl && clingingCheckLeft > 0 && Input.X < 0 && _currentHorizontalSpeed <= 0)
         {
             // refresh cling duration if holding
             _timeClingStart = Time.time;
             _leftCling = true; // set direction to know which way to wall jump later
             ClingingThisFrame = _colLeft == NO_COL;
         }
-        else if (IsInControl && clingingCheckRight > 0 && Input.X > 0)
+        else if (IsInControl && clingingCheckRight > 0 && Input.X > 0 && _currentHorizontalSpeed >= 0)
         {
             // refresh cling duration if holding
             _timeClingStart = Time.time;
@@ -335,16 +337,19 @@ public class PlayerController : MonoBehaviour, IPlayerController
         else if (Input.JumpDown && CurrentlyClinging) // wall jump
         {
             _currentHorizontalSpeed = (_leftCling ? 1 : -1) * _wallJumpVelocity.x;
+            if (_leftCling) LeftWallJumpingThisFrame = true;
+            else RightWallJumpingThisFrame = true;
             _currentVerticalSpeed = _wallJumpVelocity.y;
             _timeClingStart = float.MinValue; // end cling state
             _timeLeftGrounded = float.MinValue;
             _endedJumpEarly = false;
-            JumpingThisFrame = true;
             _allowEndJumpEarly = true;
         }
         else
         {
             JumpingThisFrame = false;
+            LeftWallJumpingThisFrame = false;
+            RightWallJumpingThisFrame = false;
         }
 
         // End the jump early if button released
@@ -462,7 +467,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
             transform.position -= new Vector3(0, _colDown - _snapDistance, 0);
         }
         // right collision
-        if(_colRight >= 0 && _currentHorizontalSpeed > 0)
+        if(_colRight >= 0 && (_currentHorizontalSpeed > 0 || ClingingThisFrame))
         {
             // stop
             _currentHorizontalSpeed = 0;
@@ -470,7 +475,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
             transform.position += new Vector3(_colRight - _snapDistance, 0, 0);
         }
         // left collision
-        if(_colLeft >= 0 && _currentHorizontalSpeed < 0)
+        if(_colLeft >= 0 && (_currentHorizontalSpeed < 0 || ClingingThisFrame))
         {
             // stop
             _currentHorizontalSpeed = 0;
