@@ -28,6 +28,8 @@ public class PlayerAnimator : MonoBehaviour
     [SerializeField] private ParticleSystem _moveParticlesLeft;
     [SerializeField] private ParticleSystem _moveParticlesRight;
     [SerializeField] private ParticleSystem _moveParticlesDown;
+    [SerializeField] private ParticleSystem _LeftWallJumpBurst, _leftWallParticle;
+    [SerializeField] private ParticleSystem _rightWallJumpBurst, _rightWallParticle;
 
     [Header("Walk Effects")]
     [SerializeField, Tooltip("frequency of walk effects while walking")] private float _walkEffectFrequency = 1f;
@@ -118,14 +120,34 @@ public class PlayerAnimator : MonoBehaviour
             // no particles needed
         }
 
-        // Jump effects (ground jump, wall jump, or enemy bounce)
+        // Jump effects (ground jump, or enemy bounce)
         if (_player.JumpingThisFrame || (_player.IsBouncing && !_prevIsBouncing))
         {
             // jumping sound
             _source.PlayOneShot(_jumpClips[Random.Range(0, _jumpClips.Length)], _jumpVolume);
 
-            // particle effect (at feet or wall if wall jumping)
+            // particle effect (at feet)
             StartCoroutine(DoGroundParticles());
+        }
+
+        // Left wall jump effects
+        if (_player.LeftWallJumpingThisFrame)
+        {
+            // jumping sound
+            _source.PlayOneShot(_jumpClips[Random.Range(0, _jumpClips.Length)], _jumpVolume);
+
+            // particle effect (on wall)
+            StartCoroutine(DoLeftWallJumpParticles());
+        }
+
+        // Right Wall jump effects
+        if (_player.RightWallJumpingThisFrame)
+        {
+            // jumping sound
+            _source.PlayOneShot(_jumpClips[Random.Range(0, _jumpClips.Length)], _jumpVolume);
+
+            // particle effect (on wall)
+            StartCoroutine(DoRightWallJumpParticles());
         }
 
         if(!_player.IsInControl && _prevIsInControl) // knocked by enemy this frame
@@ -140,6 +162,7 @@ public class PlayerAnimator : MonoBehaviour
         _prevIsBouncing = _player.IsBouncing;
     }
 
+    #region PARTICLE COROUTINES
     private IEnumerator DoGroundParticles()
     {
         ParticleSystem system1 = Instantiate(_moveParticlesLeft, _moveParticlesLeft.transform.position, _moveParticlesLeft.transform.rotation);
@@ -167,4 +190,27 @@ public class PlayerAnimator : MonoBehaviour
         Destroy(system1.gameObject);
         Destroy(system2.gameObject);
     }
+
+    private IEnumerator DoLeftWallJumpParticles()
+    {
+        ParticleSystem system1 = Instantiate(_LeftWallJumpBurst, _LeftWallJumpBurst.transform.position, _LeftWallJumpBurst.transform.rotation);
+        ParticleSystem system2 = Instantiate(_leftWallParticle, _leftWallParticle.transform.position, _leftWallParticle.transform.rotation);
+
+        yield return new WaitForSeconds(system1.main.startLifetime.constant);
+
+        Destroy(system1.gameObject);
+        Destroy(system2.gameObject);
+    }
+
+    private IEnumerator DoRightWallJumpParticles()
+    {
+        ParticleSystem system1 = Instantiate(_rightWallJumpBurst, _rightWallJumpBurst.transform.position, _rightWallJumpBurst.transform.rotation);
+        ParticleSystem system2 = Instantiate(_rightWallParticle, _rightWallParticle.transform.position, _rightWallParticle.transform.rotation);
+
+        yield return new WaitForSeconds(system1.main.startLifetime.constant);
+
+        Destroy(system1.gameObject);
+        Destroy(system2.gameObject);
+    }
+    #endregion
 }

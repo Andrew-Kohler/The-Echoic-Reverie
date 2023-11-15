@@ -20,6 +20,8 @@ public class PlayerController : MonoBehaviour, IPlayerController
     public Vector3 Velocity { get; private set; }
     public FrameInput Input { get; private set; }
     public bool JumpingThisFrame { get; private set; }
+    public bool LeftWallJumpingThisFrame { get; private set; }
+    public bool RightWallJumpingThisFrame { get; private set; }
     public bool LandingThisFrame { get; private set; }
     public bool BonkingThisFrame { get; private set; }
     public Vector3 RawMovement { get; private set; }
@@ -335,16 +337,19 @@ public class PlayerController : MonoBehaviour, IPlayerController
         else if (Input.JumpDown && CurrentlyClinging) // wall jump
         {
             _currentHorizontalSpeed = (_leftCling ? 1 : -1) * _wallJumpVelocity.x;
+            if (_leftCling) LeftWallJumpingThisFrame = true;
+            else RightWallJumpingThisFrame = true;
             _currentVerticalSpeed = _wallJumpVelocity.y;
             _timeClingStart = float.MinValue; // end cling state
             _timeLeftGrounded = float.MinValue;
             _endedJumpEarly = false;
-            JumpingThisFrame = true;
             _allowEndJumpEarly = true;
         }
         else
         {
             JumpingThisFrame = false;
+            LeftWallJumpingThisFrame = false;
+            RightWallJumpingThisFrame = false;
         }
 
         // End the jump early if button released
