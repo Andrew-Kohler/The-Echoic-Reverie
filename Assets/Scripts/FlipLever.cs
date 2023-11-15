@@ -6,7 +6,14 @@ public class FlipLever : MonoBehaviour
 {
     [SerializeField] private int _leverIndex = 0;
 
+    [SerializeField] private AudioClip _leverSound;
+    [SerializeField] private float _leverVolume = 1.0f;
+    [SerializeField] private ParticleSystem _particleEffect;
+    [SerializeField] private GameObject _leverBall;
+    [SerializeField] private float _leverBallGrowFactor;
+
     private SpriteRenderer _renderer;
+    private AudioSource _audioSource;
 
     private bool _flipped;
 
@@ -14,6 +21,7 @@ public class FlipLever : MonoBehaviour
     void Start()
     {
         _renderer = GetComponent<SpriteRenderer>();
+        _audioSource = GetComponent<AudioSource>();
 
         // ensure it starts flipped if flipped when in the scene previously
         bool state = GameManager.Instance.GetLever(_leverIndex);
@@ -31,9 +39,26 @@ public class FlipLever : MonoBehaviour
 
             GameManager.Instance.FlipLever(_leverIndex); // set data to flipped
 
-            // TODO: play flip sound and activate big particle effect!! - only activates once on first flip
+            // play flip sound and activate big particle effect!! - only activates once on first flip
+            _audioSource.PlayOneShot(_leverSound, _leverVolume);
+            _particleEffect.Play();
+            StartCoroutine(DoGrowLeverBall());
 
-            // TODO: set off bells if in 0_MainGrounds (delay to ensure it does not conflict with shock wave effect
+            // TODO: set off bells if in 0_MainGrounds (delay to ensure it does not conflict with shock wave effect) - coroutinned delay??
         }
+    }
+
+    private IEnumerator DoGrowLeverBall()
+    {
+        _leverBall.SetActive(true);
+
+        while(_particleEffect.isPlaying)
+        {
+            _leverBall.transform.localScale += Vector3.one * (_leverBallGrowFactor * Time.fixedDeltaTime); // apply grow factor
+
+            yield return new WaitForFixedUpdate();
+        }
+
+        Destroy(_leverBall);
     }
 }
