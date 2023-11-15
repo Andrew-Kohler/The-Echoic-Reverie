@@ -155,7 +155,7 @@ public class StepMover : MonoBehaviour
         }
         else
         {
-            tempSys = Instantiate(_particleSystem, new Vector3(this.transform.position.x + 1f, this.transform.position.y - .75f, 0f), new Quaternion(0, 0, 0, 0));
+            tempSys = Instantiate(_particleSystem, new Vector3(this.transform.position.x + 1.5f, this.transform.position.y - .75f, 0f), new Quaternion(0, 0, 0, 0));
 
             // calculate velocity
             Vector2 stepperPos = new Vector2(this.transform.position.x + 1.5f, this.transform.position.y - .75f);
