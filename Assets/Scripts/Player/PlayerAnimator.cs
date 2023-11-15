@@ -1,6 +1,6 @@
 using UnityEngine;
 using Random = UnityEngine.Random;
-using TarodevController;
+using System.Collections;
 
 /// <summary>
 /// This is a pretty filthy script. I was just arbitrarily adding to it as I went.
@@ -18,13 +18,16 @@ public class PlayerAnimator : MonoBehaviour
     [Header("Audio")]
     [SerializeField] private AudioClip[] _footstepClips;
     [SerializeField] private float _stepVolume;
+    [SerializeField] private float _landVolume;
     [SerializeField] private AudioClip[] _jumpClips;
     [SerializeField] private float _jumpVolume;
     [SerializeField] private AudioClip _knockbackClip;
     [SerializeField] private float _knockbackVolume;
 
     [Header("Particles")]
-    //[SerializeField] private ParticleSystem _jumpParticles, _launchParticles;
+    [SerializeField] private ParticleSystem _moveParticlesLeft;
+    [SerializeField] private ParticleSystem _moveParticlesRight;
+    [SerializeField] private ParticleSystem _moveParticlesDown;
 
     [Header("Walk Effects")]
     [SerializeField, Tooltip("frequency of walk effects while walking")] private float _walkEffectFrequency = 1f;
@@ -78,9 +81,10 @@ public class PlayerAnimator : MonoBehaviour
         if (_player.LandingThisFrame)
         {
             // landing step sound
-            _source.PlayOneShot(_footstepClips[Random.Range(0, _footstepClips.Length)], _stepVolume);
+            _source.PlayOneShot(_footstepClips[Random.Range(0, _footstepClips.Length)], _landVolume);
 
-            // TODO: particle effect (at feet)
+            // particle effect (at feet)
+            StartCoroutine(DoGroundParticles());
         }
 
         // movement effects
@@ -92,7 +96,8 @@ public class PlayerAnimator : MonoBehaviour
                 // walking sound
                 _source.PlayOneShot(_footstepClips[Random.Range(0, _footstepClips.Length)], _stepVolume);
 
-                // TODO: walking particles (at feet)
+                // walking particles (at feet)
+                StartCoroutine(DoWalkParticles());
 
                 // restart timer
                 _walkEffectTimer = _walkEffectFrequency;
@@ -110,7 +115,7 @@ public class PlayerAnimator : MonoBehaviour
         {
             // no audio needed - sounds worse with it
 
-            // TODO: particle effects (at head)
+            // no particles needed
         }
 
         // Jump effects (ground jump, wall jump, or enemy bounce)
@@ -119,7 +124,8 @@ public class PlayerAnimator : MonoBehaviour
             // jumping sound
             _source.PlayOneShot(_jumpClips[Random.Range(0, _jumpClips.Length)], _jumpVolume);
 
-            // TODO: particle effect (at feet or wall if wall jumping)
+            // particle effect (at feet or wall if wall jumping)
+            StartCoroutine(DoGroundParticles());
         }
 
         if(!_player.IsInControl && _prevIsInControl) // knocked by enemy this frame
@@ -132,5 +138,33 @@ public class PlayerAnimator : MonoBehaviour
 
         _prevIsInControl = _player.IsInControl;
         _prevIsBouncing = _player.IsBouncing;
+    }
+
+    private IEnumerator DoGroundParticles()
+    {
+        ParticleSystem system1 = Instantiate(_moveParticlesLeft, _moveParticlesLeft.transform.position, _moveParticlesLeft.transform.rotation);
+        ParticleSystem system2 = Instantiate(_moveParticlesRight, _moveParticlesRight.transform.position, _moveParticlesRight.transform.rotation);
+        ParticleSystem system3 = Instantiate(_moveParticlesDown, _moveParticlesDown.transform.position, _moveParticlesDown.transform.rotation);
+
+        yield return new WaitForSeconds(system1.main.startLifetime.constant);
+
+        Destroy(system1.gameObject);
+        Destroy(system2.gameObject);
+        Destroy(system3.gameObject);
+    }
+
+    private IEnumerator DoWalkParticles()
+    {
+        ParticleSystem system1;
+        if (_movement.x > 0)
+            system1 = Instantiate(_moveParticlesLeft, _moveParticlesLeft.transform.position, _moveParticlesLeft.transform.rotation);
+        else
+            system1 = Instantiate(_moveParticlesRight, _moveParticlesRight.transform.position, _moveParticlesRight.transform.rotation);
+        ParticleSystem system2 = Instantiate(_moveParticlesDown, _moveParticlesDown.transform.position, _moveParticlesDown.transform.rotation);
+
+        yield return new WaitForSeconds(system1.main.startLifetime.constant);
+
+        Destroy(system1.gameObject);
+        Destroy(system2.gameObject);
     }
 }

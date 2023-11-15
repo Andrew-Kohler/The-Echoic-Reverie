@@ -94,7 +94,6 @@ GameObject:
   - component: {fileID: 2333734837082554531}
   - component: {fileID: 4256617571100155328}
   - component: {fileID: 8487187785912645961}
-  - component: {fileID: 2333734837082554528}
   - component: {fileID: -6845085311166774180}
   - component: {fileID: -1619987976732884854}
   - component: {fileID: -5627729178657602567}
@@ -243,13 +242,17 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 180a4532f9e53ac499e828c551c98a72, type: 3}
   - {fileID: 8300000, guid: a033b4a630b43ae438b0584cf16e39ab, type: 3}
   _stepVolume: 0.25
+  _landVolume: 0.5
   _jumpClips:
   - {fileID: 8300000, guid: 9fce7af007b401242833b6a2145f8e9d, type: 3}
   - {fileID: 8300000, guid: 4a09c74e2aebb9046a0d4af238f7ada9, type: 3}
   - {fileID: 8300000, guid: 8bed77a344581fa4391a7f12683be31f, type: 3}
-  _jumpVolume: 0.6
+  _jumpVolume: 0.4
   _knockbackClip: {fileID: 8300000, guid: 7e1ab0564a159f74db39a65912b2bb0f, type: 3}
   _knockbackVolume: 1
+  _moveParticlesLeft: {fileID: 5713164246404085892}
+  _moveParticlesRight: {fileID: 5713164246727386094}
+  _moveParticlesDown: {fileID: 5713164246469526047}
   _walkEffectFrequency: 0.3
 --- !u!95 &4256617571100155328
 Animator:
@@ -368,23 +371,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &2333734837082554528
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9135707449525015687}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 545ba5a36e0c09d4c8dcbb15c816596c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _moveParticles1: {fileID: 5713164246404085892}
-  _moveParticles2: {fileID: 5713164246727386094}
-  _moveParticles3: {fileID: 5713164246469526047}
-  _clingParticles1: {fileID: 0}
-  _clingParticles2: {fileID: 0}
 --- !u!70 &-6845085311166774180
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -477,6 +463,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 9135707449968244749}
     m_Modifications:
     - target: {fileID: 3567327102045183874, guid: 9476f4511110d1f4d87446f8204b331f, type: 3}
+      propertyPath: m_Name
+      value: Left Burst
+      objectReference: {fileID: 0}
+    - target: {fileID: 3567327102045183874, guid: 9476f4511110d1f4d87446f8204b331f, type: 3}
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
@@ -505,6 +495,14 @@ PrefabInstance:
       value: -2095175199
       objectReference: {fileID: 0}
     - target: {fileID: 3567327102045183901, guid: 9476f4511110d1f4d87446f8204b331f, type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3567327102045183901, guid: 9476f4511110d1f4d87446f8204b331f, type: 3}
+      propertyPath: moveWithTransform
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3567327102045183901, guid: 9476f4511110d1f4d87446f8204b331f, type: 3}
       propertyPath: ShapeModule.arc.value
       value: 90
       objectReference: {fileID: 0}
@@ -514,7 +512,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3567327102045183901, guid: 9476f4511110d1f4d87446f8204b331f, type: 3}
       propertyPath: InitialModule.startSpeed.scalar
-      value: 7
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3567327102045183901, guid: 9476f4511110d1f4d87446f8204b331f, type: 3}
       propertyPath: InitialModule.startSize.minScalar
@@ -626,7 +624,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3567327102196241485, guid: 9476f4511110d1f4d87446f8204b331f, type: 3}
       propertyPath: initialSpeed
-      value: 7
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3567327102196241485, guid: 9476f4511110d1f4d87446f8204b331f, type: 3}
       propertyPath: emissionRadius
@@ -651,6 +649,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 9135707449968244749}
     m_Modifications:
+    - target: {fileID: 3567327102045183874, guid: 9476f4511110d1f4d87446f8204b331f, type: 3}
+      propertyPath: m_Name
+      value: Ground Re-Lighter Particle
+      objectReference: {fileID: 0}
     - target: {fileID: 3567327102045183874, guid: 9476f4511110d1f4d87446f8204b331f, type: 3}
       propertyPath: m_Layer
       value: 0
@@ -680,8 +682,20 @@ PrefabInstance:
       value: -531691225
       objectReference: {fileID: 0}
     - target: {fileID: 3567327102045183901, guid: 9476f4511110d1f4d87446f8204b331f, type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3567327102045183901, guid: 9476f4511110d1f4d87446f8204b331f, type: 3}
+      propertyPath: moveWithTransform
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3567327102045183901, guid: 9476f4511110d1f4d87446f8204b331f, type: 3}
       propertyPath: ShapeModule.arc.value
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3567327102045183901, guid: 9476f4511110d1f4d87446f8204b331f, type: 3}
+      propertyPath: InitialModule.maxNumParticles
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3567327102045183901, guid: 9476f4511110d1f4d87446f8204b331f, type: 3}
       propertyPath: InitialModule.startSize.scalar
@@ -713,7 +727,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3567327102196241459, guid: 9476f4511110d1f4d87446f8204b331f, type: 3}
       propertyPath: m_Name
-      value: Soundbox v1 (2)
+      value: Ground re-lighter particle
       objectReference: {fileID: 0}
     - target: {fileID: 3567327102196241459, guid: 9476f4511110d1f4d87446f8204b331f, type: 3}
       propertyPath: m_Layer
@@ -827,6 +841,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 9135707449968244749}
     m_Modifications:
     - target: {fileID: 3567327102045183874, guid: 9476f4511110d1f4d87446f8204b331f, type: 3}
+      propertyPath: m_Name
+      value: Right Burst
+      objectReference: {fileID: 0}
+    - target: {fileID: 3567327102045183874, guid: 9476f4511110d1f4d87446f8204b331f, type: 3}
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
@@ -855,6 +873,14 @@ PrefabInstance:
       value: -2095175199
       objectReference: {fileID: 0}
     - target: {fileID: 3567327102045183901, guid: 9476f4511110d1f4d87446f8204b331f, type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3567327102045183901, guid: 9476f4511110d1f4d87446f8204b331f, type: 3}
+      propertyPath: moveWithTransform
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3567327102045183901, guid: 9476f4511110d1f4d87446f8204b331f, type: 3}
       propertyPath: ShapeModule.arc.value
       value: 90
       objectReference: {fileID: 0}
@@ -864,7 +890,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3567327102045183901, guid: 9476f4511110d1f4d87446f8204b331f, type: 3}
       propertyPath: InitialModule.startSpeed.scalar
-      value: 7
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3567327102045183901, guid: 9476f4511110d1f4d87446f8204b331f, type: 3}
       propertyPath: InitialModule.startSize.minScalar
@@ -976,7 +1002,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3567327102196241485, guid: 9476f4511110d1f4d87446f8204b331f, type: 3}
       propertyPath: initialSpeed
-      value: 7
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3567327102196241485, guid: 9476f4511110d1f4d87446f8204b331f, type: 3}
       propertyPath: emissionRadius
