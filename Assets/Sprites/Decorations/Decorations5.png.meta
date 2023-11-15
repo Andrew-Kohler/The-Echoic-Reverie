@@ -112,8 +112,8 @@ TextureImporter:
         y: 68
         width: 31
         height: 15
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+      alignment: 2
+      pivot: {x: 0.5, y: 1}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -215,7 +215,7 @@ TextureImporter:
         serializedVersion: 2
         x: 135
         y: 36
-        width: 19
+        width: 9
         height: 48
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -259,8 +259,8 @@ TextureImporter:
         y: 50
         width: 15
         height: 13
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -322,8 +322,8 @@ TextureImporter:
         y: 7
         width: 31
         height: 21
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+      alignment: 2
+      pivot: {x: 0.5, y: 1}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -419,6 +419,27 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: RingFront
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 36
+        width: 10
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 44c30776f86e7ed4e854a8b7c851defd
+      internalID: 875520753
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -440,6 +461,7 @@ TextureImporter:
       Ladder: -89773945
       Podium: 1953403060
       Ring: -1605116760
+      RingFront: 875520753
       Seat: -694824452
       SeatArrangement: 1745498083
       SeatArrangement2: -1965848838
