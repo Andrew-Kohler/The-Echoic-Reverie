@@ -13,6 +13,14 @@ public class StepMover : MonoBehaviour
     [SerializeField, Min(0)] private float _jumpSpeed = 1f, _fallSpeed = 4f;
     [SerializeField] private float _pauseInterval = 3f;
 
+    [Header("Particle Parameters")]
+    [SerializeField] ParticleSystem _particleSystem;
+    [SerializeField] GameObject _projectilePrefab;
+
+    private SpriteRenderer sr;
+    private Animator anim;
+    private bool activeCoroutine;
+
     private bool _isForwardDirection = true; // forward = from start to end
     private bool _isMoving = false; // start in stopped cycle
     private float _durationTimer = -1; // initialized in first update frame
@@ -27,6 +35,9 @@ public class StepMover : MonoBehaviour
         transform.position = new Vector3(_startX, transform.position.y, transform.position.z);
 
         _durationTimer = _pauseInterval;
+
+        anim = GetComponent<Animator>();
+        sr = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -44,6 +55,10 @@ public class StepMover : MonoBehaviour
                 _durationTimer = _steppingInterval;
 
                 // walk animation
+                if (!activeCoroutine)
+                {
+                    StartCoroutine(DoStepAnim());
+                }
             }
             else // just stopped moving
             {
@@ -51,6 +66,7 @@ public class StepMover : MonoBehaviour
                 _durationTimer = _pauseInterval;
 
                 // start step sound + particles (set animation to stationary?)
+                StartCoroutine(DoLanding());
             }
         }
 
@@ -83,6 +99,7 @@ public class StepMover : MonoBehaviour
             transform.position = new Vector3(_isForwardDirection ? _endX : _startX, transform.position.y, transform.position.z);
             // flip direction
             _isForwardDirection = !_isForwardDirection;
+            sr.flipX = !sr.flipX;
             // stop moving - and start stop cycle
             _isMoving = false;
             _durationTimer = _pauseInterval;
@@ -108,5 +125,50 @@ public class StepMover : MonoBehaviour
 
         // update timer
         _durationTimer -= Time.deltaTime;
+    }
+
+    private IEnumerator DoStepAnim()
+    {
+        activeCoroutine = true;
+        anim.Play("StepperStep", 0, 0);
+        yield return new WaitForSeconds(.583f);
+        anim.Play("StepperIdle", 0, 0);
+        activeCoroutine = false;
+    }
+
+    private IEnumerator DoLanding()
+    {
+        ParticleSystem tempSys;
+        yield return new WaitForSeconds(.1f);
+        if (!sr.flipX)
+        {
+            tempSys = Instantiate(_particleSystem, new Vector3(this.transform.position.x - 1.5f, this.transform.position.y - .75f, 0f), new Quaternion(0, 0, 0, 0));
+            //tempSys.gameObject.transform.Rotate(new Vector3(0, 0, 90));
+            tempSys.gameObject.transform.Rotate(new Vector3(0, 0, 90));
+
+            // calculate velocity
+            Vector2 stepperPos = new Vector2(this.transform.position.x - 1.5f, this.transform.position.y - .75f);
+            Vector2 velocity = new Vector2(3,3);
+
+            // create projectile with velocity
+            Instantiate(_projectilePrefab, stepperPos, _projectilePrefab.transform.rotation).GetComponent<Rigidbody2D>().velocity = velocity;
+        }
+        else
+        {
+            tempSys = Instantiate(_particleSystem, new Vector3(this.transform.position.x + 1.5f, this.transform.position.y - .75f, 0f), new Quaternion(0, 0, 0, 0));
+
+            // calculate velocity
+            Vector2 stepperPos = new Vector2(this.transform.position.x + 1.5f, this.transform.position.y - .75f);
+            Vector2 velocity = new Vector2(-3, 3);
+
+            // create projectile with velocity
+            Instantiate(_projectilePrefab, stepperPos, _projectilePrefab.transform.rotation).GetComponent<Rigidbody2D>().velocity = velocity;
+
+        }
+        //ParticleSystem tempSys = Instantiate(_particleSystem, new Vector3(this.transform.position.x + .5f, this.transform.position.y - .8f, 0f), new Quaternion(0, 0, 0, 0));
+        //tempSys.gameObject.transform.Rotate(new Vector3(0,0,90));
+        tempSys.Play();
+        yield return new WaitForSeconds(.95f);
+        Destroy(tempSys.gameObject);
     }
 }

@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 7528829060615734508}
   - component: {fileID: -8772690656126565786}
   m_Layer: 0
-  m_Name: Projectile
+  m_Name: Stepper Projectile
   m_TagString: External Particles
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -124,7 +124,7 @@ Rigidbody2D:
   m_Material: {fileID: 6200000, guid: 9f6bf7684c257ba4ab6194142d8a7b9e, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
   m_Constraints: 0
 --- !u!114 &3237961068888033965
 MonoBehaviour:
@@ -138,7 +138,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eab68c5c87d59c746ac2aa48aa879eea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _timeToStop: 5
+  _timeToStop: 1
 --- !u!198 &7528829060615734508
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -222,7 +222,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 2
+      scalar: 1
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -707,7 +707,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     randomizeRotationDirection: 0
-    maxNumParticles: 300
+    maxNumParticles: 50
     customEmitterVelocity: {x: 0, y: 0, z: 0}
     size3D: 0
     rotation3D: 0
@@ -973,7 +973,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 100
+      scalar: 5
       minScalar: 10
       maxCurve:
         serializedVersion: 2

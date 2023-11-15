@@ -29,7 +29,7 @@ public class BasicPlatformReactor : MonoBehaviour
             if (!activeCoroutine)
             {
                 StartCoroutine(DoFadeEffect());
-                StartCoroutine(DoParticleEffect());
+                //StartCoroutine(DoParticleEffect());
             }
 
         }
