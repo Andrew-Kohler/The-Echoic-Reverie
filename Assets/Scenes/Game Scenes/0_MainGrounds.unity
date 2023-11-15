@@ -1025,6 +1025,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2086055639550207511, guid: 2b04ab2e54ccf0d408bc89635762061e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7426428075117761251, guid: 2b04ab2e54ccf0d408bc89635762061e, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9124829766177346421, guid: 2b04ab2e54ccf0d408bc89635762061e, type: 3}
       propertyPath: m_Name
       value: Lever
