@@ -451,6 +451,10 @@ PrefabInstance:
       propertyPath: _startPos.y
       value: -6.01
       objectReference: {fileID: 0}
+    - target: {fileID: 5513950211879231250, guid: b0faa94d52208fa4090a008326e69117, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5513950211879231251, guid: b0faa94d52208fa4090a008326e69117, type: 3}
       propertyPath: m_FlipX
       value: 0
