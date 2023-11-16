@@ -103,7 +103,7 @@ MonoBehaviour:
   m_from: {x: 0, y: 0, z: 5}
   m_to: {x: 0, y: 0, z: -5}
   m_frequency: 4
-  rateOfFade: 0.7
+  rateOfFade: 0.3
 --- !u!61 &3751248004868517674
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -143,7 +143,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxDistance: 12
-  maxVolume: 0.7
 --- !u!82 &3751248004868517672
 AudioSource:
   m_ObjectHideFlags: 0

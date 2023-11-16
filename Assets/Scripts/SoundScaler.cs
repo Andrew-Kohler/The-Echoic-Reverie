@@ -28,6 +28,6 @@ public class SoundScaler : MonoBehaviour
             audioSource.volume = math.remap(maxDistance, 0, .05f, maxVolume/1.7f, Vector2.Distance(this.gameObject.transform.position, player.gameObject.transform.position));
         }
         
-        audioSource.Play();
+        audioSource.PlayOneShot(audioSource.clip);
     }
 }

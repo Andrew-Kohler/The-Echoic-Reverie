@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 24474fd0601494f4293d7b373453b15c
+guid: a7a9ab53e0aa591439a5fdbacd6abc7a
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -105,160 +105,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Flags
+      name: Walk0
       rect:
         serializedVersion: 2
-        x: 9
-        y: 68
-        width: 31
-        height: 15
-      alignment: 2
-      pivot: {x: 0.5, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5281e18937c67154a8bba6d21520beca
-      internalID: 1336800689
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: SeatArrangement
-      rect:
-        serializedVersion: 2
-        x: 48
-        y: 31
-        width: 14
-        height: 53
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b0ee96047afb30e45bc9ae6ea71d6021
-      internalID: 1745498083
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: SeatArrangement2
-      rect:
-        serializedVersion: 2
-        x: 66
-        y: 31
-        width: 15
-        height: 53
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 302d45f829f4bff469cda4af10f89b96
-      internalID: -1965848838
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: SeatArrangement3
-      rect:
-        serializedVersion: 2
-        x: 84
-        y: 31
-        width: 17
-        height: 53
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 18539ede10fe443478c4dd3ac269f7a2
-      internalID: -883170317
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Seat
-      rect:
-        serializedVersion: 2
-        x: 109
-        y: 65
-        width: 17
-        height: 18
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1f4d48b2b0d3bb0438245d305e0195ce
-      internalID: -694824452
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ring
-      rect:
-        serializedVersion: 2
-        x: 135
-        y: 36
-        width: 9
-        height: 48
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: cc63b0f8267b1b648931171de04e03a4
-      internalID: -1605116760
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ladder
-      rect:
-        serializedVersion: 2
-        x: 2
-        y: 20
-        width: 26
-        height: 44
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 845ad2ddc8fe8b142a7f8bde9770b0ca
-      internalID: -89773945
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Spotlight
-      rect:
-        serializedVersion: 2
-        x: 30
-        y: 50
-        width: 15
-        height: 13
+        x: 4
+        y: 0
+        width: 40
+        height: 25
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -266,146 +119,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d7e905ed8ab36d94396307bb1ea6631e
-      internalID: 500702263
+      spriteID: ce90e2f39c7da8f4a9b2a78f81e7c740
+      internalID: 1529966391
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Podium
+      name: Walk1
       rect:
         serializedVersion: 2
-        x: 105
-        y: 52
-        width: 23
-        height: 9
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8a0ccc9b8308b00458b4881b5c82ec17
-      internalID: 1953403060
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Beach Ball
-      rect:
-        serializedVersion: 2
-        x: 1
-        y: 4
-        width: 14
-        height: 14
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 021a74a999b9e524fa8e35cd9d684827
-      internalID: -1594019685
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Banner
-      rect:
-        serializedVersion: 2
-        x: 30
-        y: 7
-        width: 31
-        height: 21
-      alignment: 2
-      pivot: {x: 0.5, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 455ada7693ca1cf4f8aa0de187df90da
-      internalID: -757471706
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crate
-      rect:
-        serializedVersion: 2
-        x: 62
-        y: 4
-        width: 18
-        height: 18
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: cbc9008686879814b8941431c3746dbe
-      internalID: 1584682543
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Barrel
-      rect:
-        serializedVersion: 2
-        x: 83
-        y: 4
-        width: 13
-        height: 18
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4f664a335558399419a384f60202c464
-      internalID: 1183964508
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Cannon
-      rect:
-        serializedVersion: 2
-        x: 103
-        y: 4
-        width: 44
-        height: 31
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 92775abe83a20b14a8a9a95656052fe7
-      internalID: 10484738
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Cone
-      rect:
-        serializedVersion: 2
-        x: 16
-        y: 5
-        width: 12
-        height: 15
+        x: 51
+        y: 0
+        width: 40
+        height: 25
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -413,20 +140,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5007163526525ad4f822b8fdbd444de3
-      internalID: 137799539
+      spriteID: 9dc06b29c6a9f0745ab660962659b815
+      internalID: 1537705298
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: RingFront
+      name: Walk2
       rect:
         serializedVersion: 2
-        x: 144
-        y: 36
-        width: 10
-        height: 48
+        x: 98
+        y: 0
+        width: 40
+        height: 25
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -434,8 +161,260 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 44c30776f86e7ed4e854a8b7c851defd
-      internalID: 875520753
+      spriteID: 5d5611e3dea72024ab6d6ca66b4202d7
+      internalID: -1661463288
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Walk3
+      rect:
+        serializedVersion: 2
+        x: 147
+        y: 0
+        width: 40
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6bb3444bff1970e419efc18b6cb316d6
+      internalID: 1524590058
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Walk4
+      rect:
+        serializedVersion: 2
+        x: 195
+        y: 0
+        width: 40
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a829c7d3dfa3a3f40a7d0684d9b3636b
+      internalID: 1304335018
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Walk5
+      rect:
+        serializedVersion: 2
+        x: 243
+        y: 0
+        width: 40
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d8b7156fc8c14fb44ac1ec7abb5843ce
+      internalID: -1687954886
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Walk6
+      rect:
+        serializedVersion: 2
+        x: 291
+        y: 0
+        width: 40
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 138a1feb3708d0848ad1b685ad79dd0d
+      internalID: -1010385700
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Yell1
+      rect:
+        serializedVersion: 2
+        x: 341
+        y: 0
+        width: 38
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 888b012d00775c0409451134e2b51c4d
+      internalID: -1059670186
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Yell2
+      rect:
+        serializedVersion: 2
+        x: 390
+        y: 0
+        width: 36
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e3b01f1c9969bc442ae56dc1e1b28a04
+      internalID: -249529149
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Yell3
+      rect:
+        serializedVersion: 2
+        x: 438
+        y: 0
+        width: 36
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9b950864ad872434faf3172a6b5231bf
+      internalID: 615283674
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Yell4
+      rect:
+        serializedVersion: 2
+        x: 486
+        y: 0
+        width: 36
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2fe5e85cb0de8484e841804d8c9d54bd
+      internalID: 2117279279
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Yell5
+      rect:
+        serializedVersion: 2
+        x: 534
+        y: 0
+        width: 36
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ec5acde12a428094982b76e6c6998f8d
+      internalID: 880440325
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Yell6
+      rect:
+        serializedVersion: 2
+        x: 581
+        y: 0
+        width: 38
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 83352d547de1d9a4dafc93feed2aa920
+      internalID: 1459264712
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Squish1
+      rect:
+        serializedVersion: 2
+        x: 627
+        y: 0
+        width: 40
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f4762f08837a9e945a3ec9b767435c31
+      internalID: -1585780764
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Squish2
+      rect:
+        serializedVersion: 2
+        x: 677
+        y: 0
+        width: 38
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2684e7a62cb3b1747a91bb3d0b5b79c2
+      internalID: 1002376771
       vertices: []
       indices: 
       edges: []
@@ -451,22 +430,21 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Banner: -757471706
-      Barrel: 1183964508
-      Beach Ball: -1594019685
-      Cannon: 10484738
-      Cone: 137799539
-      Crate: 1584682543
-      Flags: 1336800689
-      Ladder: -89773945
-      Podium: 1953403060
-      Ring: -1605116760
-      RingFront: 875520753
-      Seat: -694824452
-      SeatArrangement: 1745498083
-      SeatArrangement2: -1965848838
-      SeatArrangement3: -883170317
-      Spotlight: 500702263
+      Squish1: -1585780764
+      Squish2: 1002376771
+      Walk0: 1529966391
+      Walk1: 1537705298
+      Walk2: -1661463288
+      Walk3: 1524590058
+      Walk4: 1304335018
+      Walk5: -1687954886
+      Walk6: -1010385700
+      Yell1: -1059670186
+      Yell2: -249529149
+      Yell3: 615283674
+      Yell4: 2117279279
+      Yell5: 880440325
+      Yell6: 1459264712
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

@@ -17,10 +17,18 @@ public class OodooloodooMover : MonoBehaviour
     private float _durationTimer = -1; // initialized in first update frame
     private float _currSpeed = 0;
 
+    private Animator anim;
+    private SpriteRenderer sr;
+    private SoundScaler scaler;
+    private bool activeCoroutine;
+
     // Start is called before the first frame update
     void Start() 
     {
         transform.position = _startPos;
+        anim = GetComponent<Animator>();
+        sr = GetComponent<SpriteRenderer>();
+        scaler = GetComponent<SoundScaler>();
     }
 
     // Update is called once per frame
@@ -30,15 +38,21 @@ public class OodooloodooMover : MonoBehaviour
         if(_durationTimer < 0)
         {
             _durationTimer = Random.Range(_minDuration, _maxDuration);
+            Debug.Log(_durationTimer);
             // toggle moving state
             _isMoving = !_isMoving;
+            Debug.Log(_isMoving);
 
             if(_isMoving) // just started moving
             {
-                // walk animation
+                anim.SetBool("isMoving", true);
             }
             else // just stopped moving
             {
+                anim.SetBool("isMoving", false);
+                sr.flipX = !sr.flipX;
+                if(!activeCoroutine)
+                    StartCoroutine(DoYell());
                 // start oodooloodooling animation + sound + particles
             }
         }
@@ -77,5 +91,19 @@ public class OodooloodooMover : MonoBehaviour
 
         // update timer
         _durationTimer -= Time.deltaTime;
+    }
+
+    IEnumerator DoYell()
+    {
+        Debug.Log("Here we go now");
+        activeCoroutine = true;
+        anim.Play("Yell", 0, 0);
+        scaler.PlaySound();
+        yield return new WaitForSeconds(.916f);
+        anim.Play("Idle", 0, 0);
+        activeCoroutine = false;
+        // Play the anim
+        // Do a particle up
+        yield return null;  
     }
 }
