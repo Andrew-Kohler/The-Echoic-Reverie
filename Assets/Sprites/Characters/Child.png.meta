@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 4a357b1527993e94a9deb5ffb1f7793f
+guid: 29cda287753c1d64cb66b4b5e2862272
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -105,253 +105,190 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Ringmaster L
+      name: Child_0
       rect:
         serializedVersion: 2
-        x: 13
-        y: 76
-        width: 19
-        height: 39
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0f8ffaedaea285140a8ca6b646ec74d1
-      internalID: 2093036142
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ringmaster C
-      rect:
-        serializedVersion: 2
-        x: 37
-        y: 76
-        width: 19
-        height: 38
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ad51d1e56798d834a8c9fedaabfa510c
-      internalID: 2099432892
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ringmaster R
-      rect:
-        serializedVersion: 2
-        x: 59
-        y: 76
-        width: 19
-        height: 39
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2821c8c6b2bfd5c4da2a455d85877c77
-      internalID: 1105199816
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Sprink L
-      rect:
-        serializedVersion: 2
-        x: 25
-        y: 58
-        width: 14
-        height: 14
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7d7e084b3624cbb49a18df1ba4551ca0
-      internalID: 518159111
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Sprink C
-      rect:
-        serializedVersion: 2
-        x: 41
-        y: 58
-        width: 15
-        height: 14
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 51914bd4bb2300c47902af3e8770e703
-      internalID: -1548405815
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Sprink R
-      rect:
-        serializedVersion: 2
-        x: 58
-        y: 58
-        width: 14
-        height: 14
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4d942809b97400943b9738c0e2ee2d85
-      internalID: 1865140558
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Amazing C
-      rect:
-        serializedVersion: 2
-        x: 39
-        y: 32
-        width: 17
-        height: 21
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 77678edee5727704dab523fd16f9f22a
-      internalID: 704007597
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Amazing L
-      rect:
-        serializedVersion: 2
-        x: 17
-        y: 32
-        width: 15
-        height: 21
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7ee79807bf392174f8f574932aa80af1
-      internalID: -976598239
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Amazing R
-      rect:
-        serializedVersion: 2
-        x: 63
-        y: 32
-        width: 15
-        height: 21
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8d808fe8aac12a741a7049b7d2f280f4
-      internalID: 13560482
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Luno L
-      rect:
-        serializedVersion: 2
-        x: 1
+        x: 2
         y: 0
-        width: 28
-        height: 25
+        width: 18
+        height: 23
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9443ae3b98d8845479561c3b5959fa8c
-      internalID: -1306043830
+      spriteID: 6c4854d53d584da488d2cf7b929c4bea
+      internalID: 937029076
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Luno C
+      name: Child_1
       rect:
         serializedVersion: 2
-        x: 33
+        x: 24
         y: 0
-        width: 28
-        height: 25
+        width: 18
+        height: 23
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2b91729b33ef01846925913ccd77f9a8
-      internalID: 1015280139
+      spriteID: ca6788bd55e97e24d9e4ffbc7f7b0f60
+      internalID: -1898652449
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Luno R
+      name: Child_2
       rect:
         serializedVersion: 2
-        x: 64
+        x: 46
         y: 0
-        width: 28
-        height: 25
+        width: 18
+        height: 23
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c642eaebed99d54478726ccc5ae130bc
-      internalID: 1645433276
+      spriteID: c98027ed359ed9348ae23fb585fdeef5
+      internalID: 1881239815
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Child_3
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 0
+        width: 18
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 847681cd01e35d247832f7d444c53582
+      internalID: 1234251671
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Child_4
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 0
+        width: 18
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 43668bfebc2257845945c546ce2bb67c
+      internalID: 312345810
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Child_5
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 0
+        width: 18
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7c28e1f549daae44d9de7d71d08db60a
+      internalID: -1917552821
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Child_6
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 0
+        width: 18
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a0d1c181565aed541a34f35fd3760866
+      internalID: -879129105
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Child_7
+      rect:
+        serializedVersion: 2
+        x: 156
+        y: 0
+        width: 18
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 91ef5c4ca54482e4f87abbc08e4d3c83
+      internalID: -717798268
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Child_8
+      rect:
+        serializedVersion: 2
+        x: 178
+        y: 0
+        width: 18
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b36ea1b39eda27542a29b4daf09f4c4b
+      internalID: -317076989
       vertices: []
       indices: 
       edges: []
@@ -367,25 +304,15 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Amazing C: 704007597
-      Amazing L: -976598239
-      Amazing R: 13560482
-      Luno C: 1015280139
-      Luno L: -1306043830
-      Luno R: 1645433276
-      Ringmaster C: 2099432892
-      Ringmaster L: 2093036142
-      Ringmaster R: 1105199816
-      SideCharacters_0: -771299799
-      SideCharacters_10: 757335110
-      SideCharacters_12: -1377344788
-      SideCharacters_13: 1217392098
-      SideCharacters_2: 1940361131
-      SideCharacters_4: -1440484707
-      SideCharacters_9: 1232178042
-      Sprink C: -1548405815
-      Sprink L: 518159111
-      Sprink R: 1865140558
+      Child_0: 937029076
+      Child_1: -1898652449
+      Child_2: 1881239815
+      Child_3: 1234251671
+      Child_4: 312345810
+      Child_5: -1917552821
+      Child_6: -879129105
+      Child_7: -717798268
+      Child_8: -317076989
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
