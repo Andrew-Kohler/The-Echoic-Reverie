@@ -42,10 +42,8 @@ public class OodooloodooMover : MonoBehaviour
         if(_durationTimer < 0)
         {
             _durationTimer = Random.Range(_minDuration, _maxDuration);
-            Debug.Log(_durationTimer);
             // toggle moving state
             _isMoving = !_isMoving;
-            Debug.Log(_isMoving);
 
             if(_isMoving) // just started moving
             {
