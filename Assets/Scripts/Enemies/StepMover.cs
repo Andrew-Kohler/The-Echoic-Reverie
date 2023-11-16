@@ -130,9 +130,16 @@ public class StepMover : MonoBehaviour
     private IEnumerator DoStepAnim()
     {
         activeCoroutine = true;
-        anim.Play("StepperStep", 0, 0);
-        yield return new WaitForSeconds(.583f);
-        anim.Play("StepperIdle", 0, 0);
+        anim.Play("Step", 0, 0);
+        if(gameObject.name == "Stomper")
+        {
+            yield return new WaitForSeconds(1.2f);
+        }
+        else
+        {
+            yield return new WaitForSeconds(.583f);
+        }
+        anim.Play("Idle", 0, 0);
         activeCoroutine = false;
     }
 
