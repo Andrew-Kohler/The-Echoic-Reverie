@@ -19,6 +19,7 @@ public class StepMover : MonoBehaviour
 
     private SpriteRenderer sr;
     private Animator anim;
+    private SoundScaler scaler;
     private bool activeCoroutine;
 
     private bool _isForwardDirection = true; // forward = from start to end
@@ -38,6 +39,7 @@ public class StepMover : MonoBehaviour
 
         anim = GetComponent<Animator>();
         sr = GetComponent<SpriteRenderer>();
+        scaler = GetComponent<SoundScaler>();
     }
 
     // Update is called once per frame
@@ -146,15 +148,26 @@ public class StepMover : MonoBehaviour
     private IEnumerator DoLanding()
     {
         ParticleSystem tempSys;
+        float xMod;
+        float yMod;
+        if(gameObject.name == "Stomper")
+        {
+            xMod = 2f;
+            yMod = 3f;
+        }
+        else
+        {
+            xMod = 1.5f;
+            yMod = .75f;
+        }
         yield return new WaitForSeconds(.1f);
         if (!sr.flipX)
         {
-            tempSys = Instantiate(_particleSystem, new Vector3(this.transform.position.x - 1.5f, this.transform.position.y - .75f, 0f), new Quaternion(0, 0, 0, 0));
-            //tempSys.gameObject.transform.Rotate(new Vector3(0, 0, 90));
+            tempSys = Instantiate(_particleSystem, new Vector3(this.transform.position.x - xMod, this.transform.position.y - yMod, 0f), new Quaternion(0, 0, 0, 0));
             tempSys.gameObject.transform.Rotate(new Vector3(0, 0, 90));
 
             // calculate velocity
-            Vector2 stepperPos = new Vector2(this.transform.position.x - 1.5f, this.transform.position.y - .75f);
+            Vector2 stepperPos = new Vector2(this.transform.position.x - xMod, this.transform.position.y - yMod);
             Vector2 velocity = new Vector2(3,3);
 
             // create projectile with velocity
@@ -162,10 +175,10 @@ public class StepMover : MonoBehaviour
         }
         else
         {
-            tempSys = Instantiate(_particleSystem, new Vector3(this.transform.position.x + 1.5f, this.transform.position.y - .75f, 0f), new Quaternion(0, 0, 0, 0));
+            tempSys = Instantiate(_particleSystem, new Vector3(this.transform.position.x + xMod, this.transform.position.y - yMod, 0f), new Quaternion(0, 0, 0, 0));
 
             // calculate velocity
-            Vector2 stepperPos = new Vector2(this.transform.position.x + 1.5f, this.transform.position.y - .75f);
+            Vector2 stepperPos = new Vector2(this.transform.position.x + xMod, this.transform.position.y - yMod);
             Vector2 velocity = new Vector2(-3, 3);
 
             // create projectile with velocity
@@ -175,6 +188,7 @@ public class StepMover : MonoBehaviour
         //ParticleSystem tempSys = Instantiate(_particleSystem, new Vector3(this.transform.position.x + .5f, this.transform.position.y - .8f, 0f), new Quaternion(0, 0, 0, 0));
         //tempSys.gameObject.transform.Rotate(new Vector3(0,0,90));
         tempSys.Play();
+        scaler.PlaySound();
         yield return new WaitForSeconds(.95f);
         Destroy(tempSys.gameObject);
     }
