@@ -12,6 +12,13 @@ public class FinalCutsceneManager : MonoBehaviour
     [SerializeField] private GameObject _leverBall;
     [SerializeField] private float _leverBallGrowFactor;
 
+    private AudioSource audioSource;
+
+    [SerializeField] AudioClip ferrisWheelMusic;
+    [SerializeField] AudioClip theEnd;
+    [SerializeField] private GameObject thankYou;
+    [SerializeField] private GameObject mainMenu;
+
     private void OnEnable()
     {
         BellRinger.onCompleteBellRing += FinalCutscene;
@@ -29,6 +36,7 @@ public class FinalCutsceneManager : MonoBehaviour
         {
             charaList[i].SetActive(false);
         }
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -40,7 +48,6 @@ public class FinalCutsceneManager : MonoBehaviour
     public void FinalCutscene()
     {
         StartCoroutine(DoFinalCutscene());
-       
     }
 
     IEnumerator DoFinalCutscene()
@@ -59,14 +66,18 @@ public class FinalCutsceneManager : MonoBehaviour
         yield return new WaitForSeconds(3f);
         // Start the wheel
         wheelMotor.turning = true;
-            // Maybe play a sound effect for this?
+        audioSource.PlayOneShot(ferrisWheelMusic);
+        // Maybe play a sound effect for this?
         // Let the player take it in for a little
         yield return new WaitForSeconds(5f);
         // Pan the camera up to a title card
         cameraAnim.Play("FinalCamMove");
-        // Music sting?
+        audioSource.volume = .25f;
+        audioSource.PlayOneShot(theEnd);
         // There should be a "return to title" button up there that gets faded in
-        yield return null;
+        yield return new WaitForSeconds(7.264f);
+        thankYou.SetActive(true);
+        mainMenu.SetActive(true);
     }
 
     private IEnumerator DoGrowCutsceneBall()

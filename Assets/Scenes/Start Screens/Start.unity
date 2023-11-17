@@ -207,90 +207,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &111533852
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 111533854}
-  - component: {fileID: 111533853}
-  m_Layer: 0
-  m_Name: Black Background
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!212 &111533853
-SpriteRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 111533852}
-  m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 0
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1219968581
-  m_SortingLayer: -4
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
-  m_FlipX: 0
-  m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
-  m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
---- !u!4 &111533854
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 111533852}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.2678, y: -0.1088, z: 0}
-  m_LocalScale: {x: 19.021063, y: 11.3327, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &138441942
 GameObject:
   m_ObjectHideFlags: 0
@@ -396,7 +312,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &180201608
 GameObject:
@@ -896,6 +812,10 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0.39215687
       objectReference: {fileID: 0}
+    - target: {fileID: 6774493510946262533, guid: d13459891439a3f46890cb89c877b8d5, type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6774493512683468960, guid: d13459891439a3f46890cb89c877b8d5, type: 3}
       propertyPath: m_Name
       value: Ferris Wheel Cart (3)
@@ -1124,6 +1044,10 @@ PrefabInstance:
     - target: {fileID: 6774493510946262533, guid: d13459891439a3f46890cb89c877b8d5, type: 3}
       propertyPath: m_Color.r
       value: 0.39215687
+      objectReference: {fileID: 0}
+    - target: {fileID: 6774493510946262533, guid: d13459891439a3f46890cb89c877b8d5, type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6774493512683468960, guid: d13459891439a3f46890cb89c877b8d5, type: 3}
       propertyPath: m_Name
@@ -1434,7 +1358,7 @@ Transform:
   - {fileID: 648543812}
   - {fileID: 1395393495}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &728225288
 GameObject:
@@ -1666,6 +1590,10 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0.39215687
       objectReference: {fileID: 0}
+    - target: {fileID: 6774493510946262533, guid: d13459891439a3f46890cb89c877b8d5, type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6774493512683468960, guid: d13459891439a3f46890cb89c877b8d5, type: 3}
       propertyPath: m_Name
       value: Ferris Wheel Cart (2)
@@ -1841,6 +1769,10 @@ PrefabInstance:
     - target: {fileID: 6774493510946262533, guid: d13459891439a3f46890cb89c877b8d5, type: 3}
       propertyPath: m_Color.r
       value: 0.39215687
+      objectReference: {fileID: 0}
+    - target: {fileID: 6774493510946262533, guid: d13459891439a3f46890cb89c877b8d5, type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6774493512683468960, guid: d13459891439a3f46890cb89c877b8d5, type: 3}
       propertyPath: m_Name
@@ -2034,7 +1966,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -2465,6 +2397,10 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0.39215687
       objectReference: {fileID: 0}
+    - target: {fileID: 6774493510946262533, guid: d13459891439a3f46890cb89c877b8d5, type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6774493512683468960, guid: d13459891439a3f46890cb89c877b8d5, type: 3}
       propertyPath: m_Name
       value: Ferris Wheel Cart (1)
@@ -2720,6 +2656,10 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0.39215687
       objectReference: {fileID: 0}
+    - target: {fileID: 6774493510946262533, guid: d13459891439a3f46890cb89c877b8d5, type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6774493512683468960, guid: d13459891439a3f46890cb89c877b8d5, type: 3}
       propertyPath: m_Name
       value: Ferris Wheel Cart (7)
@@ -2809,6 +2749,10 @@ PrefabInstance:
     - target: {fileID: 6774493510946262533, guid: d13459891439a3f46890cb89c877b8d5, type: 3}
       propertyPath: m_Color.r
       value: 0.39215687
+      objectReference: {fileID: 0}
+    - target: {fileID: 6774493510946262533, guid: d13459891439a3f46890cb89c877b8d5, type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6774493512683468960, guid: d13459891439a3f46890cb89c877b8d5, type: 3}
       propertyPath: m_Name
@@ -2904,6 +2848,10 @@ PrefabInstance:
     - target: {fileID: 6774493510946262533, guid: d13459891439a3f46890cb89c877b8d5, type: 3}
       propertyPath: m_Color.r
       value: 0.39215687
+      objectReference: {fileID: 0}
+    - target: {fileID: 6774493510946262533, guid: d13459891439a3f46890cb89c877b8d5, type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6774493512683468960, guid: d13459891439a3f46890cb89c877b8d5, type: 3}
       propertyPath: m_Name
@@ -3161,7 +3109,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1219968581
   m_SortingLayer: -4
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: da7d5f4e44f8c9e41b8adf0bc3edf73e, type: 3}
   m_Color: {r: 0.05882353, g: 0.05882353, b: 0.05882353, a: 1}
   m_FlipX: 0
@@ -3764,7 +3712,7 @@ RectTransform:
   - {fileID: 248771325}
   - {fileID: 1483388487}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
