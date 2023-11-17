@@ -46,8 +46,16 @@ public class DecorativeElement : MonoBehaviour
         {
             StopAllCoroutines();
             soundScaler.PlaySound();
-            StartCoroutine(DoFadeEffect());
-            StartCoroutine(DoShakeEffect());
+            if (collision.CompareTag("CutsceneBall"))
+            {
+                this.enabled = false;
+            }
+            else
+            {
+                StartCoroutine(DoFadeEffect());
+                StartCoroutine(DoShakeEffect());
+            }
+            
         }
         
     }

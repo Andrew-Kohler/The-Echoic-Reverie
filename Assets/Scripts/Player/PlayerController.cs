@@ -44,6 +44,16 @@ public class PlayerController : MonoBehaviour, IPlayerController
     }
     void Activate() => _active = true;
 
+    private void OnEnable()
+    {
+        BellRinger.onCompleteSceneEnter += DisableCharacter;
+    }
+
+    private void OnDisable()
+    {
+        BellRinger.onCompleteSceneEnter -= DisableCharacter;
+    }
+
     private void Update()
     {
         // prevents clipping in first 0.5 seconds
@@ -74,6 +84,13 @@ public class PlayerController : MonoBehaviour, IPlayerController
         }
 
         MoveCharacter(); // Actually perform the axis movement
+    }
+
+    private void DisableCharacter()
+    {
+        this.enabled = false;
+        IsStomped = true;
+        //Velocity = 0;
     }
 
 

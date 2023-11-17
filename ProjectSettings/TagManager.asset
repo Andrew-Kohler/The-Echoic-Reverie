@@ -8,6 +8,7 @@ TagManager:
   - Internal Particles
   - Stomp Box
   - LeverBall
+  - CutsceneBall
   layers:
   - Default
   - TransparentFX
@@ -17,8 +18,8 @@ TagManager:
   - UI
   - GroundColliders
   - Enemy
-  - 
-  - 
+  - Front Support
+  - Back Support
   - 
   - 
   - 

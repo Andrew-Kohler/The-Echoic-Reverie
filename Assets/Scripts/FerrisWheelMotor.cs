@@ -5,11 +5,11 @@ using UnityEngine;
 public class FerrisWheelMotor : MonoBehaviour
 {
     // Start is called before the first frame update
-    public bool turning;
+    public bool turning = false;
     [SerializeField] private float rotationSpeed = .1f;
     void Start()
     {
-        turning = false;
+       
     }
 
     // Update is called once per frame

@@ -30,6 +30,12 @@ public class BellRinger : MonoBehaviour
     private AudioSource _audioSource;
     private bool _prevLever0;
 
+    [SerializeField] GameObject oodooloodoo;    // That one oodooloodoo we have to turn off
+    public delegate void OnCompleteSceneEnter();
+    public static event OnCompleteSceneEnter onCompleteSceneEnter;
+    public delegate void OnCompleteBellRing();
+    public static event OnCompleteBellRing onCompleteBellRing;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -55,8 +61,26 @@ public class BellRinger : MonoBehaviour
         _prevLever0 = GameManager.Instance.GetLever(0);
     }
 
+    private bool CheckForCompletion()
+    {
+        if(GameManager.Instance.GetLever(0) && GameManager.Instance.GetLever(1) && GameManager.Instance.GetLever(2) && GameManager.Instance.GetLever(3))
+        {
+            return true;
+        }
+        return false;
+    }
+
     private IEnumerator DoRingBells()
     {
+
+        if (CheckForCompletion())
+        {
+            // Broadcast an event that freezes the player
+            // ... and also, hide that Oodooloodoo
+            onCompleteSceneEnter?.Invoke();
+            oodooloodoo.SetActive(false);
+            
+        }
 
         yield return new WaitForSeconds(_initialWaitTime);
 
@@ -93,6 +117,34 @@ public class BellRinger : MonoBehaviour
             StartCoroutine(DoShakeEffect(_bell3));
             _audioSource.PlayOneShot(_bellSound3, _bellVolume);
         }
+
+        yield return new WaitForSeconds(_timeBetweenBells * 2);
+
+        if (CheckForCompletion())
+        {
+            StartCoroutine(DoFadeEffect(_bell0));
+            StartCoroutine(DoShakeEffect(_bell0));
+            _audioSource.PlayOneShot(_bellSound0, _bellVolume);
+
+            StartCoroutine(DoFadeEffect(_bell1));
+            StartCoroutine(DoShakeEffect(_bell1));
+            _audioSource.PlayOneShot(_bellSound1, _bellVolume);
+
+            StartCoroutine(DoFadeEffect(_bell2));
+            StartCoroutine(DoShakeEffect(_bell2));
+            _audioSource.PlayOneShot(_bellSound2, _bellVolume);
+
+            StartCoroutine(DoFadeEffect(_bell3));
+            StartCoroutine(DoShakeEffect(_bell3));
+            _audioSource.PlayOneShot(_bellSound3, _bellVolume);
+
+            yield return new WaitForSeconds(_timeBetweenBells);
+
+            // Broadcast the event that starts the final cutscene
+            onCompleteBellRing?.Invoke();
+        }
+
+        
     }
 
     IEnumerator DoFadeEffect(SpriteRenderer sr)
