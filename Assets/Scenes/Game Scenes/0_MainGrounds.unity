@@ -1170,6 +1170,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ferris Wheel Cart (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 6774493512683468962, guid: d13459891439a3f46890cb89c877b8d5, type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6774493512683468965, guid: d13459891439a3f46890cb89c877b8d5, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -1959,7 +1963,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -531691225
   m_SortingLayer: -3
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: da7d5f4e44f8c9e41b8adf0bc3edf73e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -2456,6 +2460,10 @@ PrefabInstance:
     - target: {fileID: 6774493512683468960, guid: d13459891439a3f46890cb89c877b8d5, type: 3}
       propertyPath: m_Name
       value: Ferris Wheel Cart (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6774493512683468962, guid: d13459891439a3f46890cb89c877b8d5, type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6774493512683468965, guid: d13459891439a3f46890cb89c877b8d5, type: 3}
       propertyPath: m_RootOrder
@@ -7983,6 +7991,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ferris Wheel Cart (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 6774493512683468962, guid: d13459891439a3f46890cb89c877b8d5, type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6774493512683468965, guid: d13459891439a3f46890cb89c877b8d5, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -8213,6 +8225,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ferris Wheel Cart (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 6774493512683468962, guid: d13459891439a3f46890cb89c877b8d5, type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6774493512683468965, guid: d13459891439a3f46890cb89c877b8d5, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -8413,6 +8429,10 @@ PrefabInstance:
     - target: {fileID: 6774493512683468960, guid: d13459891439a3f46890cb89c877b8d5, type: 3}
       propertyPath: m_Name
       value: Ferris Wheel Cart (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6774493512683468962, guid: d13459891439a3f46890cb89c877b8d5, type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6774493512683468965, guid: d13459891439a3f46890cb89c877b8d5, type: 3}
       propertyPath: m_RootOrder
@@ -10387,6 +10407,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ferris Wheel Cart (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 6774493512683468962, guid: d13459891439a3f46890cb89c877b8d5, type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6774493512683468965, guid: d13459891439a3f46890cb89c877b8d5, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -10664,6 +10688,10 @@ PrefabInstance:
     - target: {fileID: 6774493512683468960, guid: d13459891439a3f46890cb89c877b8d5, type: 3}
       propertyPath: m_Name
       value: Ferris Wheel Cart (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6774493512683468962, guid: d13459891439a3f46890cb89c877b8d5, type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6774493512683468965, guid: d13459891439a3f46890cb89c877b8d5, type: 3}
       propertyPath: m_RootOrder
@@ -11098,6 +11126,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 232054656}
     m_Modifications:
+    - target: {fileID: 1830860219957773335, guid: cb7cd046fdb1a22428143e1e43bf0dae, type: 3}
+      propertyPath: m_Pitch
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1830860219957773335, guid: cb7cd046fdb1a22428143e1e43bf0dae, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 859f34217bf9bab4fb276db1980a84c1, type: 3}
     - target: {fileID: 1830860219957773336, guid: cb7cd046fdb1a22428143e1e43bf0dae, type: 3}
       propertyPath: m_Name
       value: Circ Sign
@@ -11455,6 +11491,10 @@ PrefabInstance:
     - target: {fileID: 6774493512683468960, guid: d13459891439a3f46890cb89c877b8d5, type: 3}
       propertyPath: m_Name
       value: Ferris Wheel Cart
+      objectReference: {fileID: 0}
+    - target: {fileID: 6774493512683468962, guid: d13459891439a3f46890cb89c877b8d5, type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6774493512683468965, guid: d13459891439a3f46890cb89c877b8d5, type: 3}
       propertyPath: m_RootOrder
