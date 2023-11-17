@@ -30,6 +30,8 @@ public class PlayerController : MonoBehaviour, IPlayerController
     public bool CurrentlyClinging { get; private set; }
     public bool IsStomped { get; set; }
 
+    private bool isEnd = false;
+
     private Vector3 _lastPosition;
     private float _currentHorizontalSpeed, _currentVerticalSpeed;
 
@@ -44,6 +46,16 @@ public class PlayerController : MonoBehaviour, IPlayerController
     }
     void Activate() => _active = true;
 
+    private void OnEnable()
+    {
+        BellRinger.onCompleteSceneEnter += DisableCharacter;
+    }
+
+    private void OnDisable()
+    {
+        BellRinger.onCompleteSceneEnter -= DisableCharacter;
+    }
+
     private void Update()
     {
         // prevents clipping in first 0.5 seconds
@@ -56,7 +68,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
         GatherInput();
         RunCollisionChecks();
 
-        if (IsStomped) // when stomped, set speeds
+        if (IsStomped || isEnd) // when stomped, set speeds
         {
             _currentVerticalSpeed = _fallClamp; // set fall speed to max
             _currentHorizontalSpeed = 0; // don't slide, go straight down
@@ -74,6 +86,13 @@ public class PlayerController : MonoBehaviour, IPlayerController
         }
 
         MoveCharacter(); // Actually perform the axis movement
+    }
+
+    private void DisableCharacter()
+    {
+        this.enabled = false;
+        isEnd = true;
+        //Velocity = 0;
     }
 
 

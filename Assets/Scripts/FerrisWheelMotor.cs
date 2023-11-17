@@ -9,6 +9,7 @@ public class FerrisWheelMotor : MonoBehaviour
     [SerializeField] private float rotationSpeed = .1f;
     void Start()
     {
+       
         
     }
 

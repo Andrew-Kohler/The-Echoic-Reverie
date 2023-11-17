@@ -101,6 +101,15 @@ public class GameManager : MonoBehaviour
         _data.levers[index] = true;
     }
 
+    public void ResetGame()
+    {
+        // initialize default data
+        _data = new Data();
+        for (int i = 0; i < _data.levers.Length; i++)
+            _data.levers[i] = false;
+        _data.spawnpoint = new Vector2(INIT_SPAWNPOINT_X, INIT_SPAWNPOINT_Y);
+    }
+
     public Vector2 GetSpawnpoint()
     {
         return _data.spawnpoint;

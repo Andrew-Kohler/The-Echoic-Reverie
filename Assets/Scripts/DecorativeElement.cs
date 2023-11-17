@@ -16,6 +16,7 @@ public class DecorativeElement : MonoBehaviour
     [SerializeField] protected float rateOfFade = .7f;
 
     bool activeCoroutine;
+    bool revealed = false;
 
     void Start()
     {
@@ -42,12 +43,21 @@ public class DecorativeElement : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!activeCoroutine)
+        if (collision.CompareTag("CutsceneBall"))
+        {
+            soundScaler.PlaySound();
+            StartCoroutine(DoShakeEffect());
+            sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, 1f);
+            this.enabled = false;
+            revealed = true;
+        }
+
+        else if (!activeCoroutine && !revealed)
         {
             StopAllCoroutines();
             soundScaler.PlaySound();
-            StartCoroutine(DoFadeEffect());
             StartCoroutine(DoShakeEffect());
+            StartCoroutine(DoFadeEffect()); 
         }
         
     }
