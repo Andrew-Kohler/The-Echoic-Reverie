@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour
     {
         public bool[] levers = new bool[4];
         public Vector2 spawnpoint;
+        public bool hasWon;
     }
     private Data _data;
 
@@ -61,6 +62,7 @@ public class GameManager : MonoBehaviour
 #else
             _data.spawnpoint = new Vector2(INIT_SPAWNPOINT_X, INIT_SPAWNPOINT_Y);
 #endif
+            _data.hasWon = false;
 
 
             // components
@@ -110,6 +112,16 @@ public class GameManager : MonoBehaviour
     public void SetSpawnpoint(Vector2 newSpawnpoint)
     {
         _data.spawnpoint = newSpawnpoint;
+    }
+
+    public bool HasWon()
+    {
+        return _data.hasWon;
+    }
+
+    public void SetWon()
+    {
+        _data.hasWon = true;
     }
 #endregion
 

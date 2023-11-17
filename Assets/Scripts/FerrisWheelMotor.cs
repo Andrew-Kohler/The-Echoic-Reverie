@@ -10,6 +10,7 @@ public class FerrisWheelMotor : MonoBehaviour
     void Start()
     {
        
+        
     }
 
     // Update is called once per frame
@@ -17,7 +18,7 @@ public class FerrisWheelMotor : MonoBehaviour
     {
         if (turning)
         {
-            this.gameObject.transform.Rotate(new Vector3(0, 0, rotationSpeed));
+            this.gameObject.transform.Rotate(new Vector3(0, 0, rotationSpeed * Time.deltaTime));
         }
     }
 }
