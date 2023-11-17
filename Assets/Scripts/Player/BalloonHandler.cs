@@ -7,6 +7,9 @@ public class BalloonHandler : MonoBehaviour
     [Header("Game Objects")]
     [SerializeField, Tooltip("used to detect if stomped - pop balloon")] private PlayerController _player;
     [SerializeField, Tooltip("enabled and disabled to show player balloon state")] private GameObject _balloonObject;
+    [SerializeField, Tooltip("used to swap animation state of kid")] private Animator _kidAnim;
+    [SerializeField, Tooltip("gives the kid a balloon")] private GameObject _kidBalloon;
+    [SerializeField, Tooltip("silence, child")] private AudioSource _kidAudio;
 
     [Header("Colliders")]
     [SerializeField, Tooltip("used to detect collision with timmy or balloon cart")] private Collider2D _playerCollider;
@@ -33,9 +36,17 @@ public class BalloonHandler : MonoBehaviour
         {
             _ringmasterCollider.enabled = false; // disable enemy collider on ringmaster
             _hasBalloon = false; // no longer has balloon
+            _kidBalloon.SetActive(true);
+            _kidAnim.Play("ChildIdle");
+            _kidAudio.enabled = false;
         }
 
         // show balloon object if player has balloon
         _balloonObject.SetActive(_hasBalloon);
+    }
+
+    IEnumerator PlayCry()
+    {
+        yield return null;
     }
 }
