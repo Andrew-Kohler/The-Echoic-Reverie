@@ -78,6 +78,8 @@ public class PlayerAnimator : MonoBehaviour
 
         _anim.SetBool("isClinging", _player.CurrentlyClinging);
 
+        _anim.SetBool("isStomped", _player.IsStomped);
+
 
         // Landing
         if (_player.LandingThisFrame)

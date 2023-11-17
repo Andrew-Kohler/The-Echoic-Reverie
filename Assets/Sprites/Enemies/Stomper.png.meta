@@ -108,9 +108,9 @@ TextureImporter:
       name: Stomper_0
       rect:
         serializedVersion: 2
-        x: 35
+        x: 26
         y: 0
-        width: 54
+        width: 63
         height: 123
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -129,9 +129,9 @@ TextureImporter:
       name: Stomper_1
       rect:
         serializedVersion: 2
-        x: 136
+        x: 127
         y: 0
-        width: 54
+        width: 63
         height: 123
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -150,9 +150,9 @@ TextureImporter:
       name: Stomper_2
       rect:
         serializedVersion: 2
-        x: 243
+        x: 234
         y: 0
-        width: 54
+        width: 63
         height: 123
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -171,9 +171,9 @@ TextureImporter:
       name: Stomper_3
       rect:
         serializedVersion: 2
-        x: 353
+        x: 344
         y: 0
-        width: 54
+        width: 63
         height: 123
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -192,9 +192,9 @@ TextureImporter:
       name: Stomper_4
       rect:
         serializedVersion: 2
-        x: 459
+        x: 450
         y: 0
-        width: 54
+        width: 63
         height: 123
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -213,9 +213,9 @@ TextureImporter:
       name: Stomper_5
       rect:
         serializedVersion: 2
-        x: 565
+        x: 556
         y: 0
-        width: 54
+        width: 63
         height: 123
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -234,9 +234,9 @@ TextureImporter:
       name: Stomper_6
       rect:
         serializedVersion: 2
-        x: 671
+        x: 662
         y: 0
-        width: 54
+        width: 63
         height: 123
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -255,9 +255,9 @@ TextureImporter:
       name: Stomper_7
       rect:
         serializedVersion: 2
-        x: 777
+        x: 767
         y: 0
-        width: 54
+        width: 63
         height: 123
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
