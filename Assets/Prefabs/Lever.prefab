@@ -5063,7 +5063,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _leverIndex: 0
-  _leverSound: {fileID: 8300000, guid: 46ba0ee8275971f4fa696aa660cdfd5b, type: 3}
+  _leverSound: {fileID: 8300000, guid: 8c798d32f71aba942893e33868881976, type: 3}
   _leverVolume: 1
   _particleEffect: {fileID: 5543507510494161173}
   _leverBall: {fileID: 2086055639550207511}
