@@ -770,6 +770,10 @@ PrefabInstance:
       value: 5.0196953
       objectReference: {fileID: 0}
     - target: {fileID: 8312593964549543422, guid: 09fddd6541421ac4b98c334751706e45, type: 3}
+      propertyPath: sceneIndex
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8312593964549543422, guid: 09fddd6541421ac4b98c334751706e45, type: 3}
       propertyPath: spawnpoint.x
       value: -17
       objectReference: {fileID: 0}

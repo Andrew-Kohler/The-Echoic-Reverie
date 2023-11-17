@@ -6,8 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Game Scenes/0_MainGrounds.unity
-    guid: 7744a985bf456dc46b9b5c947f80d0af
+    path: Assets/Scenes/Start Screens/Start.unity
+    guid: a3e01f8b0957c3a46beaf49e680e3483
   - enabled: 1
     path: Assets/Scenes/Game Scenes/1_GameCorner.unity
     guid: cc6705bfc9bcfe1419fccaaa8a016a59
@@ -18,8 +18,8 @@ EditorBuildSettings:
     path: Assets/Scenes/Game Scenes/3_FoodCourt.unity
     guid: 0b271d23d396d864a90a69d4c217684d
   - enabled: 1
-    path: Assets/Scenes/Start Screens/Start.unity
-    guid: a3e01f8b0957c3a46beaf49e680e3483
+    path: Assets/Scenes/Game Scenes/0_MainGrounds.unity
+    guid: 7744a985bf456dc46b9b5c947f80d0af
   - enabled: 1
     path: Assets/Scenes/Start Screens/Credits.unity
     guid: 664447a3b59f28e49aa0e8d8a79ba477
