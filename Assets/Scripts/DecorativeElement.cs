@@ -48,7 +48,6 @@ public class DecorativeElement : MonoBehaviour
             soundScaler.PlaySound();
             StartCoroutine(DoFadeEffect());
             StartCoroutine(DoShakeEffect());
-            Debug.Log("??");
         }
         
     }
@@ -58,7 +57,6 @@ public class DecorativeElement : MonoBehaviour
 
         if (other.CompareTag("External Particles") && !activeCoroutine) // !activeCoroutine && 
         {
-            Debug.Log("??");
 /*            if (!activeCoroutine)
             {*/
                 StopAllCoroutines();

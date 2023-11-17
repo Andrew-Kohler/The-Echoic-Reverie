@@ -22,6 +22,10 @@ public class OodooloodooMover : MonoBehaviour
     private SoundScaler scaler;
     private bool activeCoroutine;
 
+    [Header("Particle Parameters")]
+    [SerializeField] ParticleSystem _particleSystem;
+    [SerializeField] GameObject _projectilePrefab;
+
     // Start is called before the first frame update
     void Start() 
     {
@@ -38,10 +42,8 @@ public class OodooloodooMover : MonoBehaviour
         if(_durationTimer < 0)
         {
             _durationTimer = Random.Range(_minDuration, _maxDuration);
-            Debug.Log(_durationTimer);
             // toggle moving state
             _isMoving = !_isMoving;
-            Debug.Log(_isMoving);
 
             if(_isMoving) // just started moving
             {
@@ -95,15 +97,27 @@ public class OodooloodooMover : MonoBehaviour
 
     IEnumerator DoYell()
     {
-        Debug.Log("Here we go now");
+        ParticleSystem tempSys;
+
         activeCoroutine = true;
         anim.Play("Yell", 0, 0);
         scaler.PlaySound();
+
+        tempSys = Instantiate(_particleSystem, new Vector3(this.transform.position.x, this.transform.position.y + .7f, 0f), new Quaternion(0, 0, 0, 0));
+        tempSys.gameObject.transform.Rotate(new Vector3(0, 0, 45));
+
+        // calculate velocity
+        Vector2 stepperPos = new Vector2(this.transform.position.x, this.transform.position.y + .7f);
+        Vector2 velocity = new Vector2(0, 3);
+
+        // create projectile with velocity
+        Instantiate(_projectilePrefab, stepperPos, _projectilePrefab.transform.rotation).GetComponent<Rigidbody2D>().velocity = velocity;
+
         yield return new WaitForSeconds(.916f);
         anim.Play("Idle", 0, 0);
         activeCoroutine = false;
-        // Play the anim
-        // Do a particle up
+        Destroy(tempSys.gameObject);
+
         yield return null;  
     }
 }

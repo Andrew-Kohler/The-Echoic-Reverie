@@ -18,7 +18,7 @@ public class WatcherBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Vector2.Distance(this.gameObject.transform.position, player.gameObject.transform.position) > 1.4f){
+        if (Mathf.Abs(this.gameObject.transform.position.x - player.gameObject.transform.position.x) > 1.4f){
             if ((this.gameObject.transform.position.x > player.gameObject.transform.position.x))
             {
                 sr.sprite = leftFacing;
