@@ -13,7 +13,7 @@ public class OodooloodooMover : MonoBehaviour
     [SerializeField] private float _minDuration = 0.5f, _maxDuration = 2f;
 
     private bool _isForwardDirection = true; // forward = from start to end
-    private bool _isMoving = true; // start in move cycle
+    private bool _isMoving = false; // start in move cycle (flipped in first frame)
     private float _durationTimer = -1; // initialized in first update frame
     private float _currSpeed = 0;
 
