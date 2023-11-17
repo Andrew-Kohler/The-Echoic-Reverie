@@ -7,7 +7,7 @@ public class StartButtonFunctions : MonoBehaviour
 {
     public void StartGame()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(4);
     }
 
     public void LoadCredits()
